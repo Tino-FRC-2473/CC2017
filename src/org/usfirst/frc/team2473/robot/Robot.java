@@ -21,7 +21,7 @@ import org.usfirst.frc.team2473.robot.subsystems.Shooter;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class Robot extends IterativeRobot {
+public class Robot extends ThreadingRobot {
 
 	public static final Shooter shooter = new Shooter();
 	public static final Climber climber = new Climber();
@@ -29,7 +29,6 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 
 	Command autonomousCommand;
-	SendableChooser<Command> chooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -38,9 +37,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-		chooser.addDefault("Default Auto", new RunAll());
-		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", chooser);
 	}
 
 	/**
@@ -71,8 +67,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = chooser.getSelected();
-
+		autonomousCommand = new RunAll();
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -83,6 +78,7 @@ public class Robot extends IterativeRobot {
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
+		
 	}
 
 	/**
@@ -117,5 +113,20 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void testPeriodic() {
 		LiveWindow.run();
+	}
+	
+	/** 
+	 * This function adds all the devices
+	 */
+	public void updateDeviceCalls() {
+		addDeviceCall("ClimberRight", ()-> climber.getPower("RightMotor"));
+		addDeviceCall("ClimberLeft", ()-> climber.getPower("LeftMotor"));
+		addDeviceCall("GearRight", ()-> gear.getPower("RightMotor"));
+		addDeviceCall("GearLeft", ()-> gear.getPower("LeftMotor"));
+		addDeviceCall("GearPivot", ()-> gear.getPower("PivotMotor"));
+		addDeviceCall("GearGyro", ()-> gear.getAngle());
+		addDeviceCall("ShooterRight", ()-> shooter.getPower("RightMotor"));
+		addDeviceCall("ShooterLeft", ()-> shooter.getPower("LeftMotor"));
+		addDeviceCall("ShooterServo", ()-> shooter.getPosition());
 	}
 }
