@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends ThreadingRobot {
 	
 	public static DriveTrain train;
-	
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -65,6 +65,7 @@ public class Robot extends ThreadingRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		
 	}
 
 	/**
