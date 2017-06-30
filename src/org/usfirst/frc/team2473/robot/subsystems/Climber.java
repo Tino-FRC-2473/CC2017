@@ -40,7 +40,7 @@ public class Climber extends Subsystem {
     public double getVoltage(String name) {
     	if(name.equals("LeftMotor")) {
     		return talonOne.getBusVoltage();
-    	} else if(name.equals("RightMotoor")) {
+    	} else if(name.equals("RightMotor")) {
     		return talonTwo.getBusVoltage();
     	} else {
     		return -1;
