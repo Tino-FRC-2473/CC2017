@@ -1,7 +1,6 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>CC2017</name>
+	<name>Test</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -17,23 +16,3 @@
 		<nature>edu.wpi.first.wpilib.plugins.core.nature.FRCProjectNature</nature>
 	</natures>
 </projectDescription>
-=======
-<?xml version="1.0" encoding="UTF-8"?>
-<projectDescription>
-	<name>CC2017</name>
-	<comment></comment>
-	<projects>
-	</projects>
-	<buildSpec>
-		<buildCommand>
-			<name>org.eclipse.jdt.core.javabuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-	</buildSpec>
-	<natures>
-		<nature>org.eclipse.jdt.core.javanature</nature>
-		<nature>edu.wpi.first.wpilib.plugins.core.nature.FRCProjectNature</nature>
-	</natures>
-</projectDescription>
->>>>>>> f750d4f708a22db758bda8889dbfb1a8d0af2fa8
