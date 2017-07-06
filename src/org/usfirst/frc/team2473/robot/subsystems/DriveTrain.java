@@ -26,11 +26,18 @@ public class DriveTrain extends Subsystem {
         
     }
     
-    public void setPow(double pow){
+    public void goForward(double pow){
     	front_right.set(pow);
     	front_left.set(pow);
     	back_right.set(pow);
     	back_left.set(pow);
+    }
+    
+    public void goBackward(double pow){
+    	front_right.set(-pow);
+    	front_left.set(-pow);
+    	back_right.set(-pow);
+    	back_left.set(-pow);
     }
     
     public void turnRight(double pow){
@@ -47,7 +54,7 @@ public class DriveTrain extends Subsystem {
     	back_left.set(-pow);
     }
     
-    public void resetEnconders(){
+    public void resetEncoders(){
     	front_right.changeControlMode(TalonControlMode.Position);
     	front_left.changeControlMode(TalonControlMode.Position);
     	front_right.setPosition(0);
