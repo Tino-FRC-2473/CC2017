@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ClimberRun extends Command {
-
+	double voltage = 12;
     public ClimberRun() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -36,4 +36,13 @@ public class ClimberRun extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
     }
+    public boolean testMotor(){
+    	if((Robot.climber.getVoltage("Left motor")/voltage) == (Robot.climber.getPower("Left motor")) || 
+    			Robot.climber.getVoltage("Left motor")/voltage - (Robot.climber.getPower("Left motor")) <= (Robot.climber.getPower("Left motor"))*0.05 
+    			|| (Robot.climber.getPower("Left motor")) - Robot.climber.getVoltage("Left motor")/voltage <= (Robot.climber.getPower("Left motor"))*0.05){
+    		return true;
+    	}
+    	return false;
+    }
+    
 }
