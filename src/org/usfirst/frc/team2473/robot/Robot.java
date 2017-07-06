@@ -1,13 +1,15 @@
 
 package org.usfirst.frc.team2473.robot;
 
-import org.usfirst.frc.team2473.robot.subsystems.DriveTrain;
-
+import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import org.usfirst.frc.team2473.robot.commands.ExampleCommand;
+import org.usfirst.frc.team2473.robot.subsystems.DriveTrain;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -16,9 +18,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class Robot extends ThreadingRobot {
-	
-	public static DriveTrain train;
+public class Robot extends IterativeRobot {
+
+	public static final DriveTrain exampleSubsystem = new DriveTrain();
+	public static OI oi;
+
+	Command autonomousCommand;
+	SendableChooser<Command> chooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -26,15 +32,10 @@ public class Robot extends ThreadingRobot {
 	 */
 	@Override
 	public void robotInit() {
-		train = new DriveTrain();
-	}
-	
-	@Override
-	public void updateDeviceCalls(){
-		addDeviceCall("motor_fr", () -> train.getEncPosition("fr"));
-		addDeviceCall("motor_br", () -> train.getEncPosition("br"));
-		addDeviceCall("motor_fl", () -> train.getEncPosition("fl"));
-		addDeviceCall("motor_bl", () -> train.getEncPosition("bl"));
+		oi = new OI();
+		chooser.addDefault("Default Auto", new ExampleCommand());
+		// chooser.addObject("My Auto", new MyAutoCommand());
+		SmartDashboard.putData("Auto mode", chooser);
 	}
 
 	/**
@@ -65,7 +66,18 @@ public class Robot extends ThreadingRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		
+		autonomousCommand = chooser.getSelected();
+
+		/*
+		 * String autoSelected = SmartDashboard.getString("Auto Selector",
+		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
+		 * = new MyAutoCommand(); break; case "Default Auto": default:
+		 * autonomousCommand = new ExampleCommand(); break; }
+		 */
+
+		// schedule the autonomous command (example)
+		if (autonomousCommand != null)
+			autonomousCommand.start();
 	}
 
 	/**
@@ -78,6 +90,12 @@ public class Robot extends ThreadingRobot {
 
 	@Override
 	public void teleopInit() {
+		// This makes sure that the autonomous stops running when
+		// teleop starts running. If you want the autonomous to
+		// continue until interrupted by another command, remove
+		// this line or comment it out.
+		if (autonomousCommand != null)
+			autonomousCommand.cancel();
 	}
 
 	/**

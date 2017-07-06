@@ -11,6 +11,4 @@ public class RobotMap {
 	public static final int FRONT_LEFT = 0;
 	public static final int BACK_RIGHT = 0;
 	public static final int BACK_LEFT = 0;
-	public static final int GYRO = 0;
-	public static final int SERVO = 0;
 }
