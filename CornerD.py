@@ -19,9 +19,9 @@ CORNERDETECT = 90
 CORNERBUFFER = 10
 
 #Target: approx degree of corner
-TARGET = 160
+TARGET = 315
 #angle buffer of search either way
-TARGETBUFFER = 10
+TARGETBUFFER = 179
 
 #For basic use GRAPHXY,CORNERST=true, rest=false
 GRAPHXY = True
@@ -30,7 +30,7 @@ GRAPHST = False
 #Graph Derivative
 GRAPHD = False
 #CornerST is current method
-CORNERST = True
+CORNERST = False
 
 xd = []
 yd = []
