@@ -1,4 +1,5 @@
 from sweeppy import Sweep
+import matplotlib.pyplot as plt
 import itertools
 
 angle = []
@@ -48,16 +49,18 @@ with Sweep('/dev/ttyUSB0') as sweep:
 
 index = 0
 
+plt.
+
 for i, dist in enumerate(distance):
         if dist == barDistance:
                 index = i
 
 barAngle = angle[index]
 
-for i, ang in enumerate(angle):
-        angle[i] = angle[i] - barAngle
-        if angle[i] < 0:
-                angle[i] = angle[i] + 360
+#for i, ang in enumerate(angle):
+#        angle[i] = angle[i] - barAngle
+#        if angle[i] < 0:
+#                angle[i] = angle[i] + 360
 
 
 for i in angle:

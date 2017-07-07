@@ -10,23 +10,23 @@ import itertools
 MODE = False
 
 #Smooth on X Y Graph
-XYSMOOTH = 0
+XYSMOOTH = 3
 #Smooth on Derivative
 DSMOOTH = 1
 #Angle of corner we want to detect(for boiler corner set to 45)
-CORNERDETECT = 90
+CORNERDETECT = 45
 #Buffer we allow for corner so if cornerdetect=45 cornerbuffer=5 we look for 40-50 deg
 CORNERBUFFER = 10
 
 #Target: approx degree of corner
-TARGET = 315
+TARGET =315
 #angle buffer of search either way
 TARGETBUFFER = 179
 
 #For basic use GRAPHXY,CORNERST=true, rest=false
 GRAPHXY = True
 #Graph Slope Change Totals
-GRAPHST = False
+GRAPHST = True
 #Graph Derivative
 GRAPHD = False
 #CornerST is current method
@@ -249,6 +249,7 @@ if GRAPHST:plt.plot(xSlope, slopeTotals, 'r-', label='raw')
 
 plt.xlabel('X')
 plt.ylabel('Y')
+plt.show()
 
 back = 38.1 #distance between lidar to back of robot in cm
 side = 38.1 #disance between lidar to side of robot in cm
@@ -264,9 +265,9 @@ def aligned(direction, corner_distance):
 		y= (42/(2**.5)*in_to_cm)-back #aligned y-position of lidar
 		x = (162*in_to_cm)-side_diff #aligned x-position of lidar
 		angle = math.degrees(math.atan(y/x)) #aligned angle
-		print (angle)
+		print (cornerX[0])
 		distance = (x**2 + y**2)**0.5 #aligned distance
-		print (distance)
+		print (cornerY[0])
 		if (blue):
 				return isclose(direction, 270+angle, abs_tol=0.0001) and isclose(corner_distance, distance, abs_tol=0.0001)
 		else:
