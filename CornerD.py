@@ -4,6 +4,8 @@ import math
 from sweeppy import Sweep
 import itertools
 
+#To view entire unrotated scan set TARGET=315, TARGETBUFFER=179
+
 #True->use LiDAR, False->use text files
 MODE = False
 
