@@ -16,7 +16,7 @@ DSMOOTH = 1
 #Angle of corner we want to detect(for boiler corner set to 45)
 CORNERDETECT = 90
 #Buffer we allow for corner so if cornerdetect=45 cornerbuffer=5 we look for 40-50 deg
-CORNERBUFFER = 20
+CORNERBUFFER = 10
 
 #Target: approx degree of corner
 TARGET = 160
@@ -27,11 +27,10 @@ TARGETBUFFER = 10
 GRAPHXY = True
 #Graph Slope Change Totals
 GRAPHST = False
+#Graph Derivative
 GRAPHD = False
-GRAPH2D = False
 #CornerST is current method
 CORNERST = True
-CORNER2D = False
 
 xd = []
 yd = []
@@ -196,35 +195,6 @@ if(DSMOOTH == 0):
 if GRAPHD:
 	plt.plot(dist, cartD, 'r-', label='raw')
 	plt.plot(dist, sD, 'b-', label='smooth')
-
-DSD = []
-distCSD = []
-
-for i in range(1,length):
-	distCSD.append((dist[i]+dist[i-1])/2)
-	cSD = float(sD[i]-sD[i-1])
-	dD = float(dist[i]-dist[i-1])
-	DSD.append(cSD/dD)
-
-if GRAPH2D:plt.plot(distCSD,DSD,'r-',label='second')
-
-
-mx = 0
-mxPt = 0
-for i in range(len(DSD)):
-	if(abs(DSD[i])>mx):
-		mx = abs(DSD[i])
-		mxPt = distCSD[i]
-
-cIndex = 0
-
-
-for i in range(len(dist)):
-	if(dist[i]>mxPt):
-		cIndex = i
-		break
-
-if CORNER2D:plt.scatter(xdata[cIndex],ydata[cIndex])
 
 slopeTotals = []
 sign = (sD[1]-sD[0])>0
