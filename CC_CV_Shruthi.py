@@ -1,13 +1,29 @@
 import numpy as np
 import cv2
-from math import *
+import math
 
 #find screenWidth: getImage then getWidth
 #find midX, midY: getImage then get center point
 #find pegX, pegY: get centers of rectangles, average points
 
-CONSTANT = 5; # use real calibration
+CONSTANT = 0.1; # use real calibration
+FOV = 70.42 # degrees
 camera = cv2.VideoCapture(0)
+
+def calcDistance(rectHeight, caliConstant) :
+	#hd=k
+	if(rectHeight > 0):
+		return (caliConstant / rectHeight)
+
+def calcAngle(fov, screenWidth, midX, midY, pegX, pegY) :
+	bisectAngle = FOV / 2.0 #bisect the field of view angle
+	halfScreen = screenWidth / 2.0
+	vertLength = halfScreen / math.tan(bisectAngle)
+
+	distFromCentToPeg = math.sqrt(((pegX-midX) ** 2) + ((pegY - midY) ** 2))
+	bearing = math.atan(vertLength / distFromCentToPeg) * (180/math.pi)
+
+	return bearing
 
 while True:
 	_, frame = camera.read()
@@ -35,60 +51,55 @@ while True:
 	maxArea = 0
 	secondArea = 0
 
-	x1 = 0
-	y1 = 0
-	w1 = 0
-	h1 = 0
-	x2 = 0
-	y2 = 0
-	w2 = 0
-	h2 = 0
+	x1, y1, w1, h1 = 0, 0, 0, 0
+	x2, y2, w2, h2 = 0, 0, 0, 0
 
-	for c in contours :
-		x, y, w, h = cv2.boundingRect(c)
+	indexMax = 0
+	for c in range(0, len(contours)) :
+		x, y, w, h = cv2.boundingRect(contours[c])
 		if(w*h >= maxArea):
-			secondArea = maxArea
+			indexMax = c
 			maxArea = w * h
-			x2 = x1
-			y2 = y1
-			w2 = w1
-			h2 = h1
-
 			x1 = x
 			y1 = y
 			w1 = w
 			h1 = h
 
+	for c in range(0, len(contours)) :
+		x, y, w, h = cv2.boundingRect(contours[c])
+		if(w*h >= secondArea and c != indexMax):
+			# bRX = x + w
+			# bRY = y + h
+			#
+			# cX = (x+)
 
+			# if((x >= x1 and  x <= x1 + w1) or (bRX >= x1 and bRX <= x1))
+			secondArea = w * h
+			x2 = x
+			y2 = y
+			w2 = w
+			h2 = h
 
 	cv2.rectangle(frame, (x1, y1), (x1+w1, y1+h1), (255, 0, 0), thickness=5)
 	cv2.rectangle(frame, (x2, y2), (x2+w2, y2+h2), (0, 255, 0), thickness=6)
-	pegx = (x1 + x2)/2
-	pegy = (y1 + y2)/2
+	pegx = (x1 + x2)/2.0
+	pegy = (y1 + y2 + h2)/2.0
 
-	#calcDistance()
+	dist1 = calcDistance(h1, CONSTANT)
+	dist2 = calcDistance(h2, CONSTANT)
+
+	#print "dist1:" + str(dist1)
+	#print "dist2:" + str(dist2)
+
+	distance = (dist1 + dist2) / 2.0
+
+	SCREENHEIGHT, SCREENWIDTH = frame.shape[:2];
+
+	angle = calcAngle(FOV, SCREENWIDTH, 0, 0, pegx, pegy)
+
+	print "DISTANCE: " + str(distance)
+	print "ANGLE: " + str(angle)
 
 	cv2.imshow("Mask", mask)
 	cv2.imshow("Frame", frame)
 	cv2.waitKey(1)
-
-
-
-#define functions to calculate distance and bearing based on given inputs
-
-# def calcDistance(rectHeight, caliConstant) :
-# 	# hd = k
-# 	return (caliConstant / rectHeight)
-
-
-# def calcAngle(fov, screenWidth, midX, midY, pegX, pegY):
-# 	# bisect fov angle
-# 	bisectAngle = fov / 2.0
-# 	halfWidth = screenWidth / 2.0
-# 	vertLength =  halfWidth / math.tan(bisectAngle)
-# 	math.tan
-#
-# 	distFromCentToPeg = math.sqrt(((pegX-midX)**2 + ((pegY-midY)**2)
-# 	bearing = math.atan(vertLength / distFromCentToPeg)
-#
-# 	return bearing
