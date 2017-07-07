@@ -12,7 +12,7 @@ MODE = False
 #Smooth on X Y Graph
 XYSMOOTH = 0
 #Smooth on Derivative
-DSMOOTH = 0
+DSMOOTH = 1
 #Angle of corner we want to detect(for boiler corner set to 45)
 CORNERDETECT = 90
 #Buffer we allow for corner so if cornerdetect=45 cornerbuffer=5 we look for 40-50 deg
