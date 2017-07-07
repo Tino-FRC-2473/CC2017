@@ -7,10 +7,10 @@ import itertools
 #To view entire unrotated scan set TARGET=315, TARGETBUFFER=179
 
 #True->use LiDAR, False->use text files
-MODE = False
+MODE = True
 
 #Smooth on X Y Graph
-XYSMOOTH = 3
+XYSMOOTH = 0
 #Smooth on Derivative
 DSMOOTH = 1
 #Angle of corner we want to detect(for boiler corner set to 45)
@@ -26,7 +26,7 @@ TARGETBUFFER = 179
 #For basic use GRAPHXY,CORNERST=true, rest=false
 GRAPHXY = True
 #Graph Slope Change Totals
-GRAPHST = True
+GRAPHST = False
 #Graph Derivative
 GRAPHD = False
 #CornerST is current method
@@ -133,7 +133,7 @@ for i in range(smooth,l-smooth):
 
 l = len(xdata)
 
-if GRAPHXY:plt.plot(xdata, ydata, 'r-', label='raw')
+if GRAPHXY:plt.scatter(xd, yd)
 
 cartD = []
 d = 0;

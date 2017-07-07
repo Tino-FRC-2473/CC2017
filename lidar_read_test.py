@@ -1,6 +1,7 @@
 from sweeppy import Sweep
 import matplotlib.pyplot as plt
 import itertools
+import numpy as np
 
 angle = []
 distance = []
@@ -22,9 +23,9 @@ with Sweep('/dev/ttyUSB0') as sweep:
                 for dataSample in s:
                     ang = dataSample[0]/1000.0
 
-                    if(within(angle)):
-                        angle.append(ang)
-                        distance.append(dataSample[1])
+                    
+                    angle.append(ang)
+                    distance.append(dataSample[1])
                 break
             first = False
 
@@ -40,16 +41,13 @@ for i in range(l):
         xd.append(distance[i]*np.cos(angle[i]*np.pi/180.0))
         yd.append(distance[i]*np.sin(angle[i]*np.pi/180.0))
 
-plt.plot(xdata, ydata, 'r-', label='raw')
-plt.show()
-
 index = 0
 
-for i, dist in enumerate(distance):
-        if dist == barDistance:
-                index = i
+# for i, dist in enumerate(distance):
+#         if dist == barDistance:
+#                 index = i
 
-barAngle = angle[index]
+# barAngle = angle[index]
 
 #for i, ang in enumerate(angle):
 #        angle[i] = angle[i] - barAngle
@@ -61,9 +59,14 @@ for i in angle:
         angleFile.write(str(float(i)))
         angleFile.write("\n")
 
-for i in distance:
+for i in distance:          
         distanceFile.write(str(float(i)))
         distanceFile.write("\n")
 
 angleFile.close()
 distanceFile.close()
+
+plt.scatter(xd, yd)
+plt.axhline(0)
+plt.axvline(0)
+plt.show()
