@@ -1,6 +1,8 @@
-package org.usfirst.frc.team2473.robot;
+package org.usfirst.frc.team2473.framework.components;
 
 import java.util.ArrayList;
+
+import org.usfirst.frc.team2473.framework.trackers.ExternalDevice;
 
 import com.ctre.CANTalon;
 

@@ -1,12 +1,12 @@
-package org.usfirst.frc.team2473.robot;
+package org.usfirst.frc.team2473.framework.threading;
 
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class ThreadSafeBoolean{
-	private volatile boolean value;
+public class ThreadSafeDouble {
+	private volatile double value;
 	private ReentrantReadWriteLock lock = new ReentrantReadWriteLock(true);
 
-	public boolean getValue() {
+	public double getValue() {
 		try {
 			lock.readLock().lock();
 			return value;
@@ -16,7 +16,7 @@ public class ThreadSafeBoolean{
 
 	}
 
-	public void setValue(boolean newValue) {
+	public void setValue(double newValue) {
 		try {
 			lock.writeLock().lock();
 			value = newValue;

@@ -1,8 +1,10 @@
-package org.usfirst.frc.team2473.robot;
+package org.usfirst.frc.team2473.framework.trackers;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
+
+import org.usfirst.frc.team2473.framework.threading.StringSupplier;
 
 public class DeviceTracker {
 	private String key;
@@ -57,15 +59,15 @@ public class DeviceTracker {
 		else throw new NullPointerException("No message getter set");
 	}
 	
-	public void setEvokeNumeric(double numeric) {
-		evokeNumeric = () -> numeric;
+	public void setEvokeNumeric(DoubleSupplier numeric) {
+		evokeNumeric = numeric;
 	}
 	
-	public void setEvokeConditional(boolean conditional) {
-		evokeConditional = () -> conditional;
+	public void setEvokeConditional(BooleanSupplier conditional) {
+		evokeConditional = conditional;
 	}
 	
-	public void setEvokeMessage(String message) {
-		evokeMessage = () -> message;
+	public void setEvokeMessage(StringSupplier message) {
+		evokeMessage = message;
 	}
 }

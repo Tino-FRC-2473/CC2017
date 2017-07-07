@@ -1,9 +1,14 @@
-package org.usfirst.frc.team2473.robot;
+package org.usfirst.frc.team2473.framework.readers;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
+
+import org.usfirst.frc.team2473.framework.Database;
+import org.usfirst.frc.team2473.framework.components.Trackers;
+import org.usfirst.frc.team2473.framework.threading.StringSupplier;
+import org.usfirst.frc.team2473.framework.trackers.DeviceTracker;
 
 /* The purpose of the following class is
  * to read all the values of Devices

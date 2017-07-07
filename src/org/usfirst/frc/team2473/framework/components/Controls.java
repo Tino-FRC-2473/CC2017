@@ -1,8 +1,10 @@
-package org.usfirst.frc.team2473.robot;
+package org.usfirst.frc.team2473.framework.components;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.usfirst.frc.team2473.framework.threading.ThreadSafeInternalButton;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -12,7 +14,7 @@ public class Controls {
 	private ArrayList<Joystick> joysticks;
 	private Map<String, ThreadSafeInternalButton> buttons;
 
-	enum ButtonAction {
+	public enum ButtonAction {
 		PRESSED, RELEASED, TOGGLE_PRESSED, CANCEL_PRESSED, HELD
 	}
 	

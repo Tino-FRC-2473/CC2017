@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2473.robot;
+package org.usfirst.frc.team2473.framework.trackers;
 
 public class ExternalDevice {
 	private String name;
