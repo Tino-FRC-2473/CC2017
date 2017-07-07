@@ -3,8 +3,14 @@ package org.usfirst.frc.team2473.robot;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.usfirst.frc.team2473.robot.Controls.ButtonAction;
-import org.usfirst.frc.team2473.robot.TalonTracker.Target;
+import org.usfirst.frc.team2473.framework.components.Controls;
+import org.usfirst.frc.team2473.framework.components.Trackers;
+import org.usfirst.frc.team2473.framework.components.Controls.ButtonAction;
+import org.usfirst.frc.team2473.framework.readers.ControlsReader;
+import org.usfirst.frc.team2473.framework.readers.DeviceReader;
+import org.usfirst.frc.team2473.framework.trackers.EncoderTracker;
+import org.usfirst.frc.team2473.framework.trackers.TalonTracker;
+import org.usfirst.frc.team2473.framework.trackers.TalonTracker.Target;
 import org.usfirst.frc.team2473.robot.commands.ShooterCommand;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
