@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team2473.robot.commands.ExampleCommand;
-import org.usfirst.frc.team2473.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team2473.robot.commands.DriveStraight;
+import org.usfirst.frc.team2473.robot.subsystems.DriveTrain;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -20,7 +20,7 @@ import org.usfirst.frc.team2473.robot.subsystems.ExampleSubsystem;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+	public static final DriveTrain driveTrain = new DriveTrain();
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -33,7 +33,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-		chooser.addDefault("Default Auto", new ExampleCommand());
+		chooser.addDefault("Default Auto", new DriveStraight());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 	}
@@ -72,7 +72,7 @@ public class Robot extends IterativeRobot {
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
+		 * autonomousCommand = new DriveStraight(); break; }
 		 */
 
 		// schedule the autonomous command (example)
