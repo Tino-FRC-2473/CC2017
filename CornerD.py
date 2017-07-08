@@ -32,8 +32,8 @@ LIDAR_X = 4*CM_PER_IN; # IN CM, CENTER OF ROBOT TO CENTER OF LIDAR ON Y LINE
 LIDAR_POSITION = 5
 IDEAL_Y = ROBOT_IDEAL_Y - LIDAR_POSITION; # CM Y DISTANCE FROM THE CORNER THAT THE LIDAR SHOULD BE ALIGNED TO
 
-EXPECTED_THETA = math.degrees(math.atan2(LIDAR_X, IDEAL_Y))
-THETA_MARGIN = 90
+EXPECTED_THETA = (math.degrees(math.atan2(LIDAR_X, IDEAL_Y))-BEARING_TO_WALL)%360
+THETA_MARGIN = 30
 
 def within(a, startAngle, endAngle):
         if(startAngle<endAngle):
@@ -90,7 +90,7 @@ angle = []
 distance = []
 
 for i in range(len(originalAngle)):
-        if(within(originalAngle[i], EXPECTED_THETA-THETA_MARGIN, EXPECTED_THETA+THETA_MARGIN)):
+        if(within(originalAngle[i], (EXPECTED_THETA-THETA_MARGIN)%360, (EXPECTED_THETA+THETA_MARGIN)%360)):
                 angle.append(originalAngle[i])
                 distance.append(originalDistance[i])
 
