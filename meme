@@ -1,0 +1,25 @@
+#REINSERT LOW BOILER
+print(fullBoilerY[0])
+
+def getDistance(x1, y1, x2, y2):
+        return np.sqrt( (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1) )
+
+fullDistances = []
+for i in range(0, len(fullBoilerX)):
+        fullDistances.append(getDistance(pX, pY, fullBoilerX[i], fullBoilerY[i]))
+
+LOW_PERCENTILE = 3
+HIGH_PERCENTILE = 40
+
+lowDistance = np.percentile(fullDistances, LOW_PERCENTILE)
+highDistance = np.percentile(fullDistances, HIGH_PERCENTILE)
+if(not NO_OUTPUT and DEBUG):
+        print("\nDISTANCE PERCENTILES\n  " + str(LOW_PERCENTILE) + "%: " + str(lowDistance) + "\n  " + str(HIGH_PERCENTILE) + "%: " + str(highDistance))
+
+for i in range(len(fullBoilerX)):
+        if(fullDistances[i] >= lowDistance and fullDistances[i] <= highDistance):
+                boilerX.append(fullBoilerX[i])
+                boilerY.append(fullBoilerY[i])
+
+if(not NO_OUTPUT and DEBUG):
+        print("\n# of cut boiler pts: " + str(len(boilerX)))

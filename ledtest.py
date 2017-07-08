@@ -1,8 +1,8 @@
 import RPi.GPIO as GPIO
 import time
 
-red = 21
-white = 20
+red = 3
+white = 2
 
 GPIO.setmode(GPIO.BCM)
 

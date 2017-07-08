@@ -23,10 +23,10 @@ LIDAR_D_SMALL_CUTOFF = 1
 LIDAR_D_BIG_CUTOFF = 4500
 
 # ANGLE LIDAR IS FACING RELATIVE TO THE ALLIANCE WALL
-BEARING_TO_WALL = 87;
+BEARING_TO_WALL = 88;
 
 # ALL MEASUREMENTS TO BE IN CM
-LIDAR_DISTANCE = 5*IN_TO_CM;                # FULL FIELD AXIS DISTANCE:     FROM LIDAR CENTER TO ALLIANCE WALL
+LIDAR_DISTANCE = 8*IN_TO_CM;                # FULL FIELD AXIS DISTANCE:     FROM LIDAR CENTER TO ALLIANCE WALL
 ROBOT_IDEAL_Y = 13.5*FT_TO_IN*IN_TO_CM;     # ALLIANCE WALL AXIS DISTANCE:  FROM ROBOT CENTER TO BOILER CORNER
 LIDAR_POSITION = 0                          # ALLIANCE WALL AXIS DISTANCE:  FROM LIDAR CENETER TO ROBOT CENETER
 
@@ -123,7 +123,7 @@ for i in range(1, len(originalAngle)):
         if (np.absolute(xd[i]) < 20 and yd[i] < -0.15*IDEAL_Y and yd[i] > -0.8*IDEAL_Y):
                 wallAngle.append(originalAngle[i])
                 wallDistance.append(originalDistance[i])
-        elif (xd[i] < LIDAR_DISTANCE/2.0 and within(originalAngle[i]%360, (EXPECTED_THETA-18.5)%360, (EXPECTED_THETA-2.5)%360)):
+        elif (xd[i] < LIDAR_DISTANCE/2.0 and within(originalAngle[i]%360, (EXPECTED_THETA-15)%360, (EXPECTED_THETA-2.5)%360)):
                 boilerAngle.append(originalAngle[i])
                 boilerDistance.append(originalDistance[i])
 
@@ -149,6 +149,10 @@ for i in range(len(boilerDistance)):
 # REMOVE THE LOW BOILER NOISE TO KEEP ONLY THE OUTER WALLS OF THE BOILER
 
 # OUTER POINT TO MEASURE THE DISTANCE TO EACH POINT ON THE BOILER 
+
+boilerX = []
+boilerY = []
+
 pX, pY = -IDEAL_Y/2.0, 0
 
 if(not NO_OUTPUT and DEBUG):
@@ -162,34 +166,29 @@ if(not NO_OUTPUT and DEBUG):
         plt.axvline(0)
         plt.show()
 
-print(fullBoilerY[0])
+                                #REINSERT LOW BOILER
+
+for i in range(len(fullBoilerX)):
+        boilerX.append(fullBoilerX[i])
+        boilerY.append(fullBoilerY[i])
+
 
 def getDistance(x1, y1, x2, y2):
         return np.sqrt( (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1) )
 
-fullDistances = []
-for i in range(0, len(fullBoilerX)):
-        fullDistances.append(getDistance(pX, pY, fullBoilerX[i], fullBoilerY[i]))
+maxDist = 0
+maxIdx = 0
 
-LOW_PERCENTILE = 3
-HIGH_PERCENTILE = 40
+for i in range(len(boilerX)-1):
+        thisDist = getDistance(boilerX[i], boilerY[i], boilerX[i+1], boilerY[i+1])
+        if(thisDist > maxDist):
+                maxIdx = i
+                maxDist = thisDist
 
-lowDistance = np.percentile(fullDistances, LOW_PERCENTILE)
-highDistance = np.percentile(fullDistances, HIGH_PERCENTILE)
-if(not NO_OUTPUT and DEBUG):
-        print("\nDISTANCE PERCENTILES\n  " + str(LOW_PERCENTILE) + "%: " + str(lowDistance) + "\n  " + str(HIGH_PERCENTILE) + "%: " + str(highDistance))
-
-boilerX = []
-boilerY = []
-for i in range(len(fullBoilerX)):
-        if(fullDistances[i] >= lowDistance and fullDistances[i] <= highDistance):
-                boilerX.append(fullBoilerX[i])
-                boilerY.append(fullBoilerY[i])
-
-if(not NO_OUTPUT and DEBUG):
-        print("\n# of cut boiler pts: " + str(len(boilerX)))
-
-
+boilerX = boilerX[maxIdx+2:]
+boilerY = boilerY[maxIdx+2:]
+#boilerX = [len(boilerX)/2:]
+#boilerY = [len(boilerY)/2:]
 
 # CORNER DETECTION
 
@@ -198,7 +197,7 @@ if(not NO_OUTPUT and DEBUG2):
         print("\nBoiler Slope: " + str(boilerSlope))
         print("Boiler Intercept: " + str(boilerIntercept))
 
-
+                                
 
 x = LIDAR_DISTANCE
 y = boilerSlope*x+boilerIntercept
@@ -214,6 +213,7 @@ if(not NO_OUTPUT and DEBUG):
         plt.title("With Corner")
         plt.scatter(wallX, wallY, color="green")
         plt.scatter(boilerX, boilerY, color="red")
+        plt.scatter(LIDAR_DISTANCE, -13.5*FT_TO_IN*IN_TO_CM, color="yellow")
         plt.scatter(x, y, color="blue")
         plt.axhline(0)
         plt.axvline(0)
