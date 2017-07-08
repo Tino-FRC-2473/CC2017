@@ -1,0 +1,12 @@
+Measured: 88.7391665661
+Expected: 91.44
+% Error: 2.95366735988
+
+Measured: 86.9445487875
+Expected: 91.44
+% Error: 4.91628522799
+
+Measured: 87.1941632051
+Expected: 91.44
+% Error: 4.64330358145
+
