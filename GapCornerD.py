@@ -1,12 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import math
-#from sweeppy import Sweep
+from sweeppy import Sweep
 import itertools
 
 # TRUE=USING LIDAR, FALSE=USING TEXT FILES
 # savedata.py saves data to "angle.txt" and "distance.txt"
-USING_LIDAR = False
+USING_LIDAR = True
 # SET TO TRUE DURING COMPETITION TO SUPPRESS ALL DEBUG MESSAGES TO SAVE TIME
 NO_OUTPUT = False
 
@@ -45,27 +45,27 @@ originalAngle = []
 originalDistance = []
 
 if(USING_LIDAR):
-    with Sweep('/dev/ttyUSB0') as sweep:
-        sweep.set_motor_speed(1)
-        sweep.set_sample_rate(2000)
-        sweep.start_scanning()
+        with Sweep('/dev/ttyUSB0') as sweep:
+                sweep.set_motor_speed(1)
+                sweep.set_sample_rate(2000)
+                sweep.start_scanning()
 
-        first = True
-        for scan in itertools.islice(sweep.get_scans(),3):
-            if(not first):
-                s = scan[0]
-                for dataSample in s:
-                    distanceReading = dataSample[1]
+                first = True
+                for scan in itertools.islice(sweep.get_scans(),3):
+                    if(not first):
+                        s = scan[0]
+                        for dataSample in s:
+                            distanceReading = dataSample[1]
 
-                    if(distanceReading > LIDAR_D_SMALL_CUTOFF and distanceReading < LIDAR_D_BIG_CUTOFF):
-                        originalAngle.append((dataSample[0]/1000.0 - BEARING_TO_WALL)%360)
-                        originalDistance.append(distanceReading)
-                break
-            first = False
+                            if(distanceReading > LIDAR_D_SMALL_CUTOFF and distanceReading < LIDAR_D_BIG_CUTOFF):
+                                originalAngle.append((dataSample[0]/1000.0 - BEARING_TO_WALL)%360)
+                                originalDistance.append(distanceReading)
+                        break
+                    first = False
 
-        sweep.stop_scanning()
-        if(not NO_OUTPUT and DEBUG2):
-                print("data collecting done")
+                sweep.stop_scanning()
+                if(not NO_OUTPUT and DEBUG2):
+                        print("data collecting done")
 else: 
     goodInd = []
     fx = open("angle.txt","r")
@@ -162,6 +162,8 @@ if(not NO_OUTPUT and DEBUG):
         plt.axvline(0)
         plt.show()
 
+print(fullBoilerY[0])
+
 def getDistance(x1, y1, x2, y2):
         return np.sqrt( (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1) )
 
@@ -198,11 +200,11 @@ if(not NO_OUTPUT and DEBUG2):
         print("INTERCEPTS\n  Wall: " + str(wallIntercept) + "\n  Boiler:" + str(boilerIntercept))
 
 x = (boilerIntercept - wallIntercept)/(wallSlope-boilerSlope)
-y = wallSlope*x + wallIntercept
+y = (wallSlope*x + wallIntercept)
 
 if(not NO_OUTPUT and DEBUG):
         print("\nCorner:")
-        print(x, y)
+        print(x / IN_TO_CM / FT_TO_IN, y / IN_TO_CM / FT_TO_IN)
         plt.title("With Corner")
         plt.scatter(wallX, wallY, color="green")
         plt.scatter(boilerX, boilerY, color="red")
