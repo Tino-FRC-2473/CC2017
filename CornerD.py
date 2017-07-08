@@ -5,7 +5,7 @@ from sweeppy import Sweep
 import itertools
 
 #Smooth on XY Graph
-XYSMOOTH = 0
+XYSMOOTH = 1
 #Smooth on Derivative
 DSMOOTH = 1
 
@@ -36,9 +36,9 @@ EXPECTED_THETA = 360 - math.degrees(math.atan2(IDEAL_Y, LIDAR_DISTANCE)) + 10
 THETA_MARGIN = 20
 print(EXPECTED_THETA)
 #Angle of corner we want to detect(for boiler corner set to 45)
-CORNERDETECT = 135
+CORNERDETECT = 120
 #Buffer we allow for corner so if cornerdetect=45 cornerbuffer=5 we look for 40-50 deg
-CORNERBUFFER = 45
+CORNERBUFFER = 10
 
 def within(a, startAngle, endAngle):
         if(startAngle<endAngle):
@@ -257,7 +257,7 @@ cornerX = []
 cornerY = []
 
 for i in range(0,len(slopeTotals)):
-        if(abs(slopeTotals[i]-EXPECTED_THETA)<THETA_MARGIN):
+        if(abs(slopeTotals[i]-CORNERDETECT)<CORNERBUFFER):
                 cornerX.append(smoothx[xSlope[i]])
                 cornerY.append(smoothy[xSlope[i]])
 
