@@ -14,7 +14,7 @@ XYSMOOTH = 0
 #Smooth on Derivative
 DSMOOTH = 1
 #Angle of corner we want to detect(for boiler corner set to 45)
-CORNERDETECT = 45
+CORNERDETECT = 135
 #Buffer we allow for corner so if cornerdetect=45 cornerbuffer=5 we look for 40-50 deg
 CORNERBUFFER = 10
 
@@ -279,3 +279,21 @@ if(blue):
         print(aligned(270 + math.degrees(math.atan(cornerY[0]/cornerX[0])),(cornerX[0]**2 + cornerY[0]**2)**0.5))
 else:
         print(aligned(90 - math.degrees(math.atan(cornerY[0]/cornerX[0])),(cornerX[0]**2 + cornerY[0]**2)**0.5))
+
+ang = math.degrees(math.atan(cornerY[0]/cornerX[0]))
+if ang < 0:
+        ang = ang + 360
+dist = (cornerX[0]**2 + cornerY[0]**2)**0.5
+print(ang)
+print(dist)
+
+cornerPlotX = []
+cornerPlotY = []
+
+for i, a in enumerate(angle):
+        if (a >= (ang-20)) and (a <= (ang+20)):
+                   cornerPlotX.append(distance[i]*np.cos(angle[i]*np.pi/180.0))
+                   cornerPlotY.append(distance[i]*np.sin(angle[i]*np.pi/180.0))
+
+plt.scatter(cornerPlotX,cornerPlotY)
+plt.show()                   
