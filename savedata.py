@@ -11,7 +11,7 @@ angle = []
 distance = []
 
 with Sweep('/dev/ttyUSB0') as sweep:
-    sweep.set_motor_speed(2)
+    sweep.set_motor_speed(1)
     sweep.set_sample_rate(1000)
     sweep.start_scanning()
 

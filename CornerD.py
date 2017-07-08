@@ -7,7 +7,7 @@ import itertools
 USING_LIDAR = True;
 
 #Smooth on XY Graph
-XYSMOOTH = 1
+XYSMOOTH = 0
 #Smooth on Derivative
 DSMOOTH = 1
 
@@ -26,7 +26,7 @@ LIDAR_D_SMALL_CUTOFF = 1
 LIDAR_D_BIG_CUTOFF = 6000
 
 BEARING_TO_WALL = 90;
-LIDAR_DISTANCE = 6*CM_PER_IN; # IN CM, CENTER OF LIDAR TO ALLIANCE WALL
+LIDAR_DISTANCE = 5*CM_PER_IN; # IN CM, CENTER OF LIDAR TO ALLIANCE WALL
 
 ROBOT_IDEAL_Y = 13.5*IN_PER_FT*CM_PER_IN; # IN CM, CENTER OF THE ROBOT TO THE CORNER
 LIDAR_X = 4*CM_PER_IN; # IN CM, CENTER OF ROBOT TO CENTER OF LIDAR ON Y LINE
@@ -34,7 +34,7 @@ LIDAR_X = 4*CM_PER_IN; # IN CM, CENTER OF ROBOT TO CENTER OF LIDAR ON Y LINE
 LIDAR_POSITION = 0
 IDEAL_Y = ROBOT_IDEAL_Y - LIDAR_POSITION; # CM Y DISTANCE FROM THE CORNER THAT THE LIDAR SHOULD BE ALIGNED TO
 
-EXPECTED_THETA = 360 - math.degrees(math.atan2(IDEAL_Y, LIDAR_DISTANCE)) + 5
+EXPECTED_THETA = 360 - math.degrees(math.atan2(IDEAL_Y, LIDAR_DISTANCE))
 THETA_MARGIN = 10
 print("THETA", EXPECTED_THETA)
 
@@ -61,7 +61,6 @@ if(USING_LIDAR):
         sweep.start_scanning()
 
         first = True
-        print("start scan")
         for scan in itertools.islice(sweep.get_scans(),3):
             if(not first):
                 s = scan[0]
