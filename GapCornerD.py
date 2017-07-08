@@ -1,10 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import math
-#from sweeppy import Sweep
+from sweeppy import Sweep
 import itertools
 
-USING_LIDAR = False;
+USING_LIDAR = True;
 
 #Smooth on XY Graph
 XYSMOOTH = 0
@@ -130,7 +130,7 @@ betweenDistances = []
 for i in range(1, len(originalAngle)):
         # thisDist = polarDist(originalDistance[i], originalAngle[i], originalDistance[i-1], originalAngle[i-1])
 
-        if(within(originalAngle[i]%360, (EXPECTED_THETA-THETA_MARGIN)%360, (EXPECTED_THETA+THETA_MARGIN)%360+45)
+        if(within(originalAngle[i]%360, (EXPECTED_THETA-THETA_MARGIN)%360, (EXPECTED_THETA+THETA_MARGIN)%360+65)
                 #and (len(betweenDistances) < 30 or thisDist > 10*sum(betweenDistances)/float(len(betweenDistances)) )
         ):
                 #betweenDistances.append(thisDist)
