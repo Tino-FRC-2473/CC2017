@@ -17,11 +17,11 @@ def writeCSV(arr):
 def getData(i):
         print(".")
         with open('scans.csv', 'a') as f:
-            f.write("NEW GETDATA")
+            #f.write("NEW GETDATA")
         it = 0.0
         for scan in i:
                 with open('scans.csv', 'a') as f:
-                    f.write("\nscan" + "\n")
+                    #f.write("\nscan" + "\n")
                 s = scan[0]
                 for dataSample in s:
                         ang = dataSample[0]/1000.0
