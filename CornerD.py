@@ -23,18 +23,19 @@ CM_PER_IN = 2.54;
 LIDAR_D_SMALL_CUTOFF = 1
 LIDAR_D_BIG_CUTOFF = 3000
 
-BEARING_TO_WALL = 0;
+BEARING_TO_WALL = 80;
 LIDAR_DISTANCE = 4; # IN CM, CENTER OF LIDAR TO ALLIANCE WALL
 
 ROBOT_IDEAL_X = 13*IN_PER_FT*CM_PER_IN; # IN CM, CENTER OF THE ROBOT TO THE CORNER
 LIDAR_Y = 4*CM_PER_IN; # IN CM, CENTER OF ROBOT TO CENTER OF LIDAR ON X LINE
 
-IDEAL_X = IDEAL_DISTANCE_CENTER - LIDAR_POSITION; # CM X DISTANCE FROM THE CORNER THAT THE LIDAR SHOULD BE ALIGNED TO
+LIDAR_POSITION = 5
+IDEAL_X = ROBOT_IDEAL_X - LIDAR_POSITION; # CM X DISTANCE FROM THE CORNER THAT THE LIDAR SHOULD BE ALIGNED TO
 
-EXPECTED_THETA = math.degrees(math.atan(IDEAL_X/LIDAR_Y))
-THETA_MARGIN = 20
+EXPECTED_THETA = math.degrees(math.atan2(IDEAL_X,LIDAR_Y))
+THETA_MARGIN = 30
 
-
+print(EXPECTED_THETA)
 
 # GET RAW LIDAR ANGLES AND DISTANCES
 
@@ -53,7 +54,7 @@ with Sweep('/dev/ttyUSB0') as sweep:
             for dataSample in s:
                 distanceReading = dataSample[1]
 
-                if(distanceReading > SMALL_CUTOFF and distanceReading < BIG_CUTOFF):
+                if(distanceReading > LIDAR_D_SMALL_CUTOFF and distanceReading < LIDAR_D_BIG_CUTOFF):
                     originalAngle.append(dataSample[0]/1000.0)
                     originalDistance.append(distanceReading)
             break
