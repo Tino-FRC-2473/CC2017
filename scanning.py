@@ -10,8 +10,7 @@ MOTOR_SPEED = 3
 
 def writeCSV(arr):
     with open('scans.csv', 'a') as csvfile:
-        spamwriter = csv.writer(csvfile, delimiter=' ',
-                                quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        spamwriter = csv.writer(csvfile, quoting=csv.QUOTE_MINIMAL)
         [str(i) for i in arr]
         spamwriter.writerow(arr)
 

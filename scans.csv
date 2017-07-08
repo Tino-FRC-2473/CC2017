@@ -1,2724 +1,4395 @@
 NEW GETDATA
 scan
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
 
 scan
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
 
 scan
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
 NEW GETDATA
 scan
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
 
 scan
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
 
 scan
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
 NEW GETDATA
 scan
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
 
 scan
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
 
 scan
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
 NEW GETDATA
 scan
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
 
 scan
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
 
 scan
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
 NEW GETDATA
 scan
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
 
 scan
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
 
 scan
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
-o c n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+NEW GETDATA
+scan
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+
+scan
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+
+scan
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+NEW GETDATA
+scan
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+
+scan
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+
+scan
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+NEW GETDATA
+scan
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+
+scan
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+
+scan
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
+o,c,n
