@@ -11,4 +11,6 @@ public class RobotMap {
 	public static final int FRONT_LEFT = 0;
 	public static final int BACK_RIGHT = 0;
 	public static final int BACK_LEFT = 0;
+	
+	public static final int PORT_NUMBER = 0; // TODO change to the actual port number
 }
