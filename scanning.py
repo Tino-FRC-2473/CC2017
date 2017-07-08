@@ -8,12 +8,21 @@ s = time.time()
 c = 0
 MOTOR_SPEED = 3
 
-def getData(i, f):
+def writeCSV(arr):
+    with open('scans.csv', 'a') as csvfile:
+        spamwriter = csv.writer(csvfile, delimiter=' ',
+                                quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        [str(i) for i in arr]
+        spamwriter.writerow(arr)
+
+def getData(i):
         print(".")
-        f.write("NEW GETDATA")
+        with open('scans.csv', 'a') as f:
+            f.write("NEW GETDATA")
         it = 0.0
         for scan in i:
-                f.write("\nscan" + "\n")
+                with open('scans.csv', 'a') as f:
+                    f.write("\nscan" + "\n")
                 s = scan[0]
                 for dataSample in s:
                         ang = dataSample[0]/1000.0
@@ -24,15 +33,12 @@ def getData(i, f):
                         arr.append(ang)
                         arr.append(dataSample[1])
                         
-                        writer = csv.writer(f, delimiter=' ', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-                        [str(i) for i in arr]
-                        writer.writerow(arr)
+                        writeCSV(arr)
 
                 it +=1
         
 def main():
         open('scans.csv', 'w').close()
-        f = open('scans.csv', 'a')
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
@@ -55,6 +61,6 @@ def main():
                         time.sleep(1)
                         c = time.time()-s
                         print(c)
-                        getData(itertools.islice(sweep.get_scans(), 3), f)
+                        getData(itertools.islice(sweep.get_scans(), 3))
 
 main()
