@@ -7,8 +7,6 @@ while(True):
     
 
 '''
-
-
 GPIO.add_event_detect(10, GPIO.BOTH)
 def my_callback():
     print("detect")
