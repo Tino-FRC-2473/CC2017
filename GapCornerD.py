@@ -1,18 +1,21 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import math
-#from sweeppy import Sweep
+from sweeppy import Sweep
 import itertools
 
-USING_LIDAR = False;
-DEBUG = True;
+USING_LIDAR = False
+NO_OUTPUT = True
+
+DEBUG = True
+DEBUG2 = False # High level debug messages that are very important
 
 #Smooth on XY Graph
-XYSMOOTH = 1
+XYSMOOTH = 0
 #Smooth on Derivative
 DSMOOTH = 1
 
-GRAPHXY = True
+GRAPHXY = False
 #Graph Slope Change Totals
 GRAPHST = True
 #Graph Derivative
@@ -24,7 +27,7 @@ IN_PER_FT = 12;
 CM_PER_IN = 2.54;
 
 LIDAR_D_SMALL_CUTOFF = 1
-LIDAR_D_BIG_CUTOFF = 6000
+LIDAR_D_BIG_CUTOFF = 4500
 
 BEARING_TO_WALL = 90;
 LIDAR_DISTANCE = 5*CM_PER_IN; # IN CM, CENTER OF LIDAR TO ALLIANCE WALL
@@ -35,9 +38,9 @@ LIDAR_X = 4*CM_PER_IN; # IN CM, CENTER OF ROBOT TO CENTER OF LIDAR ON Y LINE
 LIDAR_POSITION = 0
 IDEAL_Y = ROBOT_IDEAL_Y - LIDAR_POSITION; # CM Y DISTANCE FROM THE CORNER THAT THE LIDAR SHOULD BE ALIGNED TO
 
-EXPECTED_THETA = (360 - math.degrees(math.atan2(IDEAL_Y, LIDAR_DISTANCE))-7)%360
-THETA_MARGIN = 7
-print("THETA", EXPECTED_THETA-THETA_MARGIN, EXPECTED_THETA+THETA_MARGIN)
+EXPECTED_THETA = (360 - math.degrees(math.atan2(IDEAL_Y, LIDAR_DISTANCE))+5)%360
+if(!NO_OUTPUT and DEBUG):
+        print("EXPECTED THETA", EXPECTED_THETA)
 
 #Angle of corner we want to detect(for boiler corner set to 45)
 CORNERDETECT = 45
@@ -75,7 +78,8 @@ if(USING_LIDAR):
             first = False
 
         sweep.stop_scanning()
-        print("data collecting done")
+        if(!NO_OUTPUT and DEBUG2):
+                print("data collecting done")
 else: 
     goodInd = []
     fx = open("angle.txt","r")
@@ -107,7 +111,7 @@ for i in range(len(originalDistance)):
         xd.append(originalDistance[i]*np.cos(originalAngle[i]*np.pi/180.0))
         yd.append(originalDistance[i]*np.sin(originalAngle[i]*np.pi/180.0))
 
-if(DEBUG):
+if(!NO_OUTPUT and DEBUG):
     plt.title("Raw X/Y")
     plt.scatter(xd, yd)
     plt.axhline(0)
@@ -139,11 +143,10 @@ for i in range(1, len(originalAngle)):
                 #betweenDistances.append(thisDist)
         #        angle.append(originalAngle[i])
         #        distance.append(originalDistance[i])
-        if (within(originalAngle[i]%360, (EXPECTED_THETA-THETA_MARGIN)%360, (EXPECTED_THETA-2)%360)):
-
+        if (within(originalAngle[i]%360, (EXPECTED_THETA-15)%360, (EXPECTED_THETA-2)%360)):
                 angleBoiler.append(originalAngle[i])
                 distanceBoiler.append(originalDistance[i])
-        elif (within(originalAngle[i]%360, (EXPECTED_THETA+1)%360, 275)):
+        elif (within(originalAngle[i]%360, (EXPECTED_THETA+2)%360, 300)):
                 angleWall.append(originalAngle[i])
                 distanceWall.append(originalDistance[i])
         
@@ -159,8 +162,8 @@ for i in range(1, len(originalAngle)):
 #yd = []
 wallX = []
 wallY = []
-boilerX = []
-boilerY = []
+fullBoilerX = []
+fullBoilerY = []
 
 #for i in range(len(distance)):
         #xd.append(distance[i]*np.cos(angle[i]*np.pi/180.0))
@@ -170,16 +173,47 @@ for i in range(len(distanceWall)):
         wallY.append(distanceWall[i]*np.sin(angleWall[i]*np.pi/180.0))
 
 for i in range(len(distanceBoiler)):
-        boilerX.append(distanceBoiler[i]*np.cos(angleBoiler[i]*np.pi/180.0))
-        boilerY.append(distanceBoiler[i]*np.sin(angleBoiler[i]*np.pi/180.0))
+        fullBoilerX.append(distanceBoiler[i]*np.cos(angleBoiler[i]*np.pi/180.0))
+        fullBoilerY.append(distanceBoiler[i]*np.sin(angleBoiler[i]*np.pi/180.0))
 
-if(DEBUG):
-    plt.title("Cut X/Y")
-    plt.scatter(wallX, wallY)
-    plt.scatter(boilerX, boilerY)
-    plt.axhline(0)
-    plt.axvline(0)
-    plt.show()
+distMeasurePointX = -IDEAL_Y/2.0
+distMeasurePointY = 0
+
+if(!NO_OUTPUT and DEBUG):
+        print("wall len", len(wallX))
+        print("boiler len", len(fullBoilerX))
+        plt.title("Wall/Boiler X/Y")
+        plt.scatter(wallX, wallY, color="blue")
+        plt.scatter(fullBoilerX, fullBoilerY, color="green")
+        plt.scatter(distMeasurePointX, distMeasurePointY, color="red")
+        plt.axhline(0)
+        plt.axvline(0)
+        plt.show()
+
+def getDistance(x1, y1, x2, y2):
+        return np.sqrt( (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1) )
+
+fullDistances = []
+for i in range(0, len(fullBoilerX)):
+        fullDistances.append(getDistance(distMeasurePointX, distMeasurePointY, fullBoilerX[i], fullBoilerY[i]))
+
+lowDistance = np.percentile(fullDistances, 3)
+highDistance = np.percentile(fullDistances, 40)
+if(!NO_OUTPUT and DEBUG):
+        print("len", len(fullDistances))
+        print(fullDistances)
+        print("low", lowDistance, "high", highDistance)
+
+boilerX = []
+boilerY = []
+for i in range(len(fullBoilerX)):
+        if(fullDistances[i] >= lowDistance and fullDistances[i] <= highDistance):
+                boilerX.append(fullBoilerX[i])
+                boilerY.append(fullBoilerY[i])
+
+if(!NO_OUTPUT and DEBUG):
+        print("len", len(boilerX))
+
 
 # CORNER DETECTION
 
@@ -202,7 +236,7 @@ for i in range(smooth, l-smooth):
 
 l = len(distanceBoiler)
 
-for i in range(smooth, l-smooth):
+for i in range(smooth, len(boilerX)-smooth):
         sumX = 0
         sumY = 0
         for x in range(i-smooth,i+smooth+1):
@@ -221,21 +255,22 @@ if GRAPHXY:
 
 wallSlope, wallIntercept = np.polyfit(wallX, wallY, 1)
 boilerSlope, boilerIntercept = np.polyfit(boilerX, boilerY, 1)
-print("wall slope", wallSlope, "boiler slope", boilerSlope)
-print("wall intercept", wallIntercept, "boiler intercept", boilerIntercept)
+if(!NO_OUTPUT and DEBUG2):
+        print("wall slope", wallSlope, "boiler slope", boilerSlope)
+        print("wall intercept", wallIntercept, "boiler intercept", boilerIntercept)
 
 x = (boilerIntercept - wallIntercept)/(wallSlope-boilerSlope)
 y = wallSlope*x + wallIntercept
 
-if(DEBUG):
+if(!NO_OUTPUT and DEBUG):
     print(x, y)
     plt.title("With Corner")
-    plt.scatter(wallX, wallY)
-    plt.scatter(boilerX, boilerY)
-    plt.scatter(x, y, color="red")
+    plt.scatter(wallX, wallY, color="green")
+    plt.scatter(boilerX, boilerY, color="red")
+    plt.scatter(x, y, color="blue")
     plt.axhline(0)
     plt.axvline(0)
-    plt.show()
+    plt.savefig("CornerPlot.png")
 
 
 back = 38.1 #distance between lidar to back of robot in cm
