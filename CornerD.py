@@ -1,10 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import math
-#from sweeppy import Sweep
+from sweeppy import Sweep
 import itertools
 
-USING_LIDAR = False;
+USING_LIDAR = True;
 
 #Smooth on XY Graph
 XYSMOOTH = 1
@@ -23,19 +23,19 @@ IN_PER_FT = 12;
 CM_PER_IN = 2.54;
 
 LIDAR_D_SMALL_CUTOFF = 1
-LIDAR_D_BIG_CUTOFF = 10000
+LIDAR_D_BIG_CUTOFF = 6000
 
 BEARING_TO_WALL = 90;
 LIDAR_DISTANCE = 6*CM_PER_IN; # IN CM, CENTER OF LIDAR TO ALLIANCE WALL
 
-ROBOT_IDEAL_Y = 9.5*IN_PER_FT*CM_PER_IN; # IN CM, CENTER OF THE ROBOT TO THE CORNER
+ROBOT_IDEAL_Y = 13.5*IN_PER_FT*CM_PER_IN; # IN CM, CENTER OF THE ROBOT TO THE CORNER
 LIDAR_X = 4*CM_PER_IN; # IN CM, CENTER OF ROBOT TO CENTER OF LIDAR ON Y LINE
 
 LIDAR_POSITION = 0
 IDEAL_Y = ROBOT_IDEAL_Y - LIDAR_POSITION; # CM Y DISTANCE FROM THE CORNER THAT THE LIDAR SHOULD BE ALIGNED TO
 
-EXPECTED_THETA = 360 - math.degrees(math.atan2(IDEAL_Y, LIDAR_DISTANCE)) + 35
-THETA_MARGIN = 15
+EXPECTED_THETA = 360 - math.degrees(math.atan2(IDEAL_Y, LIDAR_DISTANCE)) + 5
+THETA_MARGIN = 10
 print("THETA", EXPECTED_THETA)
 
 #Angle of corner we want to detect(for boiler corner set to 45)
@@ -56,11 +56,12 @@ originalDistance = []
 
 if(USING_LIDAR):
     with Sweep('/dev/ttyUSB0') as sweep:
-        sweep.set_motor_speed(2)
+        sweep.set_motor_speed(1)
         sweep.set_sample_rate(2000)
         sweep.start_scanning()
 
         first = True
+        print("start scan")
         for scan in itertools.islice(sweep.get_scans(),3):
             if(not first):
                 s = scan[0]
@@ -104,7 +105,7 @@ yd = []
 for i in range(len(originalDistance)):
         xd.append(originalDistance[i]*np.cos(originalAngle[i]*np.pi/180.0))
         yd.append(originalDistance[i]*np.sin(originalAngle[i]*np.pi/180.0))
-
+print("data collecting done")
 plt.title("Raw X/Y")
 plt.scatter(xd, yd)
 plt.axhline(0)
@@ -285,9 +286,9 @@ for i in range(0,len(slopeTotals)):
         if(abs(slopeTotals[i]) > slopeTotals[maxIdx]):
                 maxIdx = i
 
-        # if(abs(slopeTotals[i]-CORNERDETECT)<CORNERBUFFER):
-        #         cornerX.append(smoothx[xSlope[i]])
-        #         cornerY.append(smoothy[xSlope[i]])
+         #if(abs(slopeTotals[i]-CORNERDETECT)<CORNERBUFFER):
+         #        cornerX.append(smoothx[xSlope[i]])
+         #        cornerY.append(smoothy[xSlope[i]])
 
 cornerX.append(smoothx[xSlope[maxIdx]])
 cornerY.append(smoothy[xSlope[maxIdx]])
