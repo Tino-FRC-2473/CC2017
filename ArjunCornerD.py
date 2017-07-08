@@ -14,14 +14,14 @@ XYSMOOTH = 0
 #Smooth on Derivative
 DSMOOTH = 1
 #Angle of corner we want to detect(for boiler corner set to 45)
-CORNERDETECT = 135
+CORNERDETECT = 45
 #Buffer we allow for corner so if cornerdetect=45 cornerbuffer=5 we look for 40-50 deg
 CORNERBUFFER = 10
 
 #Target: approx degree of corner
-TARGET =315
+TARGET =275
 #angle buffer of search either way
-TARGETBUFFER = 179
+TARGETBUFFER = 15
 
 #For basic use GRAPHXY,CORNERST=true, rest=false
 GRAPHXY = True
@@ -188,6 +188,7 @@ if(not DSMOOTH == 0):
                         endX = dist[end]
                 totD = endX-startX
                 sD.append(sumd/totD)
+                print("meme")
 
 if(DSMOOTH == 0):
         sD = cartD
@@ -197,6 +198,7 @@ if GRAPHD:
         plt.plot(dist, sD, 'b-', label='smooth')
 
 slopeTotals = []
+print(sD)
 sign = (sD[1]-sD[0])>0
 xSlope = []
 mx = 0

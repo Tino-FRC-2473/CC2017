@@ -5,7 +5,7 @@ from sweeppy import Sweep
 import itertools
 
 #Smooth on XY Graph
-XYSMOOTH = 1
+XYSMOOTH = 0
 #Smooth on Derivative
 DSMOOTH = 1
 
@@ -24,19 +24,19 @@ LIDAR_D_SMALL_CUTOFF = 1
 LIDAR_D_BIG_CUTOFF = 3000
 
 BEARING_TO_WALL = 90;
-LIDAR_DISTANCE = 26*CM_PER_IN; # IN CM, CENTER OF LIDAR TO ALLIANCE WALL
+LIDAR_DISTANCE = 7*CM_PER_IN; # IN CM, CENTER OF LIDAR TO ALLIANCE WALL
 
-ROBOT_IDEAL_Y = 60*CM_PER_IN; # IN CM, CENTER OF THE ROBOT TO THE CORNER
+ROBOT_IDEAL_Y = 9.5*IN_PER_FT*CM_PER_IN; # IN CM, CENTER OF THE ROBOT TO THE CORNER
 LIDAR_X = 4*CM_PER_IN; # IN CM, CENTER OF ROBOT TO CENTER OF LIDAR ON Y LINE
 
 LIDAR_POSITION = 0
 IDEAL_Y = ROBOT_IDEAL_Y - LIDAR_POSITION; # CM Y DISTANCE FROM THE CORNER THAT THE LIDAR SHOULD BE ALIGNED TO
 
-EXPECTED_THETA = 360 - math.degrees(math.atan2(IDEAL_Y, LIDAR_DISTANCE)) + 10
-THETA_MARGIN = 20
+EXPECTED_THETA = 360 - math.degrees(math.atan2(IDEAL_Y, LIDAR_DISTANCE))
+THETA_MARGIN = 17
 print(EXPECTED_THETA)
 #Angle of corner we want to detect(for boiler corner set to 45)
-CORNERDETECT = 120
+CORNERDETECT = 45
 #Buffer we allow for corner so if cornerdetect=45 cornerbuffer=5 we look for 40-50 deg
 CORNERBUFFER = 10
 
@@ -269,6 +269,13 @@ if CORNERST:
     plt.axhline(0)
     plt.axvline(0)
     plt.scatter(cornerX, cornerY)
+    cornerRangeX = []
+    cornerRangeY = []
+    #for i in range(len(smoothx)):
+    #        if (smoothx[i] <= cornerX[0]+25 and smoothx[i] >= cornerX[0]-25 and smoothy[i] <= cornerY[0] + 25 and smoothy >= cornerY[0] - 25):
+    #                cornerRangeX.append(smoothx[i])
+    #                cornerRangeY.append(smoothy[i])
+    #plt.scatter(cornerRangeX, cornerRangeY)                
     plt.show()
 
 if GRAPHST:
