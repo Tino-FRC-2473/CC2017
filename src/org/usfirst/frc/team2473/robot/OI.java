@@ -14,11 +14,6 @@ public class OI {
 	
 	public Joystick wheel = new Joystick(1); //need port number
 	
-	
-	
-	
-	
-	
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
 	//// joystick.
