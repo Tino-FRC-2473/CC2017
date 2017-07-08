@@ -28,10 +28,10 @@ def getData(i):
                         ang = dataSample[0]/1000.0
                         t = c+(ang/360)*(1.0/MOTOR_SPEED)+(it/MOTOR_SPEED)
 
-                        arr = []
-                        arr.append(t)
-                        arr.append(ang)
-                        arr.append(dataSample[1])
+                        arr = ["o", "c", "n"]
+                        #arr.append(t)
+                        #arr.append(ang)
+                        #arr.append(dataSample[1])
                         
                         writeCSV(arr)
 
