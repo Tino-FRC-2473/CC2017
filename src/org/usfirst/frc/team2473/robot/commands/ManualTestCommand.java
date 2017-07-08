@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2473.robot.commands;
 
+import java.util.function.BooleanSupplier;
+
 import org.usfirst.frc.team2473.robot.Diagnoser;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -11,10 +13,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class ManualTestCommand extends Command {
 	private Subsystem bs;
 	private Diagnoser diagnoser;
-    public ManualTestCommand(Diagnoser diagnoser) {
+	private BooleanSupplier button;
+    public ManualTestCommand(Diagnoser diagnoser, BooleanSupplier button) {
         // Use requires() here to declare subsystem dependencies
         requires(bs);
         this.diagnoser = diagnoser;
+        this.button = button;
     }
 
     // Called just before this Command runs the first time
@@ -24,11 +28,14 @@ public class ManualTestCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	diagnoser.RunSimultaneousTest();
+    	diagnoser.RunManualTest();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+        if(button.getAsBoolean()){
+        	return true;
+        }
         return false;
     }
 

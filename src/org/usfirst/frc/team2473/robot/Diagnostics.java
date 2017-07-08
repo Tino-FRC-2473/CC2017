@@ -30,7 +30,7 @@ public class Diagnostics {
 		}else if(type.equals(TestType.manual)){
 			command = new ManualTestCommands();
 			for(Diagnoser diagnoser:diagnosers){
-				command.addSequential(new ManualTestCommand(diagnoser));
+				command.addSequential(new ManualTestCommand(diagnoser,()-> Robot.oi.getButton()));
 			}
 			command.start();
 		}
