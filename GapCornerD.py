@@ -5,10 +5,10 @@ from sweeppy import Sweep
 import itertools
 
 USING_LIDAR = False
-NO_OUTPUT = True
+NO_OUTPUT = False
 
 DEBUG = True
-DEBUG2 = False # High level debug messages that are very important
+DEBUG2 = True # High level debug messages that are very important
 
 #Smooth on XY Graph
 XYSMOOTH = 0
@@ -39,7 +39,7 @@ LIDAR_POSITION = 0
 IDEAL_Y = ROBOT_IDEAL_Y - LIDAR_POSITION; # CM Y DISTANCE FROM THE CORNER THAT THE LIDAR SHOULD BE ALIGNED TO
 
 EXPECTED_THETA = (360 - math.degrees(math.atan2(IDEAL_Y, LIDAR_DISTANCE))+5)%360
-if(!NO_OUTPUT and DEBUG):
+if(not NO_OUTPUT and DEBUG):
         print("EXPECTED THETA", EXPECTED_THETA)
 
 #Angle of corner we want to detect(for boiler corner set to 45)
@@ -78,7 +78,7 @@ if(USING_LIDAR):
             first = False
 
         sweep.stop_scanning()
-        if(!NO_OUTPUT and DEBUG2):
+        if(not NO_OUTPUT and DEBUG2):
                 print("data collecting done")
 else: 
     goodInd = []
@@ -111,7 +111,7 @@ for i in range(len(originalDistance)):
         xd.append(originalDistance[i]*np.cos(originalAngle[i]*np.pi/180.0))
         yd.append(originalDistance[i]*np.sin(originalAngle[i]*np.pi/180.0))
 
-if(!NO_OUTPUT and DEBUG):
+if(not NO_OUTPUT and DEBUG):
     plt.title("Raw X/Y")
     plt.scatter(xd, yd)
     plt.axhline(0)
@@ -143,12 +143,12 @@ for i in range(1, len(originalAngle)):
                 #betweenDistances.append(thisDist)
         #        angle.append(originalAngle[i])
         #        distance.append(originalDistance[i])
-        if (within(originalAngle[i]%360, (EXPECTED_THETA-15)%360, (EXPECTED_THETA-2)%360)):
-                angleBoiler.append(originalAngle[i])
-                distanceBoiler.append(originalDistance[i])
-        elif (within(originalAngle[i]%360, (EXPECTED_THETA+2)%360, 300)):
+        if (np.absolute(xd[i]) < 20 and yd[i] < -0.15*IDEAL_Y and yd[i] > -0.8*IDEAL_Y):
                 angleWall.append(originalAngle[i])
                 distanceWall.append(originalDistance[i])
+        elif (xd[i] < 0 and within(originalAngle[i]%360, (EXPECTED_THETA-18.5)%360, (EXPECTED_THETA-2.5)%360)):
+                angleBoiler.append(originalAngle[i])
+                distanceBoiler.append(originalDistance[i])
         
 
         #elif(within(originalAngle[i], (EXPECTED_THETA-THETA_MARGIN)%360, (EXPECTED_THETA+THETA_MARGIN)%360)):
@@ -179,7 +179,7 @@ for i in range(len(distanceBoiler)):
 distMeasurePointX = -IDEAL_Y/2.0
 distMeasurePointY = 0
 
-if(!NO_OUTPUT and DEBUG):
+if(not NO_OUTPUT and DEBUG):
         print("wall len", len(wallX))
         print("boiler len", len(fullBoilerX))
         plt.title("Wall/Boiler X/Y")
@@ -199,7 +199,7 @@ for i in range(0, len(fullBoilerX)):
 
 lowDistance = np.percentile(fullDistances, 3)
 highDistance = np.percentile(fullDistances, 40)
-if(!NO_OUTPUT and DEBUG):
+if(not NO_OUTPUT and DEBUG):
         print("len", len(fullDistances))
         print(fullDistances)
         print("low", lowDistance, "high", highDistance)
@@ -211,7 +211,7 @@ for i in range(len(fullBoilerX)):
                 boilerX.append(fullBoilerX[i])
                 boilerY.append(fullBoilerY[i])
 
-if(!NO_OUTPUT and DEBUG):
+if(not NO_OUTPUT and DEBUG):
         print("len", len(boilerX))
 
 
@@ -255,14 +255,14 @@ if GRAPHXY:
 
 wallSlope, wallIntercept = np.polyfit(wallX, wallY, 1)
 boilerSlope, boilerIntercept = np.polyfit(boilerX, boilerY, 1)
-if(!NO_OUTPUT and DEBUG2):
+if(not NO_OUTPUT and DEBUG2):
         print("wall slope", wallSlope, "boiler slope", boilerSlope)
         print("wall intercept", wallIntercept, "boiler intercept", boilerIntercept)
 
 x = (boilerIntercept - wallIntercept)/(wallSlope-boilerSlope)
 y = wallSlope*x + wallIntercept
 
-if(!NO_OUTPUT and DEBUG):
+if(not NO_OUTPUT and DEBUG):
     print(x, y)
     plt.title("With Corner")
     plt.scatter(wallX, wallY, color="green")
