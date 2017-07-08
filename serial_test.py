@@ -4,9 +4,10 @@ import serial
 
 def loopGetData():
         print("\nBEGIN INFINITE LOOP")
-        with serial.Serial('/dev/ttyUSB0', timeout=10) as ser:
+        with serial.Serial('/dev/ttyUSB0', timeout=15) as ser:
                 print("after with")
                 ser.write(str(ord("D")) + str(ord("S")))
+                print("after write")
                 print(ser.read(10))
                 
 loopGetData()
