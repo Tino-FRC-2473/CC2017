@@ -11,7 +11,7 @@ DSMOOTH = 1
 
 GRAPHXY = True
 #Graph Slope Change Totals
-GRAPHST = False
+GRAPHST = True
 #Graph Derivative
 GRAPHD = False
 #CornerST is current method
@@ -266,14 +266,14 @@ if CORNERST:
     print("X:", cornerX)
     print("Y:", cornerY)
     plt.title("With Corner")
-    plt.scatter(smoothx, smoothy)
     plt.axhline(0)
     plt.axvline(0)
-    plt.show()
     plt.scatter(cornerX, cornerY)
+    plt.show()
 
 if GRAPHST:
     plt.plot(xSlope, slopeTotals, 'r-', label='raw')
+    plt.show()
 
 
 back = 38.1 #distance between lidar to back of robot in cm
