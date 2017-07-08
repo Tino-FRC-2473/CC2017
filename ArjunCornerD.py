@@ -53,6 +53,8 @@ def within(a):
                 return a>startAngle and a<endAngle
         if(startAngle>endAngle):
                 return a>startAngle or a<endAngle
+print(startAngle)
+print(endAngle)
 
 if(MODE):
     print("Using LiDAR")
@@ -64,17 +66,22 @@ if(MODE):
         first = True
         for scan in itertools.islice(sweep.get_scans(),3):
             if(not first):
+                print("memejoe")
                 s = scan[0]
                 for dataSample in s:
+                    print("memebob")
                     ang = dataSample[0]/1000.0
-
-                    if(within(angle)):
+                        
+                    if(within(ang)):
                         angle.append(ang)
                         distance.append(dataSample[1])
                 break
             first = False
 
         sweep.stop_scanning()
+
+print(angle)
+print(distance)
 
 if(not MODE):
         goodInd = []
@@ -133,7 +140,9 @@ for i in range(smooth,l-smooth):
 
 l = len(xdata)
 
-if GRAPHXY:plt.scatter(xd, yd)
+if GRAPHXY:
+        plt.scatter(xd, yd)
+        plt.show()
 
 cartD = []
 d = 0;
@@ -152,7 +161,7 @@ for i in range(0,l-1):
         cartD.append(aTan)
         d += np.sqrt(cX*cX+cY*cY)
         dist.append(d)
-
+print(dist)
 
 def inVal(i):
         return 0.5*(cartD[i]+cartD[i+1])*(dist[i+1]-dist[i])
