@@ -18,7 +18,10 @@ public class ShooterAuto extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.shooter.initDefaultCommand();
+    	//Robot.shooter.initDefaultCommand();
+    	Robot.shooter.setPowerIntake(1);
+    	Robot.shooter.setPowerShoot(1);
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -28,12 +31,16 @@ public class ShooterAuto extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+    	if(Robot.shooter.getEncoder() == 6000.0){
+        	return true;
+        }
+    	return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	
+    	Robot.shooter.setPowerIntake(0);
+    	Robot.shooter.setPowerShoot(0);
     }
 
     // Called when another command which requires one or more of the same

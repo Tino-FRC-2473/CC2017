@@ -19,12 +19,12 @@ public class Shooter extends Subsystem {
 
     CANTalon talonOne;
     CANTalon talonTwo;
-    Servo servo;
+    //Servo servo;
 
     public Shooter() {
     	talonOne = new CANTalon(RobotMap.shooterTalonOne);
     	talonTwo = new CANTalon(RobotMap.shooterTalonTwo);    
-    	servo = new Servo(RobotMap.shooterServo);
+    	//servo = new Servo(RobotMap.shooterServo);
     }
     
     public void initDefaultCommand() {
@@ -51,9 +51,26 @@ public class Shooter extends Subsystem {
     		return -1;
     	}
     }
+
+	public void setPowerShoot(double i) {
+		talonOne.set(i);
+		// TODO Auto-generated method stub
+		
+	}
+	public void setPowerIntake(double i) {
+		talonTwo.set(i);
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public double getEncoder() {
+		// TODO Auto-generated method stub
+		return talonOne.getPosition();
+	}
     
-    public double getPosition() {
-    	return servo.getPosition();
-    }
+    //public double getPosition() {
+    	//return servo.getPosition();
+    //}
 }
 

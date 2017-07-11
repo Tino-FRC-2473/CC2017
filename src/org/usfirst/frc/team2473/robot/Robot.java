@@ -27,6 +27,7 @@ public class Robot extends ThreadingRobot {
 	public static final Climber climber = new Climber();
 	public static final Gear gear = new Gear();
 	public static OI oi;
+	
 
 	Command autonomousCommand;
 
@@ -127,6 +128,6 @@ public class Robot extends ThreadingRobot {
 		addDeviceCall("GearGyro", ()-> gear.getAngle());
 		addDeviceCall("ShooterRight", ()-> shooter.getPower("RightMotor"));
 		addDeviceCall("ShooterLeft", ()-> shooter.getPower("LeftMotor"));
-		addDeviceCall("ShooterServo", ()-> shooter.getPosition());
+		//addDeviceCall("ShooterServo", ()-> shooter.getPosition());
 	}
 }
