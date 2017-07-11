@@ -21,9 +21,9 @@ public class DriveStraight extends Command implements PIDOutput {
 	private static final double K_TOLERANCE_DEGREES = 2.0f;
 
 	public DriveStraight() {
-		requires(Robot.driveTrain);
+		requires(Robot.DT);
 
-		turnController = new PIDController(KP, KI, KD, KF, Robot.driveTrain.getGyro(), this);
+		turnController = new PIDController(KP, KI, KD, KF, Robot.DT.getGyro(), this);
 		turnController.setInputRange(-180.0f, 180.0f);
 		turnController.setOutputRange(-1.0, 1.0);
 		turnController.setAbsoluteTolerance(K_TOLERANCE_DEGREES);
@@ -39,11 +39,11 @@ public class DriveStraight extends Command implements PIDOutput {
 	@Override
 	protected void execute() {
 		if (!turnController.isEnabled()) {
-			turnController.setSetpoint(Robot.driveTrain.getGyro().getYaw());
+			turnController.setSetpoint(Robot.DT.getGyro().getYaw());
 			rotateToAngleRate = 0;
 			turnController.enable();
 		}
-		Robot.driveTrain.drive(Robot.oi.getThrottleStick().getThrottle(), rotateToAngleRate);
+		Robot.DT.drive(Robot.oi.getThrottleStick().getThrottle(), rotateToAngleRate);
 	}
 
 	@Override
