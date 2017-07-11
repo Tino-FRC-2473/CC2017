@@ -14,7 +14,7 @@ public class GyroDiagnoser extends Diagnoser{
 		Diagnostics.addToQue(this);
 	}
 
-
+//Another diagnoser for DriveTrain. 
 	@Override
 	public void RunManualTest() {
 		

@@ -36,4 +36,7 @@ public class GearRun extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
     }
+    public boolean testGyro(){
+    	Robot.gear
+    }
 }
