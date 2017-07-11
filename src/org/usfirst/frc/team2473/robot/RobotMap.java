@@ -26,6 +26,7 @@ public class RobotMap {
 	public static final int gearTalonLeft = 7;
 	public static final int gearTalonRight = 8;
 	public static final int gearPivotTalon = 9;
+	public static final int Test_Button = 10;
 	
 	
 }
