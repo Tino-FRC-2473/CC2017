@@ -51,7 +51,6 @@ public CANTalon front_right, front_left, back_right, back_left;
 		drive.setInvertedMotor(MotorType.kFrontRight, true);
 		drive.setInvertedMotor(MotorType.kRearRight, true);
 		
-		
 	}
 
     public void initDefaultCommand() {
