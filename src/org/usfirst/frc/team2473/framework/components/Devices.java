@@ -8,13 +8,14 @@ import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Servo;
 
 public class Devices {
 	private ArrayList<CANTalon> talons;
 	private AnalogGyro[] gyros;
 	private ArrayList<ExternalDevice> externals;
 	private ArrayList<AnalogInput> analogs;
-	
+	private ArrayList<Servo> servos;	
 	private static Devices theInstance;
 	
 	static {
@@ -30,6 +31,7 @@ public class Devices {
 		gyros = new AnalogGyro[1];
 		externals = new ArrayList<ExternalDevice>();
 		analogs = new ArrayList<AnalogInput>();
+		servos = new ArrayList<Servo>();
 	}
 
 	public void removeTalon(int port) {
@@ -48,6 +50,25 @@ public class Devices {
 	
 	public void addTalon(int port) {
 		talons.add(new CANTalon(port));
+	}
+
+	public void removeServo(int port) {
+		for(Servo servo : servos) {
+			if(servo.getChannel()==port) {				
+				servos.remove(servo);
+				break;	
+			}
+		}
+	}
+	
+	public Servo getServo(int port) {
+		for(Servo servo : servos) if(servo.getChannel()==port) return servo;
+		addServo(port);
+		return servos.get(servos.size()-1);
+	}
+	
+	public void addServo(int port) {
+		servos.add(new Servo(port));
 	}
 	
 	public void removeAnalogInput(int channel) {

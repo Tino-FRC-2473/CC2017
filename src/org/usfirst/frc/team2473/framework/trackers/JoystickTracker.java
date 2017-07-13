@@ -4,7 +4,7 @@ import org.usfirst.frc.team2473.framework.components.Controls;
 
 public class JoystickTracker extends DeviceTracker {
 
-	enum Type {
+	public enum Type {
 		X, Y, Z, THROTTLE, TWIST
 	}
 	
