@@ -110,6 +110,9 @@ public class Robot extends IterativeRobot {
 		System.out.println("Talon Power: " + Database.getInstance().getNumeric(RobotMap.MOTOR_POWER_KEY));
 		System.out.println("Talon Current: " + Database.getInstance().getNumeric(RobotMap.MOTOR_CURRENT_KEY));
 		System.out.println("Talon Voltage: " + Database.getInstance().getNumeric(RobotMap.MOTOR_VOLTAGE_KEY));
+		
+		System.out.println("GYRO DATA: ");
+		System.out.println("Gyro Heading: " + Database.getInstance().getNumeric(RobotMap.GYRO_HEADING_KEY));
 	}
 
 	@Override
@@ -130,6 +133,8 @@ public class Robot extends IterativeRobot {
 		Trackers.getInstance().addTracker(new ButtonTracker(ControlsMap.BUTTON_ONE, ControlsMap.JOY_ONE, ControlsMap.JOY_ONE_BUTTON_ONE));
 		Trackers.getInstance().addTracker(new JoystickTracker(ControlsMap.JOYSTICK_TWO, ControlsMap.JOY_TWO, JoystickTracker.Type.Y));
 		Trackers.getInstance().addTracker(new ButtonTracker(ControlsMap.BUTTON_TWO, ControlsMap.JOY_TWO, ControlsMap.JOY_TWO_BUTTON_ONE));
+		
+		Trackers.getInstance().addTracker(new GyroTracker(RobotMap.GYRO_HEADING_KEY, RobotMap.GYRO));
 	}
 	
 	void horizontal() {
