@@ -1,11 +1,8 @@
 
 package org.usfirst.frc.team2473.robot;
 
-import org.usfirst.frc.team2473.robot.commands.GearTele;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 
 /**
