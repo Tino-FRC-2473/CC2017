@@ -60,4 +60,11 @@ public class DriveTrain extends Subsystem {
     	drive.arcadeDrive(speed, rotate);
    
 	}
+    
+    public void resetEncoders() {
+    	((CANTalon) leftFrontCAN).reset();
+    	((CANTalon) rightFrontCAN).reset();
+    	((CANTalon) leftBackCAN).reset();
+    	((CANTalon) rightBackCAN).reset();
+    }
 }
