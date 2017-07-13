@@ -6,6 +6,7 @@ import org.usfirst.frc.team2473.robot.RobotMap;
 import org.usfirst.frc.team2473.robot.commands.JoystickControl;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -25,11 +26,17 @@ public class DriveTrain extends Subsystem {
 	private SpeedController rightFrontCAN;
 	private SpeedController leftBackCAN;
 	private SpeedController rightBackCAN;
+	
+public CANTalon front_right, front_left, back_right, back_left;
 
 	private RobotDrive drive;
 	
 	public DriveTrain (){
 		super();
+		front_right = new CANTalon(RobotMap.FRONT_RIGHT);
+    	front_left = new CANTalon(RobotMap.FRONT_LEFT);
+    	back_right = new CANTalon(RobotMap.BACK_RIGHT);
+    	back_left = new CANTalon(RobotMap.BACK_LEFT);
 		
 		leftFrontCAN = new CANTalon(RobotMap.FRONT_LEFT);
 		rightFrontCAN = new CANTalon(RobotMap.FRONT_RIGHT);
@@ -60,4 +67,12 @@ public class DriveTrain extends Subsystem {
     	drive.arcadeDrive(speed, rotate);
    
 	}
+    public void resetEncoders(){
+    	front_right.changeControlMode(TalonControlMode.Position);
+    	front_left.changeControlMode(TalonControlMode.Position);
+    	front_right.setPosition(0);
+    	front_left.setPosition(0);
+    	front_right.changeControlMode(TalonControlMode.PercentVbus);
+    	front_left.changeControlMode(TalonControlMode.PercentVbus);
+    }
 }
