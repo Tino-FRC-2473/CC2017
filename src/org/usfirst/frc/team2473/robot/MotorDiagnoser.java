@@ -8,10 +8,12 @@ public class MotorDiagnoser extends Diagnoser{
 	
 	CANTalon motor;
 	String key;
+	Double range;
 	
-	public MotorDiagnoser(CANTalon motor,String key){
+	public MotorDiagnoser(CANTalon motor,String key, Double range){
 		this.motor = motor;
 		this.key = key;
+		this.range = range;
 		Diagnostics.addToQue(this);
 	}
 

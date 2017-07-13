@@ -21,6 +21,8 @@ public class DriverTrainDiagnoser extends Diagnoser {
 	
 	private Joystick stick;
 	
+	private double EcnoderTicksPerRotation = 6000.0;
+	
 	private double encoders = 1600;
 	public DriverTrainDiagnoser(CANTalon fr, CANTalon fl, CANTalon bl, CANTalon br, String keyfrp, String keyflp, 
 			String keybrp, String keyblp, String keyfre, String keyfle, 
@@ -96,7 +98,8 @@ public class DriverTrainDiagnoser extends Diagnoser {
 	@Override
 	public void RunSimultaneousTest() {
 		// TODO Auto-generated method stub
-		
+		//current power speed
+		double rpm = ((fr.getSpeed()*10)/this.EcnoderTicksPerRotation)*60;
 	}
 	
 	private void setPowerToALl(double pow){
