@@ -66,12 +66,15 @@ public CANTalon front_right, front_left, back_right, back_left;
     	drive.arcadeDrive(speed, rotate);
    
 	}
+
     public void resetEncoders(){
     	front_right.changeControlMode(TalonControlMode.Position);
     	front_left.changeControlMode(TalonControlMode.Position);
     	front_right.setPosition(0);
     	front_left.setPosition(0);
     	front_right.changeControlMode(TalonControlMode.PercentVbus);
-    	front_left.changeControlMode(TalonControlMode.PercentVbus);
     }
+
+    
+    
 }
