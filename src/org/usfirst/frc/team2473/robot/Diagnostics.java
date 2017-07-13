@@ -34,6 +34,7 @@ public class Diagnostics {
 			}
 			command.start();
 		}
-		
+		DiagnosticThread thread = new DiagnosticThread();
+		thread.start();
 	}
 }
