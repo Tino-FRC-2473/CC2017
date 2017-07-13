@@ -1,3 +1,4 @@
+
 package org.usfirst.frc.team2473.robot;
 
 /**
@@ -22,10 +23,7 @@ public class RobotMap {
 	public static final int shooterTalonOne = 3;
 	public static final int shooterTalonTwo = 4;
 	public static final int shooterServo = 5;
-	public static final int gyro = 6;
-	public static final int gearTalonLeft = 7;
-	public static final int gearTalonRight = 8;
-	public static final int gearPivotTalon = 9;
-	
+	public static final int gearPickupMotor = 6;
+	public static final int Gear_Stick = 7;
 	
 }

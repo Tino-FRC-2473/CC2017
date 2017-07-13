@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team2473.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -122,10 +121,7 @@ public class Robot extends ThreadingRobot {
 	public void updateDeviceCalls() {
 		addDeviceCall("ClimberRight", ()-> climber.getPower("RightMotor"));
 		addDeviceCall("ClimberLeft", ()-> climber.getPower("LeftMotor"));
-		addDeviceCall("GearRight", ()-> gear.getPower("RightMotor"));
-		addDeviceCall("GearLeft", ()-> gear.getPower("LeftMotor"));
-		addDeviceCall("GearPivot", ()-> gear.getPower("PivotMotor"));
-		addDeviceCall("GearGyro", ()-> gear.getAngle());
+		addDeviceCall("GearPickupMotor", ()-> gear.getPower("gearPickupMotor"));
 		addDeviceCall("ShooterRight", ()-> shooter.getPower("RightMotor"));
 		addDeviceCall("ShooterLeft", ()-> shooter.getPower("LeftMotor"));
 		//addDeviceCall("ShooterServo", ()-> shooter.getPosition());

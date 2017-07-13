@@ -13,20 +13,13 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Gear extends Subsystem {
 	
-    CANTalon talonLeft;
-    CANTalon talonRight;
-    CANTalon talonPivot;
-    AnalogGyro gyro;
-
+    public CANTalon pickupTalon;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     
     public Gear() {
 
-    	talonLeft = new CANTalon(RobotMap.gearTalonLeft);
-    	talonRight = new CANTalon(RobotMap.gearTalonRight);
-    	talonPivot = new CANTalon(RobotMap.gearPivotTalon);
-    	gyro = new AnalogGyro(RobotMap.gyro);
+    	pickupTalon = new CANTalon(RobotMap.gearPickupMotor);
 
     }
 
@@ -37,31 +30,18 @@ public class Gear extends Subsystem {
 
     
     public double getPower(String name) {
-    	if(name.equals("LeftMotor")) {
-    		return talonLeft.get();
-    	} else if(name.equals("RightMotor")) {
-    		return talonRight.get();
-    	} else  if(name.equals("PivotMotor")) {
-    		return talonPivot.get();
-    	} else {
+    	if(name.equals("pickupMotor")) {
+    		return pickupTalon.get();
+    	}  else {
     		return -1;
     	}
 	}
     
     public double getVoltage(String name) {
-    	if(name.equals("LeftMotor")) {
-    		return talonLeft.getBusVoltage();
-    	} else if(name.equals("RightMotoor")) {
-    		return talonRight.getBusVoltage();
-    	}  else if(name.equals("PivotMotoor")) {
-    		return talonPivot.getBusVoltage();
-    	}else {
+    	if(name.equals("pickupMotor")) {
+    		return pickupTalon.getBusVoltage();
+    	} else {
     		return -1;
     	}
     }
-    
-    public double getAngle() {
-    	return gyro.getAngle();
-    }
 }
-
