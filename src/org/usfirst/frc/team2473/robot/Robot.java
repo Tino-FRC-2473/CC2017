@@ -19,9 +19,11 @@ import org.usfirst.frc.team2473.robot.subsystems.DriveTrain;
  * directory.
  */
 public class Robot extends IterativeRobot {
+	
 
 	public static final DriveTrain exampleSubsystem = new DriveTrain();
 	public static OI oi;
+	public static DriveTrain driveTrain;
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -90,6 +92,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
+		Robot.driveTrain.resetEncoders();
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
