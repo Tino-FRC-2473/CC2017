@@ -24,9 +24,9 @@ public class DriverTrainDiagnoser extends Diagnoser {
 	private double EcnoderTicksPerRotation = 6000.0;
 	
 	private double encoders = 1600;
-	public DriverTrainDiagnoser(CANTalon fr, CANTalon fl, CANTalon bl, CANTalon br, String keyfrp, String keyflp, 
-			String keybrp, String keyblp, String keyfre, String keyfle, 
-			String keybre, String keyble, Joystick stick){
+	public DriverTrainDiagnoser(CANTalon fr, CANTalon fl, CANTalon bl, CANTalon br, String keyfrp, 
+								String keyflp, String keybrp, String keyblp, String keyfre, 
+								String keyfle, String keybre, String keyble, Joystick stick){
 		this.fr = fr;
 		this.fl = fl;
 		this.bl = bl;
@@ -70,16 +70,24 @@ public class DriverTrainDiagnoser extends Diagnoser {
 					System.out.println("Overall System: Positive");
 		}else{
 			if(encoders - encoderfr < -50 || encoders - encoderfr > 50){
-				System.out.println("Front Right Motor: Confirmed");
+				System.out.println("Front Right Motor: Functional");
+			}else{
+				System.out.println("Front Right Motor: Disfunctional");
 			}
 			if(encoders - encoderfl < -50 || encoders - encoderfl > 50){
-				System.out.println("Front Left Motor: Confirmed");
+				System.out.println("Front Left Motor: Functional");
+			}else{
+				System.out.println("Front Left Motor: Disfunctional");
 			}
 			if(encoders - encoderbl < -50 || encoders - encoderbl > 50){
-				System.out.println("Back Left Motor: Confirmed");
+				System.out.println("Back Left Motor: Functional");
+			}else{
+				System.out.println("Back Left Motor: Disfunctional");
 			}
 			if(encoders - encoderbr < -50 || encoders - encoderbr > 50){
-				System.out.println("Back Right Motor: Confirmed");
+				System.out.println("Back Right Motor: Functional");
+			}else{
+				System.out.println("Back Right Motor: Disfunctional");
 			}
 		}
 		
