@@ -23,7 +23,15 @@ public class DriverTrainDiagnoser extends Diagnoser {
 	
 	private double EcnoderTicksPerRotation = 6000.0;
 	
+	private double rpmfr = 0.0;
+	private double rpmfl = 0.0;
+	private double rpmbr = 0.0;
+	private double rpmbl = 0.0;
+	
 	private double encoders = 1600;
+	
+	private double maxtorque = 0.7;
+	
 	public DriverTrainDiagnoser(CANTalon fr, CANTalon fl, CANTalon bl, CANTalon br, String keyfrp, 
 								String keyflp, String keybrp, String keyblp, String keyfre, 
 								String keyfle, String keybre, String keyble, Joystick stick){
@@ -107,7 +115,24 @@ public class DriverTrainDiagnoser extends Diagnoser {
 	public void RunSimultaneousTest() {
 		// TODO Auto-generated method stub
 		//current power speed
-		double rpm = ((fr.getSpeed()*10)/this.EcnoderTicksPerRotation)*60;
+		double torquefr;
+		double torquefl;
+		double torquebr;
+		double torquebl;
+		if(DiagnosticThread.getTime()%1000 == 0){
+			double pastrpmfr = rpmfr;
+			double pastrpmfl = rpmfl;
+			double pastrpmbr = rpmbr;
+			double pastrpmbl = rpmbl;
+			rpmfr = ((fr.getSpeed()/100)/this.EcnoderTicksPerRotation)*(2*Math.PI);
+			rpmfl = ((fl.getSpeed()/100)/this.EcnoderTicksPerRotation)*(2*Math.PI);
+			rpmbr = ((br.getSpeed()/100)/this.EcnoderTicksPerRotation)*(2*Math.PI);
+			rpmbl = ((bl.getSpeed()/100)/this.EcnoderTicksPerRotation)*(2*Math.PI);
+			torquefr = (rpmfr - pastrpmfr);
+			torquefl = (rpmfl - pastrpmfl);
+			torquebr = (rpmbr - pastrpmbr);
+			torquebl = (rpmbl - pastrpmbl);
+		}
 	}
 	
 	private void setPowerToALl(double pow){

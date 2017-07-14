@@ -5,6 +5,12 @@ import java.util.ArrayList;
 public class DiagnosticThread extends Thread{
 	private static ArrayList<Diagnoser> diagnosers = new ArrayList();
 	
+	public static double initialTime;
+	
+	public DiagnosticThread(){
+		this.initialTime = System.currentTimeMillis();
+	}
+	
 	public static void addToList(Diagnoser diagnoser){
 		diagnosers.add(diagnoser);
 	}
@@ -20,5 +26,9 @@ public class DiagnosticThread extends Thread{
 	
 	private void errorHandling(){
 		
+	}
+	
+	public static double getTime(){
+		return System.currentTimeMillis() - initialTime;
 	}
 }

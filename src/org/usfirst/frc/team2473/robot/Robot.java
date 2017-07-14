@@ -21,7 +21,7 @@ import org.usfirst.frc.team2473.robot.subsystems.Shooter;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class Robot extends ThreadingRobot {
+public class Robot extends IterativeRobot {
 
 	public static final Shooter shooter = new Shooter();
 	public static final Climber climber = new Climber();
@@ -121,15 +121,4 @@ public class Robot extends ThreadingRobot {
 	/** 
 	 * This function adds all the devices
 	 */
-	public void updateDeviceCalls() {
-		addDeviceCall("ClimberRight", ()-> climber.getPower("RightMotor"));
-		addDeviceCall("ClimberLeft", ()-> climber.getPower("LeftMotor"));
-		addDeviceCall("GearRight", ()-> gear.getPower("RightMotor"));
-		addDeviceCall("GearLeft", ()-> gear.getPower("LeftMotor"));
-		addDeviceCall("GearPivot", ()-> gear.getPower("PivotMotor"));
-		addDeviceCall("GearGyro", ()-> gear.getAngle());
-		addDeviceCall("ShooterRight", ()-> shooter.getPower("RightMotor"));
-		addDeviceCall("ShooterLeft", ()-> shooter.getPower("LeftMotor"));
-		addDeviceCall("ShooterServo", ()-> shooter.getPosition());
-	}
 }
