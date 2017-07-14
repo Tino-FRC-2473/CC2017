@@ -14,12 +14,12 @@ public class Climber extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-    CANTalon talonOne;
-    CANTalon talonTwo;
+    public CANTalon ClimberMotorOne;
+    public CANTalon ClimberMotorTwo;
 
     public Climber() {
-    	talonOne = new CANTalon(RobotMap.climberTalonOne);
-    	talonTwo = new CANTalon(RobotMap.climberTalonTwo);
+    	ClimberMotorOne = new CANTalon(RobotMap.climberTalonOne);
+    	ClimberMotorTwo = new CANTalon(RobotMap.climberTalonTwo);
     }
     
     public void initDefaultCommand() {
@@ -29,9 +29,9 @@ public class Climber extends Subsystem {
     
     public double getPower(String name) {
     	if(name.equals("LeftMotor")) {
-    		return talonOne.get();
+    		return ClimberMotorOne.get();
     	} else if(name.equals("RightMotor")) {
-    		return talonTwo.get();
+    		return ClimberMotorTwo.get();
     	} else {
     		return -1;
     	}
@@ -39,9 +39,9 @@ public class Climber extends Subsystem {
     
     public double getVoltage(String name) {
     	if(name.equals("LeftMotor")) {
-    		return talonOne.getBusVoltage();
+    		return ClimberMotorOne.getBusVoltage();
     	} else if(name.equals("RightMotor")) {
-    		return talonTwo.getBusVoltage();
+    		return ClimberMotorTwo.getBusVoltage();
     	} else {
     		return -1;
     	}
