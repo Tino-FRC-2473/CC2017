@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2473.robot.commands;
 
 import org.usfirst.frc.team2473.robot.Robot;
+import org.usfirst.frc.team2473.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -23,14 +24,14 @@ public class GearTele extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (Robot.oi.gearPickupStick.getRawButton(5) == true) {
+    	if (Robot.oi.gearPickupStick.getRawButton(RobotMap.gearpickupButtonVal) == true) {
     		Robot.gear.pickupTalon.set(0.5);
     	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if(Robot.gear.pickupTalon.getEncPosition() >= 69) {
+        if(Robot.gear.pickupTalon.getEncPosition() >= RobotMap.gearpickupEncVal) {
         	return true;
         }
         return false;

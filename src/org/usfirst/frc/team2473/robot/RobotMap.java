@@ -26,4 +26,7 @@ public class RobotMap {
 	public static final int gearPickupMotor = 6;
 	public static final int Gear_Stick = 7;
 	
+	public static final int gearpickupEncVal = 69;
+	public static final int gearpickupButtonVal = 5;
+	
 }
