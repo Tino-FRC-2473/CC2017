@@ -15,6 +15,9 @@ import org.usfirst.frc.team2473.framework.trackers.GyroTracker;
 import org.usfirst.frc.team2473.framework.trackers.JoystickTracker;
 import org.usfirst.frc.team2473.framework.trackers.ServoTracker;
 import org.usfirst.frc.team2473.framework.trackers.TalonTracker;
+import org.usfirst.frc.team2473.robot.commands.MotorCommand;
+import org.usfirst.frc.team2473.robot.commands.MotorStopCommand;
+import org.usfirst.frc.team2473.robot.commands.ServoCommand;
 import org.usfirst.frc.team2473.robot.commands.ServoStopCommand;
 import org.usfirst.frc.team2473.robot.subsystems.MotorSystem;
 import org.usfirst.frc.team2473.robot.subsystems.ServoSystem;
@@ -28,7 +31,9 @@ public class Robot extends IterativeRobot {
 
 	public static ServoSystem servoSystem = new ServoSystem();
 	public static MotorSystem motorSystem = new MotorSystem();
-	
+	MotorCommand cmd1 = new MotorCommand();
+	ServoCommand cmd2 = new ServoCommand();
+
 	int counter = 0;
 
 	boolean timerRunning;
@@ -68,11 +73,14 @@ public class Robot extends IterativeRobot {
 		timerRunning = false;
 		try {
 			Controls.getInstance().addButtonCommand(ControlsMap.BUTTON_ONE, ButtonAction.PRESSED, new ServoStopCommand());
+			Controls.getInstance().addButtonCommand(ControlsMap.BUTTON_TWO, ButtonAction.PRESSED, new MotorStopCommand());
 			//so on and so forth
 		} catch (InstantiationException | IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		};
+		cmd1.start();
+		cmd2.start();
 	}
 
 	@Override
