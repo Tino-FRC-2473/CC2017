@@ -28,7 +28,7 @@ public class DriveTrain extends Subsystem {
 
 	private RobotDrive drive;
 	
-	public DriveTrain (){
+	public DriveTrain() {
 		super();
 		
 		leftFrontCAN = new CANTalon(RobotMap.FRONT_LEFT);
@@ -58,6 +58,5 @@ public class DriveTrain extends Subsystem {
 
     public void driveArcade(double speed, double rotate) {
     	drive.arcadeDrive(speed, rotate);
-   
 	}
 }

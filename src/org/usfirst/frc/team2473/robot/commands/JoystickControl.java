@@ -21,7 +21,7 @@ public class JoystickControl extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.driveArcade(Robot.oi.throttle.getThrottle(),Robot.oi.wheel.getTwist());
+    	Robot.driveTrain.driveArcade(Math.sqrt(Robot.oi.throttle.getThrottle()),Robot.oi.wheel.getTwist()/(1000));
     }
 
     // Make this return true when this Command no longer needs to run execute()
