@@ -173,7 +173,7 @@ public class DriverTrainDiagnoser extends Diagnoser {
 		   torquebr >= this.MAX_TORQUE || torquebl >= this.MAX_TORQUE ||
 		   currentfr >= this.MAX_CURRENT || currentfl >= this.MAX_CURRENT ||
 		   currentbr >= this.MAX_CURRENT || currentbl >= this.MAX_CURRENT){
-			System.out.println("FrontRightMotor: high torque");
+			System.out.println("Drive Train in CRITICAL condition, lowering max speed. BAD DRIVER DETECTED");
 			this.SpeedMultiplier -= 0.1;
 		}else{
 			this.SpeedMultiplier = 1.0;
