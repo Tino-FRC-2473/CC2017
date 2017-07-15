@@ -10,7 +10,7 @@ import org.usfirst.frc.team2473.robot.Robot;
  *
  */
 public class DriveStraight extends Command implements PIDOutput {
-	private PIDController turnController;
+	private PIDController pidController;
 	private double rotateToAngleRate;
 
 	private static final double KP = 0.03;
@@ -23,12 +23,12 @@ public class DriveStraight extends Command implements PIDOutput {
 	public DriveStraight() {
 		requires(Robot.DT);
 
-		turnController = new PIDController(KP, KI, KD, KF, Robot.DT.getGyro(), this);
-		turnController.setInputRange(-180.0f, 180.0f);
-		turnController.setOutputRange(-1.0, 1.0);
-		turnController.setAbsoluteTolerance(K_TOLERANCE_DEGREES);
-		turnController.setContinuous(true);
-		turnController.disable();
+		pidController = new PIDController(KP, KI, KD, KF, Robot.DT.getGyro(), this);
+		pidController.setInputRange(-180.0f, 180.0f);
+		pidController.setOutputRange(-1.0, 1.0);
+		pidController.setAbsoluteTolerance(K_TOLERANCE_DEGREES);
+		pidController.setContinuous(true);
+		pidController.disable();
 	}
 
 	@Override
@@ -38,10 +38,10 @@ public class DriveStraight extends Command implements PIDOutput {
 
 	@Override
 	protected void execute() {
-		if (!turnController.isEnabled()) {
-			turnController.setSetpoint(Robot.DT.getGyro().getYaw());
+		if (!pidController.isEnabled()) {
+			pidController.setSetpoint(Robot.DT.getGyro().getYaw());
 			rotateToAngleRate = 0;
-			turnController.enable();
+			pidController.enable();
 		}
 		Robot.DT.drive(Robot.oi.getThrottleStick().getThrottle(), rotateToAngleRate);
 	}
