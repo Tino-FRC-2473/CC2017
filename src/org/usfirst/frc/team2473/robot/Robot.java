@@ -5,8 +5,8 @@ import java.util.TimerTask;
 
 import org.usfirst.frc.team2473.framework.Database;
 import org.usfirst.frc.team2473.framework.components.Controls;
-import org.usfirst.frc.team2473.framework.components.Trackers;
 import org.usfirst.frc.team2473.framework.components.Controls.ButtonAction;
+import org.usfirst.frc.team2473.framework.components.Trackers;
 import org.usfirst.frc.team2473.framework.readers.ControlsReader;
 import org.usfirst.frc.team2473.framework.readers.DeviceReader;
 import org.usfirst.frc.team2473.framework.trackers.ButtonTracker;
@@ -38,13 +38,14 @@ public class Robot extends IterativeRobot {
 
 	boolean timerRunning;
 	private DeviceReader reader;
-	Timer robotControlLoop;
+	Timer robotControlLoop = new Timer();
 
 	@Override
 	public void robotInit() {
 		addTrackers();
 		reader = new DeviceReader();
 		reader.start();
+		print();
 	}
 
 	@Override
@@ -97,7 +98,37 @@ public class Robot extends IterativeRobot {
 		}
 		
 		ControlsReader.getInstance().updateAll();
+		print();
+	}
 
+	@Override
+	public void testPeriodic() {
+		LiveWindow.run();
+	}
+	
+	public void addTrackers() {
+		//in the case below, both device trackers point to the same device, a talon with the device id stored in RobotMap.SHOOTER
+		Trackers.getInstance().addTracker(new EncoderTracker(RobotMap.MOTOR_ENCODER_KEY, RobotMap.MOTOR));
+		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.MOTOR_POWER_KEY, RobotMap.MOTOR, TalonTracker.Target.POWER));
+		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.MOTOR_VOLTAGE_KEY, RobotMap.MOTOR, TalonTracker.Target.VOLTAGE));
+		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.MOTOR_CURRENT_KEY, RobotMap.MOTOR, TalonTracker.Target.CURRENT));
+		
+		Trackers.getInstance().addTracker(new ServoTracker(RobotMap.SERVO_POSITION_KEY, RobotMap.SERVO, ServoTracker.Target.POSITION));
+		Trackers.getInstance().addTracker(new ServoTracker(RobotMap.SERVO_POWER_KEY, RobotMap.SERVO, ServoTracker.Target.POWER));
+		Trackers.getInstance().addTracker(new JoystickTracker(ControlsMap.JOYSTICK_ONE, ControlsMap.JOY_ONE, JoystickTracker.Type.X));
+		Trackers.getInstance().addTracker(new ButtonTracker(ControlsMap.BUTTON_ONE, ControlsMap.JOY_ONE, ControlsMap.JOY_ONE_BUTTON_ONE));
+		Trackers.getInstance().addTracker(new JoystickTracker(ControlsMap.JOYSTICK_TWO, ControlsMap.JOY_TWO, JoystickTracker.Type.Y));
+		Trackers.getInstance().addTracker(new ButtonTracker(ControlsMap.BUTTON_TWO, ControlsMap.JOY_TWO, ControlsMap.JOY_TWO_BUTTON_ONE));
+		
+		Trackers.getInstance().addTracker(new GyroTracker(RobotMap.GYRO_HEADING_KEY, RobotMap.GYRO));
+	}
+	
+	void horizontal() {
+		for(int i = 0; i < 20; i++) System.out.print("_");
+		System.out.println();
+	}
+	
+	void print() {
 		horizontal();
 		System.out.println("ITERATION: " + ++counter);
 		
@@ -121,32 +152,6 @@ public class Robot extends IterativeRobot {
 		
 		System.out.println("GYRO DATA: ");
 		System.out.println("Gyro Heading: " + Database.getInstance().getNumeric(RobotMap.GYRO_HEADING_KEY));
-	}
-
-	@Override
-	public void testPeriodic() {
-		LiveWindow.run();
-	}
-	
-	public void addTrackers() {
-		//in the case below, both device trackers point to the same device, a talon with the device id stored in RobotMap.SHOOTER
-		Trackers.getInstance().addTracker(new EncoderTracker(RobotMap.MOTOR_ENCODER_KEY, RobotMap.MOTOR));
-		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.MOTOR_POWER_KEY, RobotMap.MOTOR, TalonTracker.Target.POWER));
-		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.MOTOR_VOLTAGE_KEY, RobotMap.MOTOR, TalonTracker.Target.VOLTAGE));
-		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.MOTOR_CURRENT_KEY, RobotMap.MOTOR, TalonTracker.Target.CURRENT));
 		
-		Trackers.getInstance().addTracker(new ServoTracker(RobotMap.SERVO_POSITION_KEY, RobotMap.SERVO, ServoTracker.Target.POSITION));
-		Trackers.getInstance().addTracker(new ServoTracker(RobotMap.SERVO_POWER_KEY, RobotMap.SERVO, ServoTracker.Target.POWER));
-		Trackers.getInstance().addTracker(new JoystickTracker(ControlsMap.JOYSTICK_ONE, ControlsMap.JOY_ONE, JoystickTracker.Type.Y));
-		Trackers.getInstance().addTracker(new ButtonTracker(ControlsMap.BUTTON_ONE, ControlsMap.JOY_ONE, ControlsMap.JOY_ONE_BUTTON_ONE));
-		Trackers.getInstance().addTracker(new JoystickTracker(ControlsMap.JOYSTICK_TWO, ControlsMap.JOY_TWO, JoystickTracker.Type.Y));
-		Trackers.getInstance().addTracker(new ButtonTracker(ControlsMap.BUTTON_TWO, ControlsMap.JOY_TWO, ControlsMap.JOY_TWO_BUTTON_ONE));
-		
-		Trackers.getInstance().addTracker(new GyroTracker(RobotMap.GYRO_HEADING_KEY, RobotMap.GYRO));
-	}
-	
-	void horizontal() {
-		for(int i = 0; i < 20; i++) System.out.print("_");
-		System.out.println();
 	}
 }

@@ -52,6 +52,7 @@ public class Controls {
 	}
 	
 	public synchronized Button getButton(String key) {
+		if(buttons.get(key)==null) buttons.put(key, new ThreadSafeInternalButton());
 		return buttons.get(key);
 	}
 	
@@ -60,6 +61,7 @@ public class Controls {
 	}
 
 	public void addButtonCommand(String key, ButtonAction action, Command cmd) throws InstantiationException, IllegalAccessException {
+		if(buttons.get(key)==null) buttons.put(key, new ThreadSafeInternalButton());
 		switch(action) {
 			case PRESSED:
 				buttons.get(key).whenPressed(cmd);
