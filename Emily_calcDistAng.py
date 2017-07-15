@@ -26,9 +26,33 @@ pinDistToCenter = 0;
 def calcDist(length): #the length of the rectangle
     #the distance and size is inversely proportional
     #dist * rectSize = constant
-    if(length != 0):
+    if(length > 0):
         return DIST_CONSTANT / length;
-    return 0;
+    return -1;
+
+#do check for whether this is needed outside calcDistSideCase
+def calcDistSideCase(y1, h1, y3, h2):
+    deltaH = 0;
+    length = 0;
+    if(y1 > y3):
+        deltaH = y1 - y3
+        lengthRight = (h1) - 2 * deltaH
+        print "deltaH: " + str(deltaH) + ", h1: " + str(h1)
+        length = (h1 + lengthRight) / 2.0
+        if(length == (h1 - deltaH)):
+            print "length: " + str(length)
+        else:
+            print "fail"
+    else:
+        deltaH = y3 - y1
+        lengthLeft = h2 - 2 * deltaH
+        print "deltaH: " + str(deltaH) + ", h2: " + str(h2)
+        length = (h2 + lengthLeft) / 2.0
+        if(length == (h2 - deltaH)):
+            print "length: " + str(length)
+        else:
+            print "fail"
+    return calcDist(length)
 
 def calcAngleDeg():
     return calcAngleRad() * 180.0 / math.pi
@@ -47,6 +71,25 @@ def calcPinDist():
 def pinPosition(x1, y1, x2, y2, x3, y3, x4, y4):
     x = (x1 + x2 + x3 + x4) / 4.0;
     y = (y1 + y2 + y3 + y4) / 4.0;
+    return (int(x), int(y))
+
+def crossPinPos(x1, y1, w1, h1, x3, y3, w3, h3):
+    ############# MAKE SURE THE RECT CASES WORK!!!
+    #Case x1 is on the left side
+    x = 0
+    y = 0
+
+    #uses similar triangles to find the coordinate of the x and y 
+    #using the heights to find the proportions
+    proportionConstant = float(h3) + h1
+    #x1 is left of x3
+    if(x1 < x3):
+        x = x1 + h1 * (x3 + w3 - x1) / proportionConstant
+        y = y1 + h1 * (y3 + h3 - y1) / proportionConstant
+    else:
+        x = x3 + h3 * (x1 + w1 - x3) / proportionConstant
+        y = y3 + h3 * (y1 + h1 - y3) / proportionConstant
+
     return (int(x), int(y))
 
 
@@ -113,7 +156,7 @@ of the top left and bottom right corners"""
 camera = cv2.VideoCapture(0)
 _, frame = camera.read()
 SCREEN_HEIGHT, SCREEN_WIDTH = frame.shape[:2]
-ANGLE_CONST = (SCREEN_WIDTH / 2.0) / math.tan(FIELD_OF_VIEW_RAD / 2.0);
+ANGLE_CONST = (SCREEN_WIDTH / 2.0) / math.tan(FIELD_OF_VIEW_RAD / 2.0)
 
 while True:
     _, frame = camera.read()
@@ -129,8 +172,8 @@ while True:
     # maskHigh = cv2.inRange(hsv, high_red, pi_red)
     # mask = maskLow + maskHigh
 
-    low_white = np.array([0,0,100]);
-    high_white = np.array([360, 10, 255]);
+    low_white = np.array([118 - 10,22.95 - 20,181.05 - 30]);
+    high_white = np.array([123 + 10, 22.95 + 20, 181.05 + 30]);
     mask = cv2.inRange(hsv, low_white, high_white);
     
     # #green thresholds
@@ -155,7 +198,7 @@ while True:
 
     for cnt in contour:
         x,y,w,h = cv2.boundingRect(cnt)
-        if(w * h > max_area):
+        if(w * h >= max_area):
             secmax_area = max_area
             max_area = w * h
 
@@ -173,15 +216,35 @@ while True:
 
     #draw rectangles on two biggest green part found
     if(max_area > 0):
-        cv2.rectangle(frame,(mx,my),(mx+mw,my+mh),(0,255,0),thickness=20)
+        cv2.rectangle(frame,(mx,my),(mx+mw,my+mh),(0,255,0),thickness=5)
         if(secmax_area > 0):
-            cv2.rectangle(frame,(sx,sy),(sx+sw,sy+sh),(0,0,255),thickness=20)
+            cv2.rectangle(frame,(sx,sy),(sx+sw,sy+sh),(0,0,255),thickness=5)
+            #draws diagonal lines
+            #top left corner to bottom right corner
+
+            #max rect is on left of secmax rect
+            if(mx < sx):
+                #top left corner to bottom right corner
+                cv2.line(frame, (mx, my), (sx+sw, sy+sh), (0, 255, 255), thickness=5)
+                #top right corner to bottm left corner
+                cv2.line(frame, (sx+sw, sy), (mx, my+mh), (0, 255, 255), thickness=5)
+            else: #secmax rect is on left of max rect
+                #top left corner to bottom right corner
+                cv2.line(frame, (sx, sy), (mx+mw, my+mh), (0, 255, 255), thickness=5)
+                #top right corner to bottm left corner
+                cv2.line(frame, (mx+mw, my), (sx, sy+sh), (0, 255, 255), thickness=5)
+            
+    
             pinX, pinY = pinPosition(mx, my, mx+mw, my+mh, sx, sy, sx+sw, sy+sh)
             cv2.circle(frame, (pinX, pinY), 1, (255, 0, 0), thickness=5)
-
+            
+            diagPinX, diagPinY = crossPinPos(mx, my, mw, mh, sx, sy, sw, sh)
+            cv2.circle(frame, (diagPinX, diagPinY), 1, (255, 0, 0), thickness=5)
+            
 
     cv2.putText(frame, "ANGLE: " + str(calcAngleDeg()), (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
     cv2.putText(frame, "DIST: " + str(calcDist((mh + sh) / 2.0)), (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
+    cv2.putText(frame, "DIST test: " + str(calcDistSideCase(my, mh, sy, sh)), (50, 150), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
 
 
     cv2.waitKey(1)
