@@ -3,155 +3,137 @@ package org.usfirst.frc.team2473.robot;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.usfirst.frc.team2473.framework.Database;
-import org.usfirst.frc.team2473.framework.components.Controls;
-import org.usfirst.frc.team2473.framework.components.Controls.ButtonAction;
-import org.usfirst.frc.team2473.framework.components.Trackers;
 import org.usfirst.frc.team2473.framework.readers.ControlsReader;
 import org.usfirst.frc.team2473.framework.readers.DeviceReader;
-import org.usfirst.frc.team2473.framework.trackers.ButtonTracker;
-import org.usfirst.frc.team2473.framework.trackers.EncoderTracker;
-import org.usfirst.frc.team2473.framework.trackers.GyroTracker;
-import org.usfirst.frc.team2473.framework.trackers.JoystickTracker;
-import org.usfirst.frc.team2473.framework.trackers.ServoTracker;
-import org.usfirst.frc.team2473.framework.trackers.TalonTracker;
-import org.usfirst.frc.team2473.robot.commands.MotorCommand;
-import org.usfirst.frc.team2473.robot.commands.MotorStopCommand;
-import org.usfirst.frc.team2473.robot.commands.ServoCommand;
-import org.usfirst.frc.team2473.robot.commands.ServoStopCommand;
-import org.usfirst.frc.team2473.robot.subsystems.MotorSystem;
-import org.usfirst.frc.team2473.robot.subsystems.ServoSystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-
+/**
+ * Central class for RIO-side code-base. Calls to commands and directly executable code are made here. Threads are created and run in this class.
+ * @author Deep Sethi
+ * @author Harmony He
+ * @version 1.0
+ */
 public class Robot extends IterativeRobot {
+	
+	private boolean timerRunning; //this timer is set to true for autonomous and false for tele-op
+	private DeviceReader reader; //this is the device reader thread, which reads device values and looks up memes
+	private Timer robotControlLoop = new Timer(); //timer allows for even periodic execution of teleOpPeriodic
 
-	public static ServoSystem servoSystem = new ServoSystem();
-	public static MotorSystem motorSystem = new MotorSystem();
-	MotorCommand cmd1 = new MotorCommand();
-	ServoCommand cmd2 = new ServoCommand();
-
-	int counter = 0;
-
-	boolean timerRunning;
-	private DeviceReader reader;
-	Timer robotControlLoop = new Timer();
-
+	/*no special constructor is required for this class. you will never need to make an object of this class*/
+	
+	/**
+	 * Is executed when the robot is first started up. Overridden from <code>IterativeRobot</code>
+	 * Calls <code>addTrackers</code> for trackers to be added and starts the <code>DeviceReader</code> thread.
+	 * @see DeviceReader
+	 * @see <a href="http://first.wpi.edu/FRC/roborio/release/docs/java/edu/wpi/first/wpilibj/IterativeRobot.html"><code>IterativeRobot</code></a>
+	 * */
 	@Override
 	public void robotInit() {
-		addTrackers();
-		reader = new DeviceReader();
-		reader.start();
-		print();
+		addTrackers(); //add the trackers before anything else
+		reader = new DeviceReader(); //create device reader thread
+		reader.start(); //start the thread once the robot is started
 	}
 
+	/**
+	 * Is executed when the robot enters disabled mode. Overridden from <code>IterativeRobot</code>
+	 * @see <a href="http://first.wpi.edu/FRC/roborio/release/docs/java/edu/wpi/first/wpilibj/IterativeRobot.html"><code>IterativeRobot</code></a>
+	 * */
 	@Override
 	public void disabledInit() {
 
 	}
 
+	/**
+	 * Is executed during the robot's disabled mode as a looping method. Overridden from <code>IterativeRobot</code>
+	 * @see <a href="http://first.wpi.edu/FRC/roborio/release/docs/java/edu/wpi/first/wpilibj/IterativeRobot.html"><code>IterativeRobot</code></a>
+	 * */
 	@Override
 	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
+		Scheduler.getInstance().run(); //run the scheduler over the periodic function
 	}
 
 
+	/**
+	 * Is executed when the robot enters autonomous mode. Overridden from <code>IterativeRobot</code>
+	 * <br> Sets the <code>timerRunning</code> to <code>false</code>
+	 * @see <a href="http://first.wpi.edu/FRC/roborio/release/docs/java/edu/wpi/first/wpilibj/IterativeRobot.html"><code>IterativeRobot</code></a>
+	 * */
 	@Override
 	public void autonomousInit() {
-		timerRunning = true;
+		timerRunning = true; //the competition timer is running now that autonomous mode has started
 	}
 
+	/**
+	 * Is executed during the robot's autonomous mode as a looping method. Overridden from <code>IterativeRobot</code>
+	 * @see <a href="http://first.wpi.edu/FRC/roborio/release/docs/java/edu/wpi/first/wpilibj/IterativeRobot.html"><code>IterativeRobot</code></a>
+	 * */
 	@Override
 	public void autonomousPeriodic() {
-		Scheduler.getInstance().run();
-	}
-
-	@Override
-	public void teleopInit() {
-		timerRunning = false;
-		try {
-			Controls.getInstance().addButtonCommand(ControlsMap.BUTTON_ONE, ButtonAction.PRESSED, new ServoStopCommand());
-			Controls.getInstance().addButtonCommand(ControlsMap.BUTTON_TWO, ButtonAction.PRESSED, new MotorStopCommand());
-			//so on and so forth
-		} catch (InstantiationException | IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		};
-		cmd1.start();
-		cmd2.start();
-	}
-
-	@Override
-	public void teleopPeriodic() {
-		Scheduler.getInstance().run();
 		if (!timerRunning) {
-			robotControlLoop.scheduleAtFixedRate(new TimerTask(){
+			robotControlLoop.scheduleAtFixedRate(new TimerTask(){ //run the control loop timer if the competition timer is not running
 				@Override
 				public void run() {
-					Scheduler.getInstance().run();
+					Scheduler.getInstance().run(); //run the scheduler over the periodic function
 				}
 			}, 0, 20);
-			timerRunning = true;
+			timerRunning = true; //ultimately set the running timer to true
+		}
+	}
+
+	/**
+	 * Is executed when the robot enters tele-op mode. Overriden from <code>IterativeRobot</code>
+	 * <br> Sets the <code>timerRunning</code> to <code>true</code>
+	 * @see <a href="http://first.wpi.edu/FRC/roborio/release/docs/java/edu/wpi/first/wpilibj/IterativeRobot.html"><code>IterativeRobot</code></a>
+	 * */
+	@Override
+	public void teleopInit() {
+		timerRunning = false; //the competition timer is not running now that tele-op mode has started
+	}
+
+	/**
+	 * Is executed during the robot's tele-op mode as a looping method. Overridden from <code>IterativeRobot</code>
+	 * <br>Gets the <code>robotControlLoop Timer</code> running, at a consistent period of 20 milliseconds.
+	 * <br><br> The <code>Scheduler</code> is run during this period, and <code>ControlsReader</code> updates OI values constantly.
+	 * @see <a href="http://first.wpi.edu/FRC/roborio/release/docs/java/edu/wpi/first/wpilibj/IterativeRobot.html"><code>IterativeRobot</code></a>
+	 * @see org.usfirst.frc.team2473.framework.readers.ControlsReader
+	 * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Timer.html"><code>Timer</code></a>
+	 * */
+	@Override
+	public void teleopPeriodic() {
+		if (!timerRunning) {
+			robotControlLoop.scheduleAtFixedRate(new TimerTask(){ //run the control loop timer if the competition timer is not running
+				@Override
+				public void run() {
+					Scheduler.getInstance().run(); //run the scheduler over the periodic function
+				}
+			}, 0, 20);
+			timerRunning = true; //ultimately set the running timer to true
 		}
 		
 		ControlsReader.getInstance().updateAll();
-		print();
 	}
 
+	/**
+	 * Is executed during the robot's tele-op mode as a looping method. Overridden from <code>IterativeRobot</code>
+	 * @see <a href="http://first.wpi.edu/FRC/roborio/release/docs/java/edu/wpi/first/wpilibj/IterativeRobot.html"><code>IterativeRobot</code></a>
+	 * */
 	@Override
 	public void testPeriodic() {
 		LiveWindow.run();
 	}
 	
+	/**
+	 * Responsible for addition of <code>DeviceTracker</code> objects to <code>Trackers</code> and all <code>Devices</code>.
+	 * <br>To add a device tracker, evoke <code>addTracker</code> from <code>Trackers</code>
+	 * <br><br><br>Example: <code>Trackers.getInstance().addTracker(new EncoderTracker("encoder tracker", 2, Type.NUMERIC)</code>
+	 * @see org.usfirst.frc.team2473.framework.trackers.DeviceTracker
+	 * @see org.usfirst.frc.team2473.framework.components.Devices
+	 * @see org.usfirst.frc.team2473.framework.components.Trackers#addTracker(org.usfirst.frc.team2473.framework.trackers.DeviceTracker)
+	 * */
 	public void addTrackers() {
-		//in the case below, both device trackers point to the same device, a talon with the device id stored in RobotMap.SHOOTER
-		Trackers.getInstance().addTracker(new EncoderTracker(RobotMap.MOTOR_ENCODER_KEY, RobotMap.MOTOR));
-		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.MOTOR_POWER_KEY, RobotMap.MOTOR, TalonTracker.Target.POWER));
-		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.MOTOR_VOLTAGE_KEY, RobotMap.MOTOR, TalonTracker.Target.VOLTAGE));
-		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.MOTOR_CURRENT_KEY, RobotMap.MOTOR, TalonTracker.Target.CURRENT));
-		
-		Trackers.getInstance().addTracker(new ServoTracker(RobotMap.SERVO_POSITION_KEY, RobotMap.SERVO, ServoTracker.Target.POSITION));
-		Trackers.getInstance().addTracker(new ServoTracker(RobotMap.SERVO_POWER_KEY, RobotMap.SERVO, ServoTracker.Target.POWER));
-		Trackers.getInstance().addTracker(new JoystickTracker(ControlsMap.JOYSTICK_ONE, ControlsMap.JOY_ONE, JoystickTracker.Type.X));
-		Trackers.getInstance().addTracker(new ButtonTracker(ControlsMap.BUTTON_ONE, ControlsMap.JOY_ONE, ControlsMap.JOY_ONE_BUTTON_ONE));
-		Trackers.getInstance().addTracker(new JoystickTracker(ControlsMap.JOYSTICK_TWO, ControlsMap.JOY_TWO, JoystickTracker.Type.Y));
-		Trackers.getInstance().addTracker(new ButtonTracker(ControlsMap.BUTTON_TWO, ControlsMap.JOY_TWO, ControlsMap.JOY_TWO_BUTTON_ONE));
-		
-		Trackers.getInstance().addTracker(new GyroTracker(RobotMap.GYRO_HEADING_KEY, RobotMap.GYRO));
-	}
-	
-	void horizontal() {
-		for(int i = 0; i < 20; i++) System.out.print("_");
-		System.out.println();
-	}
-	
-	void print() {
-		horizontal();
-		System.out.println("ITERATION: " + ++counter);
-		
-		System.out.println("JOYSTICK 1 DATA: ");
-		System.out.println("Joystick 1 Y Position: " + Database.getInstance().getNumeric(ControlsMap.JOYSTICK_ONE));
-		System.out.println("Button 1 Value: " + Database.getInstance().getConditional(ControlsMap.BUTTON_ONE));
-
-		System.out.println("SERVO DATA: ");
-		System.out.println("Servo Position: " + Database.getInstance().getNumeric(RobotMap.SERVO_POSITION_KEY));
-		System.out.println("Servo Power: " + Database.getInstance().getNumeric(RobotMap.SERVO_POWER_KEY));
-
-		System.out.println("JOYSTICK 2 DATA: ");
-		System.out.println("Joystick 2 Y Position: " + Database.getInstance().getNumeric(ControlsMap.JOYSTICK_TWO));
-		System.out.println("Button 2 Value: " + Database.getInstance().getConditional(ControlsMap.BUTTON_TWO));		
-		
-		System.out.println("TALON DATA: ");
-		System.out.println("Talon Position: " + Database.getInstance().getNumeric(RobotMap.MOTOR_ENCODER_KEY));
-		System.out.println("Talon Power: " + Database.getInstance().getNumeric(RobotMap.MOTOR_POWER_KEY));
-		System.out.println("Talon Current: " + Database.getInstance().getNumeric(RobotMap.MOTOR_CURRENT_KEY));
-		System.out.println("Talon Voltage: " + Database.getInstance().getNumeric(RobotMap.MOTOR_VOLTAGE_KEY));
-		
-		System.out.println("GYRO DATA: ");
-		System.out.println("Gyro Heading: " + Database.getInstance().getNumeric(RobotMap.GYRO_HEADING_KEY));
-		
-	}
+		//call Trackers.getInstance().addTracker(new DeviceTracker(String key, int port, Type dataType);
+	}	
 }
