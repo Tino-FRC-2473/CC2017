@@ -31,7 +31,13 @@ def calcDist(length): #the length of the rectangle
     return -1;
 
 #do check for whether this is needed outside calcDistSideCase
+#TODO make variable names better
 def calcDistSideCase(y1, h1, y3, h2):
+    return calcDist(calcLengthSideCase(y1, h1, y3, h2))
+
+#calculates the so called "average length"
+#CAN MAKE THIS METHOD MORE EFFICIENT!!!
+def calcLengthSideCase(y1, h1, y3, h2):
     deltaH = 0;
     length = 0;
     if(y1 > y3):
@@ -52,7 +58,8 @@ def calcDistSideCase(y1, h1, y3, h2):
             print "length: " + str(length)
         else:
             print "fail"
-    return calcDist(length)
+
+    return length
 
 def calcAngleDeg():
     return calcAngleRad() * 180.0 / math.pi
@@ -73,6 +80,7 @@ def pinPosition(x1, y1, x2, y2, x3, y3, x4, y4):
     y = (y1 + y2 + y3 + y4) / 4.0;
     return (int(x), int(y))
 
+#must find and modify height beforehand!!!
 def crossPinPos(x1, y1, w1, h1, x3, y3, w3, h3):
     ############# MAKE SURE THE RECT CASES WORK!!!
     #Case x1 is on the left side
@@ -214,14 +222,29 @@ while True:
 
 
 
-    #draw rectangles on two biggest green part found
+    #draw rectangles on two biggest green part found, draws green rectangles
     if(max_area > 0):
         cv2.rectangle(frame,(mx,my),(mx+mw,my+mh),(0,255,0),thickness=5)
         if(secmax_area > 0):
             cv2.rectangle(frame,(sx,sy),(sx+sw,sy+sh),(0,0,255),thickness=5)
-            #draws diagonal lines
-            #top left corner to bottom right corner
+            
+            modmx, modmy, modmw, modmh = mx, my, mw, mh
+            modsx, modsy, modsw, modsh = sx, sy, sw, sh
+            #calculate the modified coordinates
+            if(my > sy): #is my is higher up than sy (probably 100% of the time)
+                #change the modsh
+                modsh = int(calcLengthSideCase(my, mh, sy, sh) * 2 - mh)
+            else:
+                #change the modmh
+                modmh = int(calcLengthSideCase(my, mh, sy, sh) * 2 - sh)
+            
+            #draws the new rectangles, purple
+            cv2.rectangle(frame,(modmx,modmy),(modmx+modmw,modmy+modmh),(255,0,255),thickness=5)
+            cv2.rectangle(frame,(modsx,modsy),(modsx+modsw,modsy+modsh),(255,0,255),thickness=5)
+            
 
+            """#draws diagonal lines, yellow lines
+            #top left corner to bottom right corner
             #max rect is on left of secmax rect
             if(mx < sx):
                 #top left corner to bottom right corner
@@ -239,7 +262,7 @@ while True:
             cv2.circle(frame, (pinX, pinY), 1, (255, 0, 0), thickness=5)
             
             diagPinX, diagPinY = crossPinPos(mx, my, mw, mh, sx, sy, sw, sh)
-            cv2.circle(frame, (diagPinX, diagPinY), 1, (255, 0, 0), thickness=5)
+            cv2.circle(frame, (diagPinX, diagPinY), 1, (0, 0, 0), thickness=5)"""
             
 
     cv2.putText(frame, "ANGLE: " + str(calcAngleDeg()), (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
