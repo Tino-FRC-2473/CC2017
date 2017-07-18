@@ -24,8 +24,8 @@ public class RunAll extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new ClimberRun());
-    	addSequential(new ShooterRun());
-    	addSequential(new GearRun());
+    	addSequential(new ClimberTeleOp());
+    	addSequential(new ShooterAuto());
+    	addSequential(new GearTele());
     }
 }

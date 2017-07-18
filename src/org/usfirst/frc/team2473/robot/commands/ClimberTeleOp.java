@@ -29,6 +29,11 @@ public class ClimberTeleOp extends Command {
     		Robot.climber.ClimberMotorOne.set(0.5);
     		Robot.climber.ClimberMotorTwo.set(0.5);
     	}
+    	
+    	if (Robot.climber.switchVal()){
+    		Robot.climber.ClimberMotorOne.set(0);
+    		Robot.climber.ClimberMotorTwo.set(0);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
