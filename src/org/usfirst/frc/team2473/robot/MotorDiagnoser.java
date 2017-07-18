@@ -18,10 +18,10 @@ public class MotorDiagnoser extends Diagnoser{
 	}
 
 
-	@Override
-	public void RunManualTest() {
-		
-	}
+//	@Override
+//	public void RunManualTest() {
+//		
+//	}
 
 	@Override
 	public void RunSimultaneousTest() {

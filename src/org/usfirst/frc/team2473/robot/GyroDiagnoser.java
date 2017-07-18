@@ -15,10 +15,10 @@ public class GyroDiagnoser extends Diagnoser{
 	}
 
 //Another diagnoser for DriveTrain. 
-	@Override
-	public void RunManualTest() {
-		
-	}
+//	@Override
+//	public void RunManualTest() {
+//		
+//	}
 
 	@Override
 	public void RunSimultaneousTest() {
