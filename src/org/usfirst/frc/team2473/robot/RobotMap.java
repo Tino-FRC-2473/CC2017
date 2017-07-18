@@ -20,4 +20,8 @@ public class RobotMap {
 	public static final String SERVO_POSITION_KEY = "servo position key";
 	public static final String SERVO_POWER_KEY = "servo power key";
 	public static final String GYRO_HEADING_KEY = "gyro key";
+	
+	public static final String PEG_DISTANCE = "peg distance";
+	public static final String PEG_ANGLE = "peg angle";
+	public static final String FUNCTION_TRIGGER = "function trigger";
 }
