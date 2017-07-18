@@ -7,8 +7,11 @@ package org.usfirst.frc.team2473.robot;
  * floating around.
  */
 public class RobotMap {
-	public static final int FL = 1;
-	public static final int FR = 2;
-	public static final int BL = 1;
-	public static final int BR = 2;
+	
+	public static final int FRONT_RIGHT = 1; // Ask electrical for exact values
+	public static final int FRONT_LEFT = 2; // Ask electrical for exact values
+	public static final int BACK_RIGHT = 3; // Ask electrical for exact values
+	public static final int BACK_LEFT = 4; // Ask electrical for exact values
+	
+	
 }

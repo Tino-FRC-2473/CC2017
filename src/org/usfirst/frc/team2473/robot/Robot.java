@@ -8,9 +8,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team2473.robot.commands.DisplayData;
-import org.usfirst.frc.team2473.robot.commands.DriveStraight;
-import org.usfirst.frc.team2473.robot.subsystems.DriveTrain;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -21,11 +18,11 @@ import org.usfirst.frc.team2473.robot.subsystems.DriveTrain;
  */
 public class Robot extends IterativeRobot {
 
-	public static final DriveTrain DT = new DriveTrain();
-	public static final DisplayData DD = new DisplayData();
 	public static OI oi;
+	public static DriveTrain driveTrain;
 
-	Command autonomousCommand;
+	Command autonomousCommand = new DriveStraightCommand();
+	SendableChooser<Command> chooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -33,7 +30,13 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		System.out.println("Robot started");
+		
 		oi = new OI();
+		driveTrain = new DriveTrain();
+		chooser.addObject("Autonomous Drive Straight", autonomousCommand);
+		// chooser.addObject("My Auto", new MyAutoCommand());
+		SmartDashboard.putData("Auto mode", chooser);
 	}
 
 	/**
@@ -64,13 +67,13 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = DD;
-
+		
+		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new DriveStraight(); break; }
+		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
 
 		// schedule the autonomous command (example)
@@ -101,7 +104,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		Scheduler.getInstance().run();
+		//Scheduler.getInstance().run();
 	}
 
 	/**
