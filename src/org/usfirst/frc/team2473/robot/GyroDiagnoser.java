@@ -11,7 +11,7 @@ public class GyroDiagnoser extends Diagnoser{
 	public GyroDiagnoser(AnalogGyro gyro,String key){
 		this.gyro = gyro;
 		this.key = key;
-		Diagnostics.addToQue(this);
+		Diagnostics.addToQueue(this);
 	}
 
 //Another diagnoser for DriveTrain. 

@@ -14,7 +14,7 @@ public class MotorDiagnoser extends Diagnoser{
 		this.motor = motor;
 		this.key = key;
 		this.range = range;
-		Diagnostics.addToQue(this);
+		Diagnostics.addToQueue(this);
 	}
 
 

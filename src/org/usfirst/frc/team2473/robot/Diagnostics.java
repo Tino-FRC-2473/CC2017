@@ -10,7 +10,7 @@ import com.ctre.CANTalon;
 public class Diagnostics {
 	private static ArrayList<Diagnoser> diagnosers = new ArrayList();
 	private static ManualTestCommands command;
-	public static void addToQue(Diagnoser diagnoser){
+	public static void addToQueue(Diagnoser diagnoser){
 		diagnosers.add(diagnoser);
 	}
 	public enum TestType{

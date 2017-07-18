@@ -131,15 +131,15 @@ public class DriverTrainDiagnoser extends Diagnoser {
 		
 	}
 
-	@Override
-	public void RunManualTest() {
-		// TODO Auto-generated method stub
-		this.setPowerToALl(stick.getY());
-		System.out.println("frontright Power: " + DataBase.getDeviceValue(keyfrp));
-		System.out.println("backright Power: " + DataBase.getDeviceValue(keybrp));
-		System.out.println("frontleft Power: " + DataBase.getDeviceValue(keyflp));
-		System.out.println("backleft Power: " + DataBase.getDeviceValue(keyblp));
-	}
+//	@Override
+//	public void RunManualTest() {
+//		// TODO Auto-generated method stub
+//		this.setPowerToALl(stick.getY());
+//		System.out.println("frontright Power: " + DataBase.getDeviceValue(keyfrp));
+//		System.out.println("backright Power: " + DataBase.getDeviceValue(keybrp));
+//		System.out.println("frontleft Power: " + DataBase.getDeviceValue(keyflp));
+//		System.out.println("backleft Power: " + DataBase.getDeviceValue(keyblp));
+//	}
 
 	@Override
 	public void RunSimultaneousTest() {
@@ -185,6 +185,10 @@ public class DriverTrainDiagnoser extends Diagnoser {
 		fr.set(pow);
 		bl.set(pow);
 		br.set(pow);
+	}
+	
+	public double getMultiplier(){
+		return this.SpeedMultiplier;
 	}
 	
 }
