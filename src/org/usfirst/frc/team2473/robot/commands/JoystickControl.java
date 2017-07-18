@@ -19,12 +19,14 @@ public class JoystickControl extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	System.out.println("CMD INIT");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//(Robot.driveTrain.getRightPow() ) && (Robot.oi.throttle.getThrottle() <= 0.05 && Robot.oi.throttle.getThrottle() >= -0.05)
-    		Robot.driveTrain.driveArcade(Math.sqrt(Robot.oi.throttle.getThrottle()),Robot.oi.wheel.getTwist()/(1000));
+    		Robot.driveTrain.driveArcade(Math.sqrt(Robot.oi.throttle.getZ()),Robot.oi.wheel.getTwist());
+			System.out.println(Robot.oi.throttle.getZ());
     }
 
     // Make this return true when this Command no longer needs to run execute()

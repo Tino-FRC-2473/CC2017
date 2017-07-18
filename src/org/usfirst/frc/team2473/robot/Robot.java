@@ -22,8 +22,6 @@ public class Robot extends IterativeRobot {
 	public static DriveTrain driveTrain;
 	public static JoystickControl joycom;
 	Command autonomousCommand;
-	SendableChooser<Command> chooser = new SendableChooser<>();
-
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -33,8 +31,6 @@ public class Robot extends IterativeRobot {
 		driveTrain = new DriveTrain();
 		joycom = new JoystickControl();
 		oi = new OI();
-		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", chooser);
 	}
 
 	/**

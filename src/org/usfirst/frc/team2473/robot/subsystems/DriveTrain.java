@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2473.robot.subsystems;
 
-import org.usfirst.frc.team2473.robot.Database;
 import org.usfirst.frc.team2473.robot.Robot;
 import org.usfirst.frc.team2473.robot.RobotMap;
 import org.usfirst.frc.team2473.robot.commands.JoystickControl;
@@ -32,6 +31,7 @@ public CANTalon front_right, front_left, back_right, back_left;
 	
 	public DriveTrain() {
 		super();
+		System.out.println("DT CREATED");
 		front_right = new CANTalon(RobotMap.FRONT_RIGHT);
     	front_left = new CANTalon(RobotMap.FRONT_LEFT);
     	back_right = new CANTalon(RobotMap.BACK_RIGHT);
