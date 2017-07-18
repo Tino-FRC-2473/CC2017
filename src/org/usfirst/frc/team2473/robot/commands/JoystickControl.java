@@ -8,7 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class JoystickControl extends Command {
-	
+	private double prevThrottleVal = 0;
+	private double dvr = 0;
+	private double dvl = 0;
     public JoystickControl() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -21,7 +23,8 @@ public class JoystickControl extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.driveArcade(Math.sqrt(Robot.oi.throttle.getThrottle()),Robot.oi.wheel.getTwist()/(1000));
+    	//(Robot.driveTrain.getRightPow() ) && (Robot.oi.throttle.getThrottle() <= 0.05 && Robot.oi.throttle.getThrottle() >= -0.05)
+    		Robot.driveTrain.driveArcade(Math.sqrt(Robot.oi.throttle.getThrottle()),Robot.oi.wheel.getTwist()/(1000));
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -21,10 +21,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveTrain extends Subsystem {
     
-	private SpeedController leftFrontCAN;
-	private SpeedController rightFrontCAN;
-	private SpeedController leftBackCAN;
-	private SpeedController rightBackCAN;
+	private CANTalon leftFrontCAN;
+	private CANTalon rightFrontCAN;
+	private CANTalon leftBackCAN;
+	private CANTalon rightBackCAN;
 
 	private RobotDrive drive;
 	
@@ -55,7 +55,15 @@ public class DriveTrain extends Subsystem {
     	drive.tankDrive(left, right);
    
 	}
+    
+    public double getLeftPow() {
+    	return leftFrontCAN.get();
+    }
 
+    public double getRightPow() {
+    	return rightFrontCAN.get();
+    }
+    
     public void driveArcade(double speed, double rotate) {
     	drive.arcadeDrive(speed, rotate);
 	}
