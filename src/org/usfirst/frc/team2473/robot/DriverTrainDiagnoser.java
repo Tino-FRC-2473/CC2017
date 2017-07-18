@@ -6,45 +6,49 @@ import com.ctre.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class DriverTrainDiagnoser extends Diagnoser {
-	private CANTalon fr;
-	private CANTalon fl;
-	private CANTalon bl;
-	private CANTalon br;
-	private String keyfre;
+	//contructor values
+	private CANTalon fr; //front right motor
+	private CANTalon fl; //front left motor
+	private CANTalon bl; //back left motor
+	private CANTalon br; //back right motor
+	private String keyfre; //encoder
 	private String keyfle;
 	private String keyble;
 	private String keybre;
-	private String keyfrp;
+	private String keyfrp; //power
 	private String keyflp;
 	private String keyblp;
 	private String keybrp;
-	private String keyfrs;
+	private String keyfrs; //speed
 	private String keyfls;
 	private String keybls;
 	private String keybrs;
-	private String keyfrc;
+	private String keyfrc; //current
 	private String keyflc;
 	private String keyblc;
 	private String keybrc;
 	
-	private Joystick stick;
+	//private Joystick stick; unused code for now
 	
-	private double EcnoderTicksPerRotation = 6000.0;
-	
+	//torque calculations
 	private double rpmfr = 0.0;
 	private double rpmfl = 0.0;
 	private double rpmbr = 0.0;
 	private double rpmbl = 0.0;
-	double torquefr = 0.0;
-	double torquefl = 0.0;
-	double torquebr = 0.0;
-	double torquebl = 0.0;
+	private double torquefr = 0.0;
+	private double torquefl = 0.0;
+	private double torquebr = 0.0;
+	private double torquebl = 0.0;
 	
+	//encoder goal for onetime test
 	private double encoders = 1600;
 	
+	//motor constants
 	private final double MAX_TORQUE = 0.03;
 	private final double MAX_CURRENT = 10.0;
+	private double EcnoderTicksPerRotation = 6000.0;
 	
+	//speed multiplier
 	private double SpeedMultiplier = 1.0;
 	
 	public DriverTrainDiagnoser(CANTalon fr, CANTalon fl, CANTalon bl, CANTalon br, Joystick stick, 
@@ -77,31 +81,24 @@ public class DriverTrainDiagnoser extends Diagnoser {
 		this.keybrp = keybrc;
 		this.keyblp = keyblc;
 		//the joystick
-		this.stick = stick;
+		//this.stick = stick; unused code for now
 	}
 
 	@Override
 	public void RunOneTimeTest() {
 		// TODO Auto-generated method stub
-		fr.changeControlMode(TalonControlMode.Position);
-		fl.changeControlMode(TalonControlMode.Position);
-		bl.changeControlMode(TalonControlMode.Position);
-		br.changeControlMode(TalonControlMode.Position);
-	
-		fr.setPosition(0);
-		fl.setPosition(0);
-		bl.setPosition(0);
-		br.setPosition(0);
-		
-		fr.setPosition(encoders);
-		fl.setPosition(encoders);
-		bl.setPosition(encoders);
-		br.setPosition(encoders);
-		
 		double encoderfr = DataBase.getDeviceValue(keyfre);
 		double encoderfl = DataBase.getDeviceValue(keyfle);
 		double encoderbl = DataBase.getDeviceValue(keyble);
 		double encoderbr = DataBase.getDeviceValue(keybre);
+		
+		reset();
+		
+		while(encoderfr <= encoders || encoderfl <= encoders){
+			if(DataBase.getDeviceValue(keyfrp) != 0.5){
+				setPowerToALl(0.5);
+			}
+		}
 		
 		if((encoderfr + encoderfl + encoderbr + encoderbl)/4 > encoders + 50 &&
 				(encoderfr + encoderfl + encoderbr + encoderbl)/4 < encoders - 50){
@@ -128,6 +125,8 @@ public class DriverTrainDiagnoser extends Diagnoser {
 				System.out.println("Back Right Motor: Disfunctional");
 			}
 		}
+		
+		reset();
 		
 	}
 
@@ -185,6 +184,23 @@ public class DriverTrainDiagnoser extends Diagnoser {
 		fr.set(pow);
 		bl.set(pow);
 		br.set(pow);
+	}
+	
+	private void reset(){
+		fr.changeControlMode(TalonControlMode.Position);
+		fl.changeControlMode(TalonControlMode.Position);
+		bl.changeControlMode(TalonControlMode.Position);
+		br.changeControlMode(TalonControlMode.Position);
+	
+		fr.setPosition(0);
+		fl.setPosition(0);
+		bl.setPosition(0);
+		br.setPosition(0);
+		
+		fr.changeControlMode(TalonControlMode.PercentVbus);
+		fl.changeControlMode(TalonControlMode.PercentVbus);
+		bl.changeControlMode(TalonControlMode.PercentVbus);
+		br.changeControlMode(TalonControlMode.PercentVbus);
 	}
 	
 	public double getMultiplier(){
