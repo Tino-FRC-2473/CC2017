@@ -1,4 +1,7 @@
-package org.usfirst.frc.team2473.robot;
+package org.usfirst.frc.team2473.robot.commands;
+
+import org.usfirst.frc.team2473.robot.Acceleration;
+import org.usfirst.frc.team2473.robot.Robot;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;

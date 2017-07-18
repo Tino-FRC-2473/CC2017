@@ -1,4 +1,6 @@
-package org.usfirst.frc.team2473.robot;
+package org.usfirst.frc.team2473.robot.subsystems;
+
+import org.usfirst.frc.team2473.robot.RobotMap;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
