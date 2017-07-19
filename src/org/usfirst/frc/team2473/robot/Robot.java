@@ -21,7 +21,6 @@ public class Robot extends IterativeRobot {
 	private boolean timerRunning; //this timer is set to true for autonomous and false for tele-op
 	private DeviceReader reader; //this is the device reader thread, which reads device values and looks up memes
 	private Timer robotControlLoop = new Timer(); //timer allows for even periodic execution of teleOpPeriodic
-
 	/*no special constructor is required for this class. you will never need to make an object of this class*/
 	
 	/**
@@ -33,6 +32,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		addTrackers(); //add the trackers before anything else
+		addDevices(); //add any devices lacking trackers but still need to be used
 		reader = new DeviceReader(); //create device reader thread
 		reader.start(); //start the thread once the robot is started
 	}
@@ -91,6 +91,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		timerRunning = false; //the competition timer is not running now that tele-op mode has started
+		ControlsReader.getInstance().init(); //initialize the tracking process of drive station controls
 	}
 
 	/**
@@ -136,4 +137,14 @@ public class Robot extends IterativeRobot {
 	public void addTrackers() {
 		//call Trackers.getInstance().addTracker(new DeviceTracker(String key, int port, Type dataType);
 	}	
+	
+	/**
+	 * Responsible for addition of hardware component objects to the central <code>Devices</code> class.
+	 * <br>To add a device, simply implement <code>a specified add method</code> from <code>Devices</code>
+	 * <br><br><br>Example: <code>Devices.getInstance().addTalon(RobotMap.TALON_ONE); //TALON_ONE is an int device-id</code>
+	 * @see org.usfirst.frc.team2473.framework.components.Devices
+	 * */
+	public void addDevices() {
+
+	}
 }
