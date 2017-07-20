@@ -38,7 +38,6 @@ public class Robot extends ThreadingRobot {
 	public static final Shooter shooter = new Shooter();
 	public static final Climber climber = new Climber();
 	public static final Gear gear = new Gear();
-	public static OI oi;
 	Timer robotControlLoop;
 	private boolean timerRunning;
 
@@ -51,7 +50,6 @@ public class Robot extends ThreadingRobot {
 	@Override
 	public void robotInit() {
 		robotControlLoop = new Timer();
-		oi = new OI();
 		addTrackers();
 		addDevices();
 		reader = new DeviceReader();

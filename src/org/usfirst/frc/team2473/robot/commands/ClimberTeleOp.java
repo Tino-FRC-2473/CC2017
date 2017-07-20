@@ -27,10 +27,8 @@ public class ClimberTeleOp extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	if (Robot.oi.gearPickupStick.getRawButton(6) == true) {
-    		Robot.climber.ClimberMotorOne.set(0.5);
-    		Robot.climber.ClimberMotorTwo.set(0.5);
-    	}
+		Robot.climber.ClimberMotorOne.set(0.5);
+		Robot.climber.ClimberMotorTwo.set(0.5);
     	
     	if (Robot.climber.switchVal()){
     		Robot.climber.ClimberMotorOne.set(0);
