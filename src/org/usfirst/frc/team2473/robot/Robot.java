@@ -4,6 +4,21 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+import org.usfirst.frc.team2473.framework.components.Controls;
+import org.usfirst.frc.team2473.framework.components.Devices;
+import org.usfirst.frc.team2473.framework.components.Trackers;
+import org.usfirst.frc.team2473.framework.components.Controls.ButtonAction;
+import org.usfirst.frc.team2473.framework.readers.ControlsReader;
+import org.usfirst.frc.team2473.framework.readers.DeviceReader;
+import org.usfirst.frc.team2473.framework.trackers.ButtonTracker;
+import org.usfirst.frc.team2473.framework.trackers.EncoderTracker;
+import org.usfirst.frc.team2473.framework.trackers.TalonTracker;
+import org.usfirst.frc.team2473.framework.trackers.TalonTracker.Target;
+import org.usfirst.frc.team2473.robot.commands.ClimberTeleOp;
+import org.usfirst.frc.team2473.robot.commands.GearTele;
 import org.usfirst.frc.team2473.robot.commands.RunAll;
 import org.usfirst.frc.team2473.robot.subsystems.Climber;
 import org.usfirst.frc.team2473.robot.subsystems.Gear;
@@ -17,12 +32,15 @@ import org.usfirst.frc.team2473.robot.subsystems.Shooter;
  * directory.
  */
 public class Robot extends ThreadingRobot {
-
+	DeviceReader reader;
+	
+	
 	public static final Shooter shooter = new Shooter();
 	public static final Climber climber = new Climber();
 	public static final Gear gear = new Gear();
 	public static OI oi;
-	
+	Timer robotControlLoop;
+	private boolean timerRunning;
 
 	Command autonomousCommand;
 
@@ -32,7 +50,12 @@ public class Robot extends ThreadingRobot {
 	 */
 	@Override
 	public void robotInit() {
+		robotControlLoop = new Timer();
 		oi = new OI();
+		addTrackers();
+		addDevices();
+		reader = new DeviceReader();
+		reader.start();
 	}
 
 	/**
@@ -63,18 +86,7 @@ public class Robot extends ThreadingRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = new RunAll();
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
-
-		// schedule the autonomous command (example)
-		if (autonomousCommand != null)
-			autonomousCommand.start();
-		
+		timerRunning = true;
 	}
 
 	/**
@@ -87,12 +99,25 @@ public class Robot extends ThreadingRobot {
 
 	@Override
 	public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
-		if (autonomousCommand != null)
-			autonomousCommand.cancel();
+		try {
+			Controls.getInstance().addButtonCommand(ControlsMap.Joy_ZERO_Climber_Val, ButtonAction.HELD, new ClimberTeleOp());
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			Controls.getInstance().addButtonCommand(ControlsMap.Joy_ZERO_Gear_Val, ButtonAction.PRESSED, new GearTele());
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		timerRunning = false;
 	}
 
 	/**
@@ -100,7 +125,17 @@ public class Robot extends ThreadingRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		Scheduler.getInstance().run();
+		if (!timerRunning) {
+			robotControlLoop.scheduleAtFixedRate(new TimerTask(){ //run the control loop timer if the competition timer is not running
+				@Override
+				public void run() {
+					Scheduler.getInstance().run(); //run the scheduler over the periodic function
+				}
+			}, 0, 20);
+			timerRunning = true; //ultimately set the running timer to true
+		}
+		
+		ControlsReader.getInstance().updateAll();
 	}
 
 	/**
@@ -111,15 +146,35 @@ public class Robot extends ThreadingRobot {
 		LiveWindow.run();
 	}
 	
-	/** 
-	 * This function adds all the devices
-	 */
-	public void updateDeviceCalls() {
-		addDeviceCall("ClimberRight", ()-> climber.getPower("RightMotor"));
-		addDeviceCall("ClimberLeft", ()-> climber.getPower("LeftMotor"));
-		addDeviceCall("GearPickupMotor", ()-> gear.getPower("gearPickupMotor"));
-		addDeviceCall("ShooterRight", ()-> shooter.getPower("RightMotor"));
-		addDeviceCall("ShooterLeft", ()-> shooter.getPower("LeftMotor"));
-		//addDeviceCall("ShooterServo", ()-> shooter.getPosition());
+//	/** 
+//	 * This function adds all the devices
+//	 */
+//	public void updateDeviceCalls() {
+//		addDeviceCall("ClimberRight", ()-> climber.getPower("RightMotor"));
+//		addDeviceCall("ClimberLeft", ()-> climber.getPower("LeftMotor"));
+//		addDeviceCall("GearPickupMotor", ()-> gear.getPower("gearPickupMotor"));
+//		addDeviceCall("ShooterRight", ()-> shooter.getPower("RightMotor"));
+//		addDeviceCall("ShooterLeft", ()-> shooter.getPower("LeftMotor"));
+//	}
+	
+	public void addDevices() {
+		Devices.getInstance().addTalon(RobotMap.shooterTalonOne);
+		Devices.getInstance().addTalon(RobotMap.shooterTalonTwo);
+		Devices.getInstance().addTalon(RobotMap.gearPickupMotor);
+		Devices.getInstance().addTalon(RobotMap.climberTalonOne);
+		Devices.getInstance().addTalon(RobotMap.climberTalonTwo);
+	}
+	
+	public void addTrackers() {
+		Trackers.getInstance().addTracker(new EncoderTracker(RobotMap.Shooter_Enc, RobotMap.shooterTalonOne));
+		Trackers.getInstance().addTracker(new EncoderTracker(RobotMap.Shooter_Enc, RobotMap.shooterTalonTwo));
+		Trackers.getInstance().addTracker(new EncoderTracker(RobotMap.Gear_Pickup_Enc, RobotMap.gearPickupMotor));
+		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.climberTalonOneCurrent, RobotMap.climberTalonOne, Target.CURRENT));
+		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.climberTalonTwoCurrent, RobotMap.climberTalonTwo, Target.CURRENT));
+		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.shooterTalonOneCurrent, RobotMap.shooterTalonOne, Target.CURRENT));
+		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.shooterTalonOneCurrent, RobotMap.shooterTalonOne, Target.CURRENT));
+		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.gearPickupTalonCurrent, RobotMap.gearPickupMotor, Target.CURRENT));
+		Trackers.getInstance().addTracker(new ButtonTracker(ControlsMap.Joy_ZERO_Climber_Val, ControlsMap.Joy_ZERO, ControlsMap.Joy_ZERO_Climber));
+		Trackers.getInstance().addTracker(new ButtonTracker(ControlsMap.Joy_ZERO_Gear_Val, ControlsMap.Joy_ZERO, ControlsMap.Joy_ZERO_Gear));
 	}
 }

@@ -1,6 +1,8 @@
 package org.usfirst.frc.team2473.robot.commands;
 
+import org.usfirst.frc.team2473.framework.Database;
 import org.usfirst.frc.team2473.robot.Robot;
+import org.usfirst.frc.team2473.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -31,10 +33,12 @@ public class ShooterAuto extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if(Robot.shooter.getEncoder() == 6000.0){
-        	return true;
-        }
-    	return false;
+//    	if(Robot.shooter.getEncoder() == 6000.0){
+//        	return true;
+//        }
+//    	return false;
+    	
+    	return Database.getInstance().getNumeric(RobotMap.Shooter_Enc) >= RobotMap.shooterEncVal;
     }
 
     // Called once after isFinished returns true

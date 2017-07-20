@@ -22,13 +22,20 @@ public class RobotMap {
 	public static final int climberTalonTwo = 2;
 	public static final int shooterTalonOne = 3;
 	public static final int shooterTalonTwo = 4;
-	public static final int shooterServo = 5;
-	public static final int gearPickupMotor = 6;
-	public static final int Gear_Stick = 7;
-	public static final int Climber_Limit_Swith = 8;
+	public static final int gearPickupMotor = 5;
+	public static final int Gear_Stick = 6;
+	public static final int Climber_Limit_Swith = 7;
 	
 	
 	public static final int gearpickupEncVal = 69;
-	public static final int gearpickupButtonVal = 5;
+	public static final int gearpickupButtonVal = 70;
+	public static final int shooterEncVal = 68;
 	
+	public static final String Gear_Pickup_Enc = "abc";
+	public static final String Shooter_Enc = "def";
+	public static final String climberTalonOneCurrent = "sdf";
+	public static final String climberTalonTwoCurrent = "sdf";
+	public static final String shooterTalonOneCurrent = "sdf";
+	public static final String shooterTalonTwoCurrent = "sdf";
+	public static final String gearPickupTalonCurrent = "sdf";
 }
