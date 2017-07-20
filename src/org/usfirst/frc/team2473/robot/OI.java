@@ -8,20 +8,9 @@ import edu.wpi.first.wpilibj.buttons.Button;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	public Joystick throttle = new Joystick(RobotMap.THROTTLE); //need port number
+	public Joystick throttle = new Joystick(RobotMap.THROTTLE); 
 	
-	public Joystick wheel = new Joystick(RobotMap.STEERING_WHEEL); //need port number
-	
-	public double squareWithSign(double d){
-		if(d>=0.4){
-			return -d*d;
-		}
-		else if(d<=-0.4){
-			return d*d;
-		}
-		else{
-			return 0;
-		}
+	public Joystick wheel = new Joystick(RobotMap.STEERING_WHEEL);
 	}
 	
 	//// CREATING BUTTONS
