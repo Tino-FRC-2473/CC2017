@@ -26,4 +26,7 @@ with Sweep('/dev/ttyUSB0') as sweep:
             first = False
 
         sweep.stop_scanning()
-print("Angle:" + angle + "\nDistance:" + distance)
+print("Angle:")
+print(angle)
+print("\nDistance:")
+print(distance)
