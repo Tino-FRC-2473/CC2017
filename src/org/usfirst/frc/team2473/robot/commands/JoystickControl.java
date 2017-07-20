@@ -25,7 +25,7 @@ public class JoystickControl extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//(Robot.driveTrain.getRightPow() ) && (Robot.oi.throttle.getThrottle() <= 0.05 && Robot.oi.throttle.getThrottle() >= -0.05)
-    		Robot.driveTrain.driveArcade(squareWithSign(Robot.oi.throttle.getZ()),Robot.oi.wheel.getTwist());
+    		Robot.driveTrain.driveArcade(squareWithSign(Robot.oi.throttle.getZ()),Robot.oi.wheel.getX());
 			System.out.println(Robot.oi.throttle.getZ());
     }
 
@@ -52,4 +52,5 @@ public class JoystickControl extends Command {
 		else{
 			return 0;
 		}
+    }
 }

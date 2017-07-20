@@ -11,7 +11,7 @@ public class OI {
 	public Joystick throttle = new Joystick(RobotMap.THROTTLE); 
 	
 	public Joystick wheel = new Joystick(RobotMap.STEERING_WHEEL);
-	}
+	
 	
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
