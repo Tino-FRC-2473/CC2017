@@ -4,6 +4,9 @@ import itertools
 angle = []
 distance = []
 
+def within(a):
+		return True
+
 with Sweep('/dev/ttyUSB0') as sweep:
         sweep.set_motor_speed(2)
         sweep.set_sample_rate(1000)
