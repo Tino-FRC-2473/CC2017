@@ -1,4 +1,5 @@
-from sweeppy import sweep
+from sweeppy import Sweep
+import itertools
 
 angle = []
 distance = []
