@@ -13,7 +13,7 @@ public class DriveStraight extends Command implements PIDOutput {
 	private PIDController pidController;
 	private double rotateToAngleRate;
 
-	private static final double KP = 0.03;
+	private static final double KP = 0.05;
 	private static final double KI = 0.00;
 	private static final double KD = 0.00;
 	private static final double KF = 0.00;
@@ -23,6 +23,8 @@ public class DriveStraight extends Command implements PIDOutput {
 	public DriveStraight() {
 		requires(Robot.DT);
 
+		System.out.println("Started command");
+		
 		pidController = new PIDController(KP, KI, KD, KF, Robot.DT.getGyro(), this);
 		pidController.setInputRange(-180.0f, 180.0f);
 		pidController.setOutputRange(-1.0, 1.0);
@@ -33,7 +35,7 @@ public class DriveStraight extends Command implements PIDOutput {
 
 	@Override
 	protected void initialize() {
-
+		System.out.println("Init");
 	}
 
 	@Override
@@ -43,7 +45,7 @@ public class DriveStraight extends Command implements PIDOutput {
 			rotateToAngleRate = 0;
 			pidController.enable();
 		}
-		Robot.DT.drive(Robot.oi.getThrottleStick().getThrottle(), rotateToAngleRate);
+		Robot.DT.drive(Robot.oi.getThrottleStick().getZ(), rotateToAngleRate);
 	}
 
 	@Override

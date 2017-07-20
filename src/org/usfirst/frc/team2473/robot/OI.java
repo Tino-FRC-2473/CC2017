@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class OI {
 	private Joystick wheel = new Joystick(1);
-	private Joystick throttle = new Joystick(2);
+	private Joystick throttle = new Joystick(0);
 
 	public Joystick getWheel() {
 		return wheel;
