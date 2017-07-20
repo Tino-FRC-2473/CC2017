@@ -40,24 +40,28 @@ def calcDistSideCase(y1, h1, y3, h2):
 def calcLengthSideCase(y1, h1, y3, h2):
     deltaH = 0;
     length = 0;
-    if(y1 > y3):
-        deltaH = y1 - y3
-        lengthRight = (h1) - 2 * deltaH
-        print "deltaH: " + str(deltaH) + ", h1: " + str(h1)
-        length = (h1 + lengthRight) / 2.0
-        if(length == (h1 - deltaH)):
-            print "length: " + str(length)
-        else:
-            print "fail"
-    else:
+    #if first rect is higher than second rect
+
+    print "y1: " + str(y1) + ", y3:" + str(y3)
+
+    if(y1 < y3):
         deltaH = y3 - y1
+        lengthRight = h1 - 2 * deltaH
+        #print "deltaH: " + str(deltaH) + ", h1: " + str(h1)
+        length = (h1 + lengthRight) / 2.0
+        #if(length == (h1 - deltaH)):
+        print "length: " + str(length)
+        #else:
+        #    print "fail"
+    else:
+        deltaH = y1 - y3
         lengthLeft = h2 - 2 * deltaH
-        print "deltaH: " + str(deltaH) + ", h2: " + str(h2)
+        #print "deltaH: " + str(deltaH) + ", h2: " + str(h2)
         length = (h2 + lengthLeft) / 2.0
-        if(length == (h2 - deltaH)):
-            print "length: " + str(length)
-        else:
-            print "fail"
+        #if(length == (h2 - deltaH)):
+        print "length: " + str(length)
+        #else:
+        #    print "fail"
 
     return length
 
@@ -171,18 +175,19 @@ while True:
 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-    # zero_red = np.array([0, 100, 100]);
-    # low_red = np.array([10, 255, 255]);
-    # high_red = np.array([160, 100, 100]);
-    # pi_red = np.array([180, 255, 255]);
+    zero_red = np.array([0, 100, 100]);
+    low_red = np.array([10, 255, 255]);
+    high_red = np.array([160, 100, 100]);
+    pi_red = np.array([180, 255, 255]);
+    
     #make mask
-    # maskLow = cv2.inRange(hsv, zero_red, low_red)
-    # maskHigh = cv2.inRange(hsv, high_red, pi_red)
-    # mask = maskLow + maskHigh
+    maskLow = cv2.inRange(hsv, zero_red, low_red)
+    maskHigh = cv2.inRange(hsv, high_red, pi_red)
+    mask = maskLow + maskHigh
 
-    low_white = np.array([118 - 10,22.95 - 20,181.05 - 30]);
-    high_white = np.array([123 + 10, 22.95 + 20, 181.05 + 30]);
-    mask = cv2.inRange(hsv, low_white, high_white);
+    #low_white = np.array([118 - 10,22.95 - 20,181.05 - 30]);
+    #high_white = np.array([123 + 10, 22.95 + 20, 181.05 + 30]);
+    #mask = cv2.inRange(hsv, low_white, high_white);
     
     # #green thresholds
     # low_green = np.array([40, 100, 100])
@@ -231,8 +236,9 @@ while True:
             modmx, modmy, modmw, modmh = mx, my, mw, mh
             modsx, modsy, modsw, modsh = sx, sy, sw, sh
             #calculate the modified coordinates
-            if(my > sy): #is my is higher up than sy (probably 100% of the time)
+            if(my < sy): #is my is higher up than sy (probably 100% of the time)
                 #change the modsh
+                
                 modsh = int(calcLengthSideCase(my, mh, sy, sh) * 2 - mh)
             else:
                 #change the modmh
@@ -270,7 +276,7 @@ while True:
     cv2.putText(frame, "DIST test: " + str(calcDistSideCase(my, mh, sy, sh)), (50, 150), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
 
 
-    cv2.waitKey(1)
+    cv2.waitKey(5000)
 
     cv2.imshow("Mask", mask)
 
