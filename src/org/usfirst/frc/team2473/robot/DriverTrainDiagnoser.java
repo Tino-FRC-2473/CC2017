@@ -71,15 +71,15 @@ public class DriverTrainDiagnoser extends Diagnoser {
 		this.keybrp = keybrp;
 		this.keyblp = keyblp;
 		//speed values(CANTalon.getSpeed())
-		this.keyfrp = keyfrs;
-		this.keyflp = keyfls;
-		this.keybrp = keybrs;
-		this.keyblp = keybls;
+		this.keyfrs = keyfrs;
+		this.keyfls = keyfls;
+		this.keybrs = keybrs;
+		this.keybls = keybls;
 		//input current values
-		this.keyfrp = keyfrc;
-		this.keyflp = keyflc;
-		this.keybrp = keybrc;
-		this.keyblp = keyblc;
+		this.keyfrc = keyfrc;
+		this.keyflc = keyflc;
+		this.keybrc = keybrc;
+		this.keyblc = keyblc;
 		//the joystick
 		//this.stick = stick; unused code for now
 	}
@@ -148,6 +148,7 @@ public class DriverTrainDiagnoser extends Diagnoser {
 		double pastrpmfl;
 		double pastrpmbr;
 		double pastrpmbl;
+		
 		double currentfr = DataBase.getDeviceValue(keyfrc);
 		double currentfl = DataBase.getDeviceValue(keyflc);
 		double currentbr = DataBase.getDeviceValue(keybrc);
@@ -166,8 +167,7 @@ public class DriverTrainDiagnoser extends Diagnoser {
 			torquefl = (rpmfl - pastrpmfl);
 			torquebr = (rpmbr - pastrpmbr);
 			torquebl = (rpmbl - pastrpmbl);
-		}
-		
+		}	
 		if(torquefr >= this.MAX_TORQUE || torquefl >= this.MAX_TORQUE || 
 		   torquebr >= this.MAX_TORQUE || torquebl >= this.MAX_TORQUE ||
 		   currentfr >= this.MAX_CURRENT || currentfl >= this.MAX_CURRENT ||

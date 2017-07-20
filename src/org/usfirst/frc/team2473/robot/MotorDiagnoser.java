@@ -33,7 +33,6 @@ public class MotorDiagnoser extends Diagnoser{
 		this.keyc = keyc;
 		this.keyp = keyp;
 		this.range = range;
-		
 		Diagnostics.addToQueue(this);
 	}
 
@@ -63,9 +62,7 @@ public class MotorDiagnoser extends Diagnoser{
 
 	@Override
 	public void RunOneTimeTest() {
-		
 		reset();
-		
 		while(DataBase.getDeviceValue(keye) <= range){
 			if(DataBase.getDeviceValue(keyp) != 0.3){
 				motor.set(0.3);
@@ -74,9 +71,7 @@ public class MotorDiagnoser extends Diagnoser{
 		if(DataBase.getDeviceValue(keye) <= range + 50 && DataBase.getDeviceValue(keye) >= range - 50){
 			System.out.println("Motor: " + "insert name" + "Disfunctional");
 		}
-		
 		reset();
-		
 	}
 	
 	private void reset(){
