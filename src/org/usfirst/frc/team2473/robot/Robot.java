@@ -2,6 +2,7 @@
 package org.usfirst.frc.team2473.robot;
 
 import org.usfirst.frc.team2473.robot.commands.DriveStraightCommand;
+import org.usfirst.frc.team2473.robot.commands.TestCommand;
 import org.usfirst.frc.team2473.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -24,13 +25,8 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static DriveTrain driveTrain;
 
-<<<<<<< HEAD
 	Command autonomousCommand;
 	Command testCommand;
-=======
-	Command autonomousCommand = new DriveStraightCommand();
-	SendableChooser<Command> chooser = new SendableChooser<>();
->>>>>>> 54a79334766518a62a34fb4e5f88e18f0b8c2daa
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -42,14 +38,8 @@ public class Robot extends IterativeRobot {
 		
 		oi = new OI();
 		driveTrain = new DriveTrain();
-<<<<<<< HEAD
 		testCommand = new TestCommand();
 		autonomousCommand = new DriveStraightCommand();
-		
-		//chooser.addObject("Autonomous Drive Straight", autonomousCommand);
-=======
-		chooser.addObject("Autonomous Drive Straight", autonomousCommand);
->>>>>>> 54a79334766518a62a34fb4e5f88e18f0b8c2daa
 		// chooser.addObject("My Auto", new MyAutoCommand());
 	}
 
@@ -109,14 +99,7 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-<<<<<<< HEAD
-		//if (autonomousCommand != null)
-		//	autonomousCommand.cancel();
-		
-		if(autonomousCommand != null)
-=======
 		if (autonomousCommand != null)
->>>>>>> 54a79334766518a62a34fb4e5f88e18f0b8c2daa
 			autonomousCommand.cancel();
 	}
 

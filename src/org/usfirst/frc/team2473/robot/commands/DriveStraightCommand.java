@@ -20,7 +20,7 @@ public class DriveStraightCommand extends Command implements PIDOutput{
 	private static final double K_TOLERANCE_DEGREES = 2.0f;
 	
 	private boolean firstPass = true;
-	private double maxEncoderDistance = 2000;
+	private double maxEncoderDistance = 50000;
 	private boolean finished = false;
 
 	public DriveStraightCommand(){
