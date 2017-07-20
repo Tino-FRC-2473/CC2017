@@ -25,9 +25,8 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static DriveTrain driveTrain;
 
-	Command autonomousCommand = new DriveStraightCommand();
-	Command testCommand = new TestCommand();
-	SendableChooser<Command> chooser = new SendableChooser<>();
+	Command autonomousCommand;
+	Command testCommand;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -39,10 +38,11 @@ public class Robot extends IterativeRobot {
 		
 		oi = new OI();
 		driveTrain = new DriveTrain();
+		testCommand = new TestCommand();
+		autonomousCommand = new DriveStraightCommand();
+		
 		//chooser.addObject("Autonomous Drive Straight", autonomousCommand);
-		chooser.addObject("Test Command", testCommand);
 		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", chooser);
 	}
 
 	/**
@@ -74,7 +74,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		
-		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -86,8 +85,8 @@ public class Robot extends IterativeRobot {
 		//if (autonomousCommand != null)
 			//autonomousCommand.start();
 		
-		if(testCommand != null){
-			testCommand.start();
+		if(autonomousCommand != null){
+			autonomousCommand.start();
 		}
 	}
 
@@ -108,8 +107,8 @@ public class Robot extends IterativeRobot {
 		//if (autonomousCommand != null)
 		//	autonomousCommand.cancel();
 		
-		if(testCommand != null)
-			testCommand.cancel();
+		if(autonomousCommand != null)
+			autonomousCommand.cancel();
 	}
 
 	/**

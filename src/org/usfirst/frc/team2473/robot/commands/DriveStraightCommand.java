@@ -13,7 +13,7 @@ public class DriveStraightCommand extends Command implements PIDOutput{
 	private double rotateToAngleRate;
 
 	
-	private static final double KP = 0.03;
+	private static final double KP = 0.05;
 	private static final double KI = 0.00;
 	private static final double KD = 0.00;
 	private static final double KF = 0.00;
