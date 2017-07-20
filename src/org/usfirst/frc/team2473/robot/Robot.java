@@ -31,8 +31,7 @@ public class Robot extends IterativeRobot {
 	 * */
 	@Override
 	public void robotInit() {
-		addTrackers(); //add the trackers before anything else
-		addDevices(); //add any devices lacking trackers but still need to be used
+		RobotMap.getInstance().execute();
 		reader = new DeviceReader(); //create device reader thread
 		reader.start(); //start the thread once the robot is started
 	}
@@ -124,27 +123,5 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void testPeriodic() {
 		LiveWindow.run();
-	}
-	
-	/**
-	 * Responsible for addition of <code>DeviceTracker</code> objects to <code>Trackers</code> and all <code>Devices</code>.
-	 * <br>To add a device tracker, evoke <code>addTracker</code> from <code>Trackers</code>
-	 * <br><br><br>Example: <code>Trackers.getInstance().addTracker(new EncoderTracker("encoder tracker", 2, Type.NUMERIC)</code>
-	 * @see org.usfirst.frc.team2473.framework.trackers.DeviceTracker
-	 * @see org.usfirst.frc.team2473.framework.components.Devices
-	 * @see org.usfirst.frc.team2473.framework.components.Trackers#addTracker(org.usfirst.frc.team2473.framework.trackers.DeviceTracker)
-	 * */
-	public void addTrackers() {
-		//call Trackers.getInstance().addTracker(new DeviceTracker(String key, int port, Type dataType);
-	}	
-	
-	/**
-	 * Responsible for addition of hardware component objects to the central <code>Devices</code> class.
-	 * <br>To add a device, simply implement <code>a specified add method</code> from <code>Devices</code>
-	 * <br><br><br>Example: <code>Devices.getInstance().addTalon(RobotMap.TALON_ONE); //TALON_ONE is an int device-id</code>
-	 * @see org.usfirst.frc.team2473.framework.components.Devices
-	 * */
-	public void addDevices() {
-
 	}
 }
