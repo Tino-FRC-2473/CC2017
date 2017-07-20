@@ -12,6 +12,18 @@ public class OI {
 	
 	public Joystick wheel = new Joystick(RobotMap.STEERING_WHEEL); //need port number
 	
+	public double squareWithSign(double d){
+		if(d>=0.4){
+			return -d*d;
+		}
+		else if(d<=-0.4){
+			return d*d;
+		}
+		else{
+			return 0;
+		}
+	}
+	
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
 	//// joystick.
