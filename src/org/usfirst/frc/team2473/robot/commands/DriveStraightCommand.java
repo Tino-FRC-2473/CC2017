@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2473.robot.commands;
 
-import org.usfirst.frc.team2473.robot.Acceleration;
 import org.usfirst.frc.team2473.robot.Robot;
 
 import edu.wpi.first.wpilibj.PIDController;
@@ -21,9 +20,8 @@ public class DriveStraightCommand extends Command implements PIDOutput{
 	private static final double K_TOLERANCE_DEGREES = 2.0f;
 	
 	private boolean firstPass = true;
+	private double maxEncoderDistance = 2000;
 	private boolean finished = false;
-	
-	private double currentPower = Acceleration.START_POWER;
 
 	public DriveStraightCommand(){
 		requires(Robot.driveTrain);
@@ -57,16 +55,9 @@ public class DriveStraightCommand extends Command implements PIDOutput{
 			turnController.enable();
 		}
 		
-		int averageEncoderVal = (Robot.driveTrain.getLeftEnc() + Robot.driveTrain.getRightEnc()) /2;
-		if(averageEncoderVal >= Acceleration.TOTAL_ENCODER_DISTANCE){
-			finished = true;
-			Robot.driveTrain.drive(0, rotateToAngleRate);
-		}
-		else{
-			double motorPower = Acceleration.getPower(averageEncoderVal, currentPower);
-			currentPower = motorPower;
-			Robot.driveTrain.drive(motorPower, rotateToAngleRate);
-		}
+		if(Robot.driveTrain.getLeftEnc() < maxEncoderDistance || Robot.driveTrain.getRightEnc() < maxEncoderDistance)
+			Robot.driveTrain.drive(0.5, rotateToAngleRate);
+		else finished = true;
 	}
 
 	@Override
