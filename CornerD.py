@@ -133,7 +133,9 @@ for i in range(smooth,l-smooth):
 
 l = len(xdata)
 
-if GRAPHXY:plt.plot(xdata, ydata, 'r-', label='raw')
+if GRAPHXY:
+        plt.plot(xdata, ydata, 'r-', label='raw')
+        plt.show()
 
 cartD = []
 d = 0;
@@ -276,5 +278,5 @@ if GRAPHD:
 
 # if(blue):
 #         print(aligned(270 + math.degrees(math.atan(cornerY[0]/cornerX[0])),(cornerX[0]**2 + cornerY[0]**2)**0.5))
-# else
+# else:
 #         print(aligned(90 - math.degrees(math.atan(cornerY[0]/cornerX[0])),(cornerX[0]**2 + cornerY[0]**2)**0.5))
