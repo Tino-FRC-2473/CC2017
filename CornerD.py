@@ -133,9 +133,7 @@ for i in range(smooth,l-smooth):
 
 l = len(xdata)
 
-if GRAPHXY:
-        plt.plot(xdata, ydata, 'r-', label='raw')
-        plt.show()
+if GRAPHXY:plt.plot(xdata, ydata, 'r-', label='raw')
 
 cartD = []
 d = 0;
@@ -198,85 +196,85 @@ if GRAPHD:
         plt.plot(dist, cartD, 'r-', label='raw')
         plt.plot(dist, sD, 'b-', label='smooth')
 
-# slopeTotals = []
-# sign = (sD[1]-sD[0])>0
-# xSlope = []
-# mx = 0
+slopeTotals = []
+sign = (sD[1]-sD[0])>0
+xSlope = []
+mx = 0
 
-# thisSlopes = [sD[1]-sD[0]]
-# maxThisSlope = 0
-# maxCorner = 0
+thisSlopes = [sD[1]-sD[0]]
+maxThisSlope = 0
+maxCorner = 0
 
-# for i in range(1,length-1):
-#         thisSlope = sD[i+1]-sD[i]
-#         thisSign = thisSlope>0
-#         if(sign==thisSign):
-#                 thisSlopes.append(thisSlope)
-#                 if(abs(thisSlope)>maxThisSlope):
-#                         maxThisSlope = abs(thisSlope)
-#                         maxCorner = i+1
-#         else:
-#                 slopeTotals.append(sum(thisSlopes))
-#                 aL = abs(sum(thisSlopes))
-#                 if(aL>mx):
-#                         mx = aL
-#                 sign = thisSign
-#                 xSlope.append(maxCorner)
-#                 thisSlopes = [thisSlope]
-#                 maxThisSlope = abs(thisSlope)
-#                 maxCorner = i+1
+for i in range(1,length-1):
+        thisSlope = sD[i+1]-sD[i]
+        thisSign = thisSlope>0
+        if(sign==thisSign):
+                thisSlopes.append(thisSlope)
+                if(abs(thisSlope)>maxThisSlope):
+                        maxThisSlope = abs(thisSlope)
+                        maxCorner = i+1
+        else:
+                slopeTotals.append(sum(thisSlopes))
+                aL = abs(sum(thisSlopes))
+                if(aL>mx):
+                        mx = aL
+                sign = thisSign
+                xSlope.append(maxCorner)
+                thisSlopes = [thisSlope]
+                maxThisSlope = abs(thisSlope)
+                maxCorner = i+1
 
-# slopeTotals.append(sum(thisSlopes))
-# aL = abs(sum(thisSlopes))
-# if(aL>mx):
-#         mx = aL
-# xSlope.append(maxCorner)
+slopeTotals.append(sum(thisSlopes))
+aL = abs(sum(thisSlopes))
+if(aL>mx):
+        mx = aL
+xSlope.append(maxCorner)
 
-# cornerX = []
-# cornerY = []
+cornerX = []
+cornerY = []
 
-# for i in range(0,len(slopeTotals)):
-#         if(abs(slopeTotals[i]-CORNERDETECT)<CORNERBUFFER):
-#                 cornerX.append(xdata[xSlope[i]])
-#                 cornerY.append(ydata[xSlope[i]])
-
-
-# plt.legend()
-# plt.show()
-# if CORNERST:plt.scatter(cornerX, cornerY)
+for i in range(0,len(slopeTotals)):
+        if(abs(slopeTotals[i]-CORNERDETECT)<CORNERBUFFER):
+                cornerX.append(xdata[xSlope[i]])
+                cornerY.append(ydata[xSlope[i]])
 
 
-# if GRAPHST:plt.plot(xSlope, slopeTotals, 'r-', label='raw')
+plt.legend()
+plt.show()
+if CORNERST:plt.scatter(cornerX, cornerY)
 
 
-# plt.xlabel('X')
-# plt.ylabel('Y')
+if GRAPHST:plt.plot(xSlope, slopeTotals, 'r-', label='raw')
 
-# back = 38.1 #distance between lidar to back of robot in cm
-# side = 38.1 #disance between lidar to side of robot in cm
-# width = 76.2 #width of robot
-# blue = True #whether or not we are on blue 
 
-# def isclose(a, b, rel_tol=1e-09, abs_tol=0.0):
-#     	return abs(a-b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
+plt.xlabel('X')
+plt.ylabel('Y')
 
-# def aligned(direction, corner_distance):
-# 		side_diff = width/2 - side
-# 		in_to_cm = 2.54 #used to convert inches to centimeters
-# 		y= (42/(2**.5)*in_to_cm)-back #aligned y-position of lidar
-# 		x = (162*in_to_cm)-side_diff #aligned x-position of lidar
-# 		angle = math.degrees(math.atan(y/x)) #aligned angle
-# 		print (angle)
-# 		distance = (x**2 + y**2)**0.5 #aligned distance
-# 		print (distance)
-# 		if (blue):
-# 				return isclose(direction, 270+angle, abs_tol=0.0001) and isclose(corner_distance, distance, abs_tol=0.0001)
-# 		else:
-# 				return isclose(direction, 90-angle, abs_tol=0.0001) and isclose(corner_distance, distance, abs_tol=0.0001)
+back = 38.1 #distance between lidar to back of robot in cm
+side = 38.1 #disance between lidar to side of robot in cm
+width = 76.2 #width of robot
+blue = True #whether or not we are on blue 
 
-# index = 0
+def isclose(a, b, rel_tol=1e-09, abs_tol=0.0):
+    	return abs(a-b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
 
-# if(blue):
-#         print(aligned(270 + math.degrees(math.atan(cornerY[0]/cornerX[0])),(cornerX[0]**2 + cornerY[0]**2)**0.5))
-# else:
-#         print(aligned(90 - math.degrees(math.atan(cornerY[0]/cornerX[0])),(cornerX[0]**2 + cornerY[0]**2)**0.5))
+def aligned(direction, corner_distance):
+		side_diff = width/2 - side
+		in_to_cm = 2.54 #used to convert inches to centimeters
+		y= (42/(2**.5)*in_to_cm)-back #aligned y-position of lidar
+		x = (162*in_to_cm)-side_diff #aligned x-position of lidar
+		angle = math.degrees(math.atan(y/x)) #aligned angle
+		print (angle)
+		distance = (x**2 + y**2)**0.5 #aligned distance
+		print (distance)
+		if (blue):
+				return isclose(direction, 270+angle, abs_tol=0.0001) and isclose(corner_distance, distance, abs_tol=0.0001)
+		else:
+				return isclose(direction, 90-angle, abs_tol=0.0001) and isclose(corner_distance, distance, abs_tol=0.0001)
+
+index = 0
+
+if(blue):
+        print(aligned(270 + math.degrees(math.atan(cornerY[0]/cornerX[0])),(cornerX[0]**2 + cornerY[0]**2)**0.5))
+else:
+        print(aligned(90 - math.degrees(math.atan(cornerY[0]/cornerX[0])),(cornerX[0]**2 + cornerY[0]**2)**0.5))
