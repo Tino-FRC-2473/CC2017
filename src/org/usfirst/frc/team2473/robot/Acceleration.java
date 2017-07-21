@@ -6,14 +6,14 @@ public class Acceleration {
 	
 	public static final double MAX_POWER = 0.7;
 	
-	public static final int TOTAL_ENCODER_DISTANCE = 2000;
+	public static final int TOTAL_ENCODER_DISTANCE = 20000;
 	
-	public static final int START_ACCELERATION_ENCODER = 50;
-	public static final int END_ACCELERATION_ENCODER = 750;
-	public static final int START_DECELERATION_ENCODER = 1250;
-	public static final int END_DECELERATION_ENCODER = 1950;
+	public static final int START_ACCELERATION_ENCODER = 500;
+	public static final int END_ACCELERATION_ENCODER = 7500;
+	public static final int START_DECELERATION_ENCODER = 12500;
+	public static final int END_DECELERATION_ENCODER = 19500;
 	
-	public static final int ACCELERATION_INTERVAL = 175;
+	public static final int ACCELERATION_INTERVAL = 1750;
 	public static final double ACCELERATION_RATE = (MAX_POWER - START_POWER) / ((END_ACCELERATION_ENCODER - START_ACCELERATION_ENCODER) / ACCELERATION_INTERVAL);
 	
 	public static double getPower(int encoderCount, double currentPower){

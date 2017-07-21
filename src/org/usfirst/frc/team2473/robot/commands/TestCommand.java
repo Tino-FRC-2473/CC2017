@@ -22,7 +22,7 @@ public class TestCommand extends Command{
 		}
 		
 		Robot.driveTrain.setPower(0.5);
-		if(Robot.driveTrain.getLeftEnc() > 500 || Robot.driveTrain.getRightEnc() > 500){
+		if(Robot.driveTrain.getLeftEnc() > 50000 || Robot.driveTrain.getRightEnc() > 50000){
 			Robot.driveTrain.setPower(0);
 			finished = true;
 		}

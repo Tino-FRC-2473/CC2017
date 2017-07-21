@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2473.robot.commands;
 
+import org.usfirst.frc.team2473.robot.Acceleration;
 import org.usfirst.frc.team2473.robot.Robot;
 
 import edu.wpi.first.wpilibj.PIDController;
@@ -12,16 +13,16 @@ public class DriveStraightCommand extends Command implements PIDOutput{
 	private double rotateToAngleRate;
 
 	
-	private static final double KP = 0.03;
+	private static final double KP = 0.05;
 	private static final double KI = 0.00;
 	private static final double KD = 0.00;
 	private static final double KF = 0.00;
 
 	private static final double K_TOLERANCE_DEGREES = 2.0f;
 	
-	private boolean firstPass = true;
-	private double maxEncoderDistance = 2000;
 	private boolean finished = false;
+	
+	private double currentPower = Acceleration.START_POWER;
 
 	public DriveStraightCommand(){
 		requires(Robot.driveTrain);
@@ -42,12 +43,12 @@ public class DriveStraightCommand extends Command implements PIDOutput{
 	}
 	
 	@Override
+	public void initialize() {
+		Robot.driveTrain.resetEncoders();
+	}
+	
+	@Override
 	public void execute(){
-		if(firstPass){
-			firstPass = false;
-			Robot.driveTrain.resetEncoders();
-			return;
-		}
 		
 		if (!turnController.isEnabled()) {
 			turnController.setSetpoint(Robot.driveTrain.getGyro().getYaw());
@@ -55,9 +56,16 @@ public class DriveStraightCommand extends Command implements PIDOutput{
 			turnController.enable();
 		}
 		
-		if(Robot.driveTrain.getLeftEnc() < maxEncoderDistance || Robot.driveTrain.getRightEnc() < maxEncoderDistance)
-			Robot.driveTrain.drive(0.5, rotateToAngleRate);
-		else finished = true;
+		int averageEncoderVal = (Robot.driveTrain.getLeftEnc() + Robot.driveTrain.getRightEnc()) /2;
+		if(averageEncoderVal >= Acceleration.TOTAL_ENCODER_DISTANCE){
+			finished = true;
+			Robot.driveTrain.drive(0, rotateToAngleRate);
+		}
+		else{
+			double motorPower = Acceleration.getPower(averageEncoderVal, currentPower);
+			currentPower = motorPower;
+			Robot.driveTrain.drive(motorPower, rotateToAngleRate);
+		}
 	}
 
 	@Override
