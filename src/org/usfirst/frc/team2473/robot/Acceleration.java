@@ -7,6 +7,7 @@ public class Acceleration {
 	public static final double MAX_POWER = 0.7;
 	
 	public static final int TOTAL_ENCODER_DISTANCE = 20000;
+	// Comment
 	
 	public static final int START_ACCELERATION_ENCODER = 500;
 	public static final int END_ACCELERATION_ENCODER = 7500;
