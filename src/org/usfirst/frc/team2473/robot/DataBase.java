@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Servo;
 
 public class DataBase {
-	private static Map<String,ThreadSafeDouble> DoubleValues = new HashMap();
+	private static Map<String,ThreadSafeDouble> DoubleValues = new HashMap<String, ThreadSafeDouble>();
 	
 	public static double getDeviceValue(String key){
 		return DoubleValues.get(key).getValue();

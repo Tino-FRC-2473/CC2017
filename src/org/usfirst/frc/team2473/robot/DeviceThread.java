@@ -11,12 +11,12 @@ import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Servo;
 
 public class DeviceThread extends Thread{
-	private static Map<String,DoubleSupplier> suppliers = new HashMap();
+	private static Map<String,DoubleSupplier> suppliers = new HashMap<String, DoubleSupplier>();
 	
-	public static ArrayList<String> motorsvolt = new ArrayList();
-	public static ArrayList<String> motorspow = new ArrayList();
-	public static ArrayList<String> servos = new ArrayList();
-	public static ArrayList<String> gyros = new ArrayList();
+	public static ArrayList<String> motorsvolt = new ArrayList<String>();
+	public static ArrayList<String> motorspow = new ArrayList<String>();
+	public static ArrayList<String> servos = new ArrayList<String>();
+	public static ArrayList<String> gyros = new ArrayList<String>();
 	
 	//public static ArrayList<CANTalon> motorrefs = new ArrayList();
 	//public static ArrayList<Servo> servorefs = new ArrayList();
@@ -27,12 +27,11 @@ public class DeviceThread extends Thread{
 	}
 	
 	public void run(){
-		while(this.isAlive()){
+		while(isAlive()){
 			update();
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

@@ -12,7 +12,7 @@ public class GearRun extends Command {
     public GearRun() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.gear);
+    	requires(Robot.GEAR);
     }
 
     // Called just before this Command runs the first time

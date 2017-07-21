@@ -23,9 +23,9 @@ import org.usfirst.frc.team2473.robot.subsystems.Shooter;
  */
 public class Robot extends IterativeRobot {
 
-	public static final Shooter shooter = new Shooter();
-	public static final Climber climber = new Climber();
-	public static final Gear gear = new Gear();
+	public static final Shooter SHOOTER = new Shooter();
+	public static final Climber CLIMBER = new Climber();
+	public static final Gear GEAR = new Gear();
 	public static OI oi;
 
 	Command autonomousCommand;

@@ -46,7 +46,7 @@ public class DriverTrainDiagnoser extends Diagnoser {
 	//motor constants
 	private final double MAX_TORQUE = 0.03;
 	private final double MAX_CURRENT = 10.0;
-	private double EcnoderTicksPerRotation = 6000.0;
+	private double EncoderTicksPerSecond = 6000.0;
 	
 	//speed multiplier
 	private double SpeedMultiplier = 1.0;
@@ -130,16 +130,6 @@ public class DriverTrainDiagnoser extends Diagnoser {
 		
 	}
 
-//	@Override
-//	public void RunManualTest() {
-//		// TODO Auto-generated method stub
-//		this.setPowerToALl(stick.getY());
-//		System.out.println("frontright Power: " + DataBase.getDeviceValue(keyfrp));
-//		System.out.println("backright Power: " + DataBase.getDeviceValue(keybrp));
-//		System.out.println("frontleft Power: " + DataBase.getDeviceValue(keyflp));
-//		System.out.println("backleft Power: " + DataBase.getDeviceValue(keyblp));
-//	}
-
 	@Override
 	public void RunSimultaneousTest() {
 		// TODO Auto-generated method stub
@@ -159,20 +149,20 @@ public class DriverTrainDiagnoser extends Diagnoser {
 			pastrpmfl = rpmfl;
 			pastrpmbr = rpmbr;
 			pastrpmbl = rpmbl;
-			rpmfr = ((DataBase.getDeviceValue(keyfrs)/100)/this.EcnoderTicksPerRotation)*(2*Math.PI);
-			rpmfl = ((DataBase.getDeviceValue(keyfls)/100)/this.EcnoderTicksPerRotation)*(2*Math.PI);
-			rpmbr = ((DataBase.getDeviceValue(keybrs)/100)/this.EcnoderTicksPerRotation)*(2*Math.PI);
-			rpmbl = ((DataBase.getDeviceValue(keybls)/100)/this.EcnoderTicksPerRotation)*(2*Math.PI);
+			rpmfr = ((DataBase.getDeviceValue(keyfrs)/100)/this.EncoderTicksPerSecond)*(2*Math.PI);
+			rpmfl = ((DataBase.getDeviceValue(keyfls)/100)/this.EncoderTicksPerSecond)*(2*Math.PI);
+			rpmbr = ((DataBase.getDeviceValue(keybrs)/100)/this.EncoderTicksPerSecond)*(2*Math.PI);
+			rpmbl = ((DataBase.getDeviceValue(keybls)/100)/this.EncoderTicksPerSecond)*(2*Math.PI);
 			torquefr = (rpmfr - pastrpmfr);
 			torquefl = (rpmfl - pastrpmfl);
 			torquebr = (rpmbr - pastrpmbr);
 			torquebl = (rpmbl - pastrpmbl);
 		}	
-		if(torquefr >= this.MAX_TORQUE || torquefl >= this.MAX_TORQUE || 
-		   torquebr >= this.MAX_TORQUE || torquebl >= this.MAX_TORQUE ||
-		   currentfr >= this.MAX_CURRENT || currentfl >= this.MAX_CURRENT ||
-		   currentbr >= this.MAX_CURRENT || currentbl >= this.MAX_CURRENT){
-			System.out.println("Drive Train in CRITICAL condition, lowering max speed. BAD DRIVER DETECTED");
+		if(torquefr >= MAX_TORQUE || torquefl >= MAX_TORQUE || 
+		   torquebr >= MAX_TORQUE || torquebl >= MAX_TORQUE ||
+		   currentfr >= MAX_CURRENT || currentfl >= MAX_CURRENT ||
+		   currentbr >= MAX_CURRENT || currentbl >= MAX_CURRENT){
+			System.out.println("Drive Train in CRITICAL condition, lowering max speed");
 			this.SpeedMultiplier -= 0.1;
 		}else{
 			this.SpeedMultiplier = 1.0;
@@ -204,7 +194,7 @@ public class DriverTrainDiagnoser extends Diagnoser {
 	}
 	
 	public double getMultiplier(){
-		return this.SpeedMultiplier;
+		return SpeedMultiplier;
 	}
 	
 }

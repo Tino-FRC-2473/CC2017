@@ -35,13 +35,7 @@ public class MotorDiagnoser extends Diagnoser{
 		this.range = range;
 		Diagnostics.addToQueue(this);
 	}
-
-
-//	@Override
-//	public void RunManualTest() {
-//		
-//	}
-
+	
 	@Override
 	public void RunSimultaneousTest() {
 		double pastrpm;
