@@ -14,12 +14,6 @@ public class GyroDiagnoser extends Diagnoser{
 		Diagnostics.addToQueue(this);
 	}
 
-//Another diagnoser for DriveTrain. 
-//	@Override
-//	public void RunManualTest() {
-//		
-//	}
-
 	@Override
 	public void RunSimultaneousTest() {
 		

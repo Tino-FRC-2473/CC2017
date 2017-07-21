@@ -3,12 +3,12 @@ package org.usfirst.frc.team2473.robot;
 import java.util.ArrayList;
 
 public class DiagnosticThread extends Thread{
-	private static ArrayList<Diagnoser> diagnosers = new ArrayList();
+	private static ArrayList<Diagnoser> diagnosers = new ArrayList<Diagnoser>();
 	
 	public static double initialTime;
 	
 	public DiagnosticThread(){
-		this.initialTime = System.currentTimeMillis();
+		initialTime = System.currentTimeMillis();
 	}
 	
 	public static void addToList(Diagnoser diagnoser){
@@ -16,15 +16,15 @@ public class DiagnosticThread extends Thread{
 	}
 	
 	public void run(){
-		while(this.isAlive()){
+		while(isAlive()){
 			for(Diagnoser diagnoser:diagnosers){
 				diagnoser.RunSimultaneousTest();
 			}
-			this.errorHandling();
+			errorPrinting();
 		}
 	}
 	
-	private void errorHandling(){
+	private void errorPrinting(){
 		
 	}
 	

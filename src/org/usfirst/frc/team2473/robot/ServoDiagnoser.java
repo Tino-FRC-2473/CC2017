@@ -15,10 +15,6 @@ public class ServoDiagnoser extends Diagnoser{
 		Diagnostics.addToQueue(this);
 	}
 
-//	@Override
-//	public void RunManualTest() {
-//		
-//	}
 
 	@Override
 	public void RunSimultaneousTest() {

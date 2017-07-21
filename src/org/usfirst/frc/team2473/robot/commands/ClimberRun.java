@@ -12,7 +12,7 @@ public class ClimberRun extends Command {
     public ClimberRun() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.climber);
+    	requires(Robot.CLIMBER);
     }
 
     // Called just before this Command runs the first time
@@ -37,9 +37,9 @@ public class ClimberRun extends Command {
     protected void interrupted() {
     }
     public boolean testMotor(){
-    	if((Robot.climber.getVoltage("Left motor")/voltage) == (Robot.climber.getPower("Left motor")) || 
-    			Robot.climber.getVoltage("Left motor")/voltage - (Robot.climber.getPower("Left motor")) <= (Robot.climber.getPower("Left motor"))*0.05 
-    			|| (Robot.climber.getPower("Left motor")) - Robot.climber.getVoltage("Left motor")/voltage <= (Robot.climber.getPower("Left motor"))*0.05){
+    	if((Robot.CLIMBER.getVoltage("Left motor")/voltage) == (Robot.CLIMBER.getPower("Left motor")) || 
+    			Robot.CLIMBER.getVoltage("Left motor")/voltage - (Robot.CLIMBER.getPower("Left motor")) <= (Robot.CLIMBER.getPower("Left motor"))*0.05 
+    			|| (Robot.CLIMBER.getPower("Left motor")) - Robot.CLIMBER.getVoltage("Left motor")/voltage <= (Robot.CLIMBER.getPower("Left motor"))*0.05){
     		return true;
     	}
     	return false;
