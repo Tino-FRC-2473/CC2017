@@ -68,7 +68,6 @@ public class DriveStraightCommand extends Command implements PIDOutput{
 		}
 	}
 	
-	//Comment
 
 	@Override
 	protected void end() {

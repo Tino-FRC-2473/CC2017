@@ -43,7 +43,6 @@ public class DriveTrain extends Subsystem{
 		backLeftTalon.set(pow);
 		
 	}
-	//Comment
 	
 	public void resetEncoders(){
 		frontRightTalon.changeControlMode(TalonControlMode.Position);
