@@ -86,6 +86,8 @@ public class MotorDiagnoser extends Diagnoser{
 				System.out.println("Motor: " + deviceID + "Encoder Count: " + Database.getInstance().getNumeric(keye));
 		}
 		System.out.println("STOP! If this is as far as the motor goes, everything is working.");
+		DigitalInputDiagnoser motorswitch = new DigitalInputDiagnoser(deviceID, range);
+		motorswitch.turnOff();
 	}
 	
 	private void reset(){

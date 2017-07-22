@@ -31,5 +31,6 @@ public class Diagnostics {
 		}
 		DiagnosticThread thread = new DiagnosticThread();
 		thread.start();
+		
 	}
 }

@@ -9,7 +9,6 @@ import org.usfirst.frc.team2473.framework.components.Devices;
  * @version 1.0
  * */
 public class GyroTracker extends DeviceTracker {
-
 	/**
 	 * Constructor allowing for key assignment and corresponding analog gyro port assignment.
 	 * @param key <code>String</code> value representing reference key for tracker
