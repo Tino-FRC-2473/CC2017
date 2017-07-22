@@ -58,7 +58,7 @@ barIdxs = []
 
 for i, dist in enumerate(distance):
         if dist >= BAR_MIN and dist <= BAR_MAX:
-                barIdxs.append(dist)
+                barIdxs.append(angle[i])
 
 print(barIdxs)
 
