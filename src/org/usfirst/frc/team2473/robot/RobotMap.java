@@ -1,37 +1,28 @@
 package org.usfirst.frc.team2473.robot;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import org.usfirst.frc.team2473.framework.readers.Parser;
 
 /**
  * Class stores constants for devices installed on the robot and respective access keys. These constants can be value limits, port numbers, device ids, and more.
  * @author Deep Sethi
  * @author Harmony He
- * @version 2.0
+ * @version 1.0
  * */
 public class RobotMap {
-	private List<String> all = new ArrayList<String>();
-	public final String TALON_ONE = "TALON;4;current;voltage;power;encoders";
-	public final String ANALOG_ONE = "ANALOG;1";
+	//device ids
+	public static final int MOTOR = 10;
+	public static final int SERVO = 0;
+	public static final int GYRO = 0;
+
+	//keys
+	public static final String MOTOR_ENCODER_KEY = "encoder key";
+	public static final String MOTOR_VOLTAGE_KEY = "voltage key";
+	public static final String MOTOR_CURRENT_KEY = "current key";
+	public static final String MOTOR_POWER_KEY = "power key";
+	public static final String SERVO_POSITION_KEY = "servo position key";
+	public static final String SERVO_POWER_KEY = "servo power key";
+	public static final String GYRO_HEADING_KEY = "gyro key";
 	
-	private static RobotMap theInstance;
-	
-	static {
-		theInstance = new RobotMap();
-	}
-	
-	private RobotMap() {
-		all = Arrays.asList(TALON_ONE, ANALOG_ONE);
-	}
-	
-	public static RobotMap getInstance() {
-		return theInstance;
-	}
-	
-	public void execute() {
-		for(String deviceSpecs : all) Parser.parseDevice(deviceSpecs);
-	}
+	public static final String PEG_DISTANCE = "peg distance";
+	public static final String PEG_ANGLE = "peg angle";
+	public static final String FUNCTION_TRIGGER = "function trigger";
 }
