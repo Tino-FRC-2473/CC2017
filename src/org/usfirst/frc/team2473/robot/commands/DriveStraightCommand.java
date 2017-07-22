@@ -56,7 +56,7 @@ public class DriveStraightCommand extends Command implements PIDOutput{
 			turnController.enable();
 		}
 		
-		int averageEncoderVal = (Robot.driveTrain.getLeftEnc() + Robot.driveTrain.getRightEnc()) /2;
+		int averageEncoderVal = ((Robot.driveTrain.getLeftEnc() * -1) + (Robot.driveTrain.getRightEnc()) * -1) /2;
 		if(averageEncoderVal >= Acceleration.TOTAL_ENCODER_DISTANCE){
 			finished = true;
 			Robot.driveTrain.drive(0, rotateToAngleRate);
@@ -65,6 +65,8 @@ public class DriveStraightCommand extends Command implements PIDOutput{
 			double motorPower = Acceleration.getPower(averageEncoderVal, currentPower);
 			currentPower = motorPower;
 			Robot.driveTrain.drive(motorPower, rotateToAngleRate);
+			
+			System.out.println("Current power of the robot = " + currentPower);
 		}
 	}
 	

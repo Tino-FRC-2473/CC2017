@@ -17,6 +17,8 @@ public class Acceleration {
 	public static final double ACCELERATION_RATE = (MAX_POWER - START_POWER) / ((END_ACCELERATION_ENCODER - START_ACCELERATION_ENCODER) / ACCELERATION_INTERVAL);
 	
 	public static double getPower(int encoderCount, double currentPower){
+		System.out.println("Encoder" + encoderCount);
+		
 		if(encoderCount >= START_ACCELERATION_ENCODER && encoderCount <= END_ACCELERATION_ENCODER){
 			int speedFactor = (encoderCount - START_ACCELERATION_ENCODER) / ACCELERATION_INTERVAL;
 			return START_POWER + speedFactor * ACCELERATION_RATE;

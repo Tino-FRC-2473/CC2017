@@ -42,9 +42,10 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void setPower(double pow) {
-		frontRightTalon.set(pow);
+		System.out.println("pow = " + pow);
+		frontRightTalon.set(-pow);
 		frontLeftTalon.set(pow);
-		backRightTalon.set(pow);
+		backRightTalon.set(-pow);
 		backLeftTalon.set(pow);
 		
 	}
@@ -72,7 +73,7 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void drive(double d, double rotateToAngleRate) {
-		drive.arcadeDrive(d, rotateToAngleRate);
+		drive.arcadeDrive(-d, rotateToAngleRate);
 	}
 
 }
