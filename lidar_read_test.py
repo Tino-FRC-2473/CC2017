@@ -60,12 +60,20 @@ for i, dist in enumerate(distance):
         if dist >= BAR_MIN and dist <= BAR_MAX:
                 barIdxs.append(angle[i])
 
+print("before outlier removal")
+print(barIdxs)
+
+for i in range(0, len(barIdxs)):
+        barIdxs[i] = int(barIdxs[i]*1000)
+
 def rejectOutliers(data, m=2):
     return data[abs(data - np.mean(data)) < m * np.std(data)]
 
-print("before outlier removal")
-print(barIdxs)
 barIdxs = rejectOutliers(barIdxs)
+
+for i in range(0, len(barIdxs)):
+        barIdxs[i] = barIdxs[i]/1000.0
+
 print("after outlier removal")
 print(barIdxs)
 
