@@ -3,11 +3,15 @@ package org.usfirst.frc.team2473.robot;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.usfirst.frc.team2473.framework.components.Trackers;
 import org.usfirst.frc.team2473.framework.diagnostic.Diagnostics;
 import org.usfirst.frc.team2473.framework.diagnostic.Diagnostics.TestType;
 import org.usfirst.frc.team2473.framework.diagnostic.diagnosers.MotorDiagnoser;
 import org.usfirst.frc.team2473.framework.readers.ControlsReader;
 import org.usfirst.frc.team2473.framework.readers.DeviceReader;
+import org.usfirst.frc.team2473.framework.trackers.EncoderTracker;
+import org.usfirst.frc.team2473.framework.trackers.TalonTracker;
+import org.usfirst.frc.team2473.framework.trackers.TalonTracker.Target;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -125,6 +129,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testInit() {
+		addTrackers();
 		addTests();
 		Diagnostics.getInstance().startTests(TestType.ONETIME);
 	}
@@ -148,7 +153,11 @@ public class Robot extends IterativeRobot {
 	 * */
 	public void addTrackers() {
 		//call Trackers.getInstance().addTracker(new DeviceTracker(String key, int port, Type dataType);
-	}	
+		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.MOTOR_CURRENT_KEY, RobotMap.MOTOR, Target.CURRENT));
+		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.MOTOR_POWER_KEY, RobotMap.MOTOR, Target.POWER));
+		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.MOTOR_SPEED_KEY, RobotMap.MOTOR, Target.SPEED));
+		Trackers.getInstance().addTracker(new EncoderTracker(RobotMap.MOTOR_ENCODER_KEY, RobotMap.MOTOR));
+	}
 
 	/**
 	 * Responsible for addition of hardware device objects to <code>Device</code> objects.

@@ -17,7 +17,7 @@ public class GyroDiagnoser extends Diagnoser{
 	public GyroDiagnoser(int deviceID, String angleKey, String trackedDeviceValue, double gyroRange){
 		this.deviceID = deviceID;
 		this.angleKey = angleKey;
-		this.range = range;
+		this.range = gyroRange;
 		this.trackedDeviceValue = trackedDeviceValue;
 		//this.type = type;
 		//Diagnostics.addToQueue(this);
