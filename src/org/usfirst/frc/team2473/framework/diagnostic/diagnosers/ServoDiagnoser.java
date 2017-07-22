@@ -21,7 +21,7 @@ public class ServoDiagnoser extends Diagnoser{
 	}
 
 	@Override
-	public void RunOneTimeTest() {
+	public void runOneTimeTest() {
 		
 	}
 

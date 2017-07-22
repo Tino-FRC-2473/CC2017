@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.Servo;
 
 public class MotorDiagnoser extends Diagnoser{
 	//constructor values
-	private String keys; //speed
+	private String speedKey; //speed
 	private String keyc; //current
 	private String keye; //encoder
 	private String keyp; //power
@@ -51,7 +51,7 @@ public class MotorDiagnoser extends Diagnoser{
 					keyc = tracker.getKey();
 					break;
 				case SPEED:
-					keys = tracker.getKey();
+					speedKey = tracker.getKey();
 					break;
 				default:
 						break;
@@ -59,7 +59,7 @@ public class MotorDiagnoser extends Diagnoser{
 			} else if(tracker.getClass().getName().equals("EncoderTracker")) {
 				keye = ((EncoderTracker) tracker).getKey();
 			}
-		this.keys = keys;
+		this.speedKey = speedKey;
 		this.keye = keye;
 		this.keyc = keyc;
 		this.keyp = keyp;
@@ -76,10 +76,10 @@ public class MotorDiagnoser extends Diagnoser{
 	public void RunSimultaneousTest() {
 		double pastrpm;
 		double current = (Database.getInstance().getNumeric(keyc));
-		if(DiagnosticThread.getTime()%1000 == 0){
+		if(DiagnosticThread.getInstance().getTime()%1000 == 0){
 			if(type.equals(Type.M775)){
 				pastrpm = rpm;
-				rpm = (((Database.getInstance().getNumeric(keys)*600))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
+				rpm = (((Database.getInstance().getNumeric(speedKey)*600))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
 				torque = (rpm - pastrpm);
 			}
 		}
@@ -94,7 +94,7 @@ public class MotorDiagnoser extends Diagnoser{
 	}
 
 	@Override
-	public void RunOneTimeTest() {
+	public void runOneTimeTest() {
 		reset();
 		while(Database.getInstance().getNumeric(keye) <= range){
 			if(Database.getInstance().getNumeric(keyp) != 0.3){
@@ -102,10 +102,10 @@ public class MotorDiagnoser extends Diagnoser{
 			}
 		}
 		if(Database.getInstance().getNumeric(keye) <= range + 50 && Database.getInstance().getNumeric(keye) >= range - 50){
-			System.out.println("Motor: " + deviceID + "Disfunctional");
+			System.out.println("Motor: " + deviceID + "Dysfunctional");
 		}
 		reset();
-		System.out.println("Turn motor mannually in any direction");
+		System.out.println("Turn motor-driven wheel manually in any direction");
 		while(Math.abs(Database.getInstance().getNumeric(keye)) <= range){
 				System.out.println("Motor: " + deviceID + "Encoder Count: " + Database.getInstance().getNumeric(keye));
 		}
@@ -113,9 +113,7 @@ public class MotorDiagnoser extends Diagnoser{
 	}
 	
 	private void reset(){
-		Devices.getInstance().getTalon(deviceID).changeControlMode(TalonControlMode.Position);
-		Devices.getInstance().getTalon(deviceID).setPosition(0);
-		Devices.getInstance().getTalon(deviceID).changeControlMode(TalonControlMode.PercentVbus);
+		for(DeviceTracker tracker : Trackers.getInstance().getTrackers()) if(tracker.getKey().equals(keye)) ((EncoderTracker)tracker).resetEncoder();
 	}
 	
 	public double getMultiplier(){

@@ -28,19 +28,16 @@ public class Diagnostics {
 		SIMULTANEOUS,ONETIME
 	}
 
-	public void startTests(TestType type){
-		if(type.equals(TestType.ONETIME) || type.equals(TestType.SIMULTANEOUS)){
-			for(Diagnoser diagnoser : diagnosers){
-				if(type.equals(TestType.SIMULTANEOUS)){
-					DiagnosticThread.addToList(diagnoser);
-				}
-				if(type.equals(TestType.ONETIME)){
-					diagnoser.RunOneTimeTest();
-					diagnosers.remove(diagnoser);
-				}
+	public void startTests(TestType type){		
+		for(Diagnoser diagnoser : diagnosers){
+			if(type.equals(TestType.SIMULTANEOUS)){
+				DiagnosticThread.getInstance().addToList(diagnoser);
+			}
+			if(type.equals(TestType.ONETIME)){
+				diagnoser.runOneTimeTest();
+				diagnosers.remove(diagnoser);
 			}
 		}
-		DiagnosticThread thread = new DiagnosticThread();
-		thread.start();
+		if(type.equals(TestType.SIMULTANEOUS)) DiagnosticThread.getInstance().start();
 	}
 }

@@ -5,15 +5,25 @@ import java.util.ArrayList;
 import org.usfirst.frc.team2473.framework.diagnostic.diagnosers.Diagnoser;
 
 public class DiagnosticThread extends Thread{
-	private static ArrayList<Diagnoser> diagnosers = new ArrayList<Diagnoser>();
+	private ArrayList<Diagnoser> diagnosers = new ArrayList<Diagnoser>();
 	
-	public static double initialTime;
+	public double initialTime;
 	
-	public DiagnosticThread(){
+	private static DiagnosticThread theInstance;
+	
+	static {
+		theInstance = new DiagnosticThread();
+	}
+	
+	public static DiagnosticThread getInstance() {
+		return theInstance;
+	}
+
+	private DiagnosticThread(){
 		initialTime = System.currentTimeMillis();
 	}
 	
-	public static void addToList(Diagnoser diagnoser){
+	public void addToList(Diagnoser diagnoser){
 		diagnosers.add(diagnoser);
 	}
 	
@@ -23,6 +33,12 @@ public class DiagnosticThread extends Thread{
 				diagnoser.RunSimultaneousTest();
 			}
 			errorPrinting();
+			
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -30,7 +46,7 @@ public class DiagnosticThread extends Thread{
 		
 	}
 	
-	public static double getTime(){
+	public double getTime(){
 		return System.currentTimeMillis() - initialTime;
 	}
 }

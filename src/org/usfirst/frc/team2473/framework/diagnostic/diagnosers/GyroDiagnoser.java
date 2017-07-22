@@ -42,7 +42,7 @@ public class GyroDiagnoser extends Diagnoser{
 	}
 
 	@Override
-	public void RunOneTimeTest() {
+	public void runOneTimeTest() {
 		Devices.getInstance().getGyro(deviceID).reset();
 		System.out.println("Turn the gyro 90 degrees");
 		while(Database.getInstance().getNumeric(angleKey) <= 90){
