@@ -8,24 +8,7 @@ distance = []
 angleFile= open("angle.txt","w+")
 distanceFile = open("distance.txt", "w+")
 
-#Target: approx degree of corner
-TARGET = 315
-#angle buffer of search either way
-TARGETBUFFER = 179
-
-startAngle = TARGET-TARGETBUFFER
-endAngle = TARGET+TARGETBUFFER
-if(startAngle<0):startAngle+=360
-if(endAngle>360):endAngle-=360
-adjust = 315-TARGET
-
-barDistance = 5
-
-def within(a):
-        if(startAngle<endAngle):
-                return a>startAngle and a<endAngle
-        if(startAngle>endAngle):
-                return a>startAngle or a<endAngle
+barCutoff = 5
 
 with Sweep('/dev/ttyUSB0') as sweep:
         sweep.set_motor_speed(2)
@@ -47,9 +30,20 @@ with Sweep('/dev/ttyUSB0') as sweep:
 
         sweep.stop_scanning()
 
-index = 0
 
-plt.
+l = len(distance)
+
+xd = []
+yd = []
+
+for i in range(l):
+        xd.append(distance[i]*np.cos(angle[i]*np.pi/180.0))
+        yd.append(distance[i]*np.sin(angle[i]*np.pi/180.0))
+
+plt.plot(xdata, ydata, 'r-', label='raw')
+plt.show()
+
+index = 0
 
 for i, dist in enumerate(distance):
         if dist == barDistance:
