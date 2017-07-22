@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2473.robot.commands;
 
+import org.usfirst.frc.team2473.framework.Database;
+import org.usfirst.frc.team2473.robot.ControlsMap;
 import org.usfirst.frc.team2473.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -25,8 +27,8 @@ public class JoystickControl extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//(Robot.driveTrain.getRightPow() ) && (Robot.oi.throttle.getThrottle() <= 0.05 && Robot.oi.throttle.getThrottle() >= -0.05)
-    		Robot.driveTrain.driveArcade(squareWithSign(Robot.oi.throttle.getZ()),Robot.oi.wheel.getX());
-			System.out.println(Robot.oi.throttle.getZ());
+    		Robot.driveTrain.driveArcade(squareWithSign(Database.getInstance().getNumeric(ControlsMap.THROTTLE_Y)),Database.getInstance().getNumeric(ControlsMap.STEERING_WHEEL_X));
+			System.out.println(Database.getInstance().getNumeric(ControlsMap.THROTTLE_Y));
     }
 
     // Make this return true when this Command no longer needs to run execute()

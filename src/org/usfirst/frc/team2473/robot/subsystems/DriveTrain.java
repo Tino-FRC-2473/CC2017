@@ -79,6 +79,8 @@ public CANTalon front_right, front_left, back_right, back_left;
     	front_right.setPosition(0);
     	front_left.setPosition(0);
     	front_right.changeControlMode(TalonControlMode.PercentVbus);
+    	front_left.changeControlMode(TalonControlMode.PercentVbus);
+
     }
 
     
