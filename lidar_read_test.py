@@ -6,10 +6,18 @@ import numpy as np
 angle = []
 distance = []
 
-angleFile= open("angle.txt","w+")
+angleFile = open("angle.txt","w+")
 distanceFile = open("distance.txt", "w+")
 
-barCutoff = 5
+SMALL_CUTOFF = 1
+BIG_CUTOFF = 3000
+
+BAR_MIN = 3
+BAR_MAX = 20
+
+
+
+# GET RAW LIDAR DATA AND ADD TO "angle" and "distance" arrays
 
 with Sweep('/dev/ttyUSB0') as sweep:
         sweep.set_motor_speed(2)
@@ -21,39 +29,42 @@ with Sweep('/dev/ttyUSB0') as sweep:
             if(not first):
                 s = scan[0]
                 for dataSample in s:
-                    ang = dataSample[0]/1000.0
+                    distanceReading = dataSample[1]
 
+                    # CUT OUT TOO BIG AND TOO LITTLE DISTANCE VALUES
+                    if(distanceReading > SMALL_CUTOFF and distanceReading < BIG_CUTOFF):
+                        angle.append(dataSample[0]/1000.0)
+                        distance.append(dataSample[1])
                     
-                    angle.append(ang)
-                    distance.append(dataSample[1])
                 break
             first = False
 
         sweep.stop_scanning()
 
+dLen = len(distance) # length of the data
 
-l = len(distance)
+
+
+# CONVERT POLAR TO CARTESIAN
 
 xd = []
 yd = []
 
-for i in range(l):
+for i in range(dLen):
         xd.append(distance[i]*np.cos(angle[i]*np.pi/180.0))
         yd.append(distance[i]*np.sin(angle[i]*np.pi/180.0))
 
-index = 0
+barIdxs = []
 
-# for i, dist in enumerate(distance):
-#         if dist == barDistance:
-#                 index = i
+for i, dist in enumerate(distance):
+        if dist >= BAR_MIN and dist <= BAR_MAX:
+                barIdxs.append(dist)
 
-# barAngle = angle[index]
+print(barIdxs)
 
-#for i, ang in enumerate(angle):
-#        angle[i] = angle[i] - barAngle
-#        if angle[i] < 0:
-#                angle[i] = angle[i] + 360
 
+
+# RECORD DATA IN FILES
 
 for i in angle:
         angleFile.write(str(float(i)))
@@ -65,6 +76,10 @@ for i in distance:
 
 angleFile.close()
 distanceFile.close()
+
+
+
+# GRAPH DATA USING MATPLOTLIB
 
 plt.scatter(xd, yd)
 plt.axhline(0)
