@@ -25,7 +25,11 @@ public class TalonTracker extends DeviceTracker {
 		/**
 		 * Talon output current
 		 */
-		CURRENT
+		CURRENT,
+		/**
+		 * Talon output speed
+		 */
+		SPEED
 	}
 
 	/**
@@ -42,5 +46,6 @@ public class TalonTracker extends DeviceTracker {
 		if(target == Target.POWER) setEvokeNumeric(() -> Devices.getInstance().getTalon(getPort()).get()); 
 		else if(target == Target.VOLTAGE) setEvokeNumeric(() -> Devices.getInstance().getTalon(getPort()).getOutputVoltage());
 		else if(target == Target.CURRENT) setEvokeNumeric(() -> Devices.getInstance().getTalon(getPort()).getOutputCurrent());
+		else if(target == Target.CURRENT) setEvokeNumeric(() -> Devices.getInstance().getTalon(getPort()).getSpeed());
 	}
 }
