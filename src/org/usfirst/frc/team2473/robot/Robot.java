@@ -4,11 +4,8 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
-<<<<<<< HEAD
 import org.usfirst.frc.team2473.framework.components.Trackers;
-=======
 import org.usfirst.frc.team2473.framework.Networking;
->>>>>>> 483ea346cca332b7ccddcc71da6ba51127d16242
 import org.usfirst.frc.team2473.framework.diagnostic.Diagnostics;
 import org.usfirst.frc.team2473.framework.diagnostic.Diagnostics.TestType;
 import org.usfirst.frc.team2473.framework.diagnostic.diagnosers.MotorDiagnoser;
