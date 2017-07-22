@@ -26,7 +26,9 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * @version 1.0
  */
 public class Robot extends IterativeRobot {
-	
+
+	private boolean networkingRunning = false; //set to true if networking is running
+	private boolean deviceReadingRunning = true; //set to true if using framework for threading
 	private boolean timerRunning; //this timer is set to true for autonomous and false for tele-op
 	private DeviceReader reader; //this is the device reader thread, which reads device values and looks up memes
 	private Timer robotControlLoop = new Timer(); //timer allows for even periodic execution of teleOpPeriodic
@@ -42,16 +44,23 @@ public class Robot extends IterativeRobot {
 	 * */
 	@Override
 	public void robotInit() {
-		addTrackers(); //add the trackers before anything else
-		addDevices(); //add the devices if not covered by trackers
-		reader = new DeviceReader(); //create device reader thread
-		reader.start(); //start the thread once the robot is started
-		try {
-			network = new Networking(); //create the networking thread
-		} catch (IOException e) {
-			e.printStackTrace();
-		} 
-		network.start(); //start the thread once the robot is started
+		if(deviceReadingRunning) {
+			addTrackers(); //add the trackers before anything else
+			addDevices(); //add the devices if not covered by trackers
+			reader = new DeviceReader(); //create device reader thread
+			reader.start(); //start the thread once the robot is started			
+		}
+		if(networkingRunning) {
+			try {
+				network = new Networking(); //create the networking thread
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+			network.start(); //start the thread once the robot is started			
+		}
+		Diagnostics.getInstance().startTests(TestType.ONETIME);
+		Diagnostics.getInstance().startTests(TestType.SIMULTANEOUS);
+		
 	}
 
 	/**
@@ -138,9 +147,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testInit() {
-		addTrackers();
-		addTests();
-		Diagnostics.getInstance().startTests(TestType.ONETIME);
+
 	}
 
 	/**
