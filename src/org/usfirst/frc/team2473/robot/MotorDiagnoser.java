@@ -41,7 +41,7 @@ public class MotorDiagnoser extends Diagnoser{
 		this.keyp = keyp;
 		this.range = range;
 		this.type = type;
-		Diagnostics.addToQueue(this);
+		//Diagnostics.addToQueue(this);
 	}
 	
 	public enum Type{

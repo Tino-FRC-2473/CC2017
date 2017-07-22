@@ -29,8 +29,6 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 
 	Command autonomousCommand;
-	
-	private DeviceThread thread = new DeviceThread();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -39,7 +37,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-		thread.start();
 	}
 
 	/**
