@@ -3,6 +3,9 @@ package org.usfirst.frc.team2473.robot;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.usfirst.frc.team2473.framework.diagnostic.Diagnostics;
+import org.usfirst.frc.team2473.framework.diagnostic.Diagnostics.TestType;
+import org.usfirst.frc.team2473.framework.diagnostic.diagnosers.MotorDiagnoser;
 import org.usfirst.frc.team2473.framework.readers.ControlsReader;
 import org.usfirst.frc.team2473.framework.readers.DeviceReader;
 
@@ -118,7 +121,16 @@ public class Robot extends IterativeRobot {
 	}
 
 	/**
-	 * Is executed during the robot's tele-op mode as a looping method. Overridden from <code>IterativeRobot</code>
+	 * Is executed at the beginning of the robot's test mode. Used for diagnostics. 
+	 */
+	@Override
+	public void testInit() {
+		addTests();
+		Diagnostics.getInstance().startTests(TestType.ONETIME);
+	}
+
+	/**
+	 * Is executed during the robot's testing mode as a looping method. Overridden from <code>IterativeRobot</code>
 	 * @see <a href="http://first.wpi.edu/FRC/roborio/release/docs/java/edu/wpi/first/wpilibj/IterativeRobot.html"><code>IterativeRobot</code></a>
 	 * */
 	@Override
@@ -144,5 +156,9 @@ public class Robot extends IterativeRobot {
 	 * */
 	public void addDevices() {
 		//call Devices.getInstance() add method in order to add a specific sort of device
+	}
+
+	public void addTests() {
+		Diagnostics.getInstance().addToQueue(new MotorDiagnoser(RobotMap.MOTOR, DiagnosticMap.MOTOR_RANGE, DiagnosticMap.MOTOR_TYPE));
 	}
 }

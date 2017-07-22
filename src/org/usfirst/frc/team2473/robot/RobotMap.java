@@ -18,6 +18,7 @@ public class RobotMap {
 	public static final String MOTOR_VOLTAGE_KEY = "voltage key";
 	public static final String MOTOR_CURRENT_KEY = "current key";
 	public static final String MOTOR_POWER_KEY = "power key";
+	public static final String MOTOR_SPEED_KEY = "speed key";
 	public static final String SERVO_POSITION_KEY = "servo position key";
 	public static final String SERVO_POWER_KEY = "servo power key";
 	public static final String GYRO_HEADING_KEY = "gyro key";
