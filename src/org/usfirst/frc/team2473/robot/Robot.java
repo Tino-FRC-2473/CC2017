@@ -1,9 +1,14 @@
 package org.usfirst.frc.team2473.robot;
 
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+<<<<<<< HEAD
 import org.usfirst.frc.team2473.framework.components.Trackers;
+=======
+import org.usfirst.frc.team2473.framework.Networking;
+>>>>>>> 483ea346cca332b7ccddcc71da6ba51127d16242
 import org.usfirst.frc.team2473.framework.diagnostic.Diagnostics;
 import org.usfirst.frc.team2473.framework.diagnostic.Diagnostics.TestType;
 import org.usfirst.frc.team2473.framework.diagnostic.diagnosers.MotorDiagnoser;
@@ -28,7 +33,8 @@ public class Robot extends IterativeRobot {
 	private boolean timerRunning; //this timer is set to true for autonomous and false for tele-op
 	private DeviceReader reader; //this is the device reader thread, which reads device values and looks up memes
 	private Timer robotControlLoop = new Timer(); //timer allows for even periodic execution of teleOpPeriodic
-
+	private Networking network; //this is the networking thread
+	
 	/*no special constructor is required for this class. you will never need to make an object of this class*/
 	
 	/**
@@ -43,6 +49,12 @@ public class Robot extends IterativeRobot {
 		addDevices(); //add the devices if not covered by trackers
 		reader = new DeviceReader(); //create device reader thread
 		reader.start(); //start the thread once the robot is started
+		try {
+			network = new Networking(); //create the networking thread
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
+		network.start(); //start the thread once the robot is started
 	}
 
 	/**
