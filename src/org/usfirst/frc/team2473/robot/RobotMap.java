@@ -1,5 +1,8 @@
 package org.usfirst.frc.team2473.robot;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -12,11 +15,11 @@ public class RobotMap {
 	// public static int leftMotor = 1;
 	// public static int rightMotor = 2;
 
-	// If you are using multiple modules, make sure to define both the port
+	// If you are using multiple modules, make s4;ure to define both the port
 	// number and the module. For example you with a rangefinder:
 	// public static int rangefinderPort = 1;
 	// public static int rangefinderModule = 1;
-	
+	public static final String MEME = "talon;";
 	public static final int climberTalonOne = 1;
 	public static final int climberTalonTwo = 2;
 	public static final int shooterTalonOne = 3;
@@ -28,5 +31,6 @@ public class RobotMap {
 	public static final int gearPivotTalon = 9;
 	public static final int Test_Button = 10;
 	
-	
+	public static final String keys = "enkfewj";
+	//public static final HashMap<String, String> personalDatabase = new HashMap<String, String>();
 }

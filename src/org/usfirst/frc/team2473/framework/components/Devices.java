@@ -9,6 +9,7 @@ import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Servo;
 
 /**
@@ -24,6 +25,7 @@ public class Devices {
 	private ArrayList<AnalogInput> analogs; //collection of analog input sensors
 	private ArrayList<DigitalInput> digitals; //collection of digital input sensors
 	private ArrayList<Servo> servos;	 //collection of servos
+	private ArrayList<Encoder> encoders;	 //collection of endcoders
 	private static Devices theInstance; //serves as the static instance to use at all times
 	
 	static { //construct theInstance as a static function
@@ -36,6 +38,7 @@ public class Devices {
 		externals = new ArrayList<ExternalDevice>();
 		analogs = new ArrayList<AnalogInput>();
 		servos = new ArrayList<Servo>();
+		encoders = new ArrayList<Encoder>();
 	}
 
 	/**

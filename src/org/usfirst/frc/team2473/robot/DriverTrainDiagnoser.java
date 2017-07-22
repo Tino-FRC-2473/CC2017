@@ -3,6 +3,7 @@ package org.usfirst.frc.team2473.robot;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class DriverTrainDiagnoser extends Diagnoser {
@@ -44,9 +45,10 @@ public class DriverTrainDiagnoser extends Diagnoser {
 	private double encoders = 1600;
 	
 	//motor constants
-	private final double MAX_TORQUE = 0.03;
-	private final double MAX_CURRENT = 10.0;
-	private double EncoderTicksPerSecond = 6000.0;
+	//private final double MAX_TORQUE = 0.03;
+	//private final double MAX_CURRENT = 10.0;
+	//private double EncoderTicksPerRotation = 6000.0;
+	//private final double GearRatio = 14;
 	
 	//speed multiplier
 	private double SpeedMultiplier = 1.0;
@@ -149,19 +151,19 @@ public class DriverTrainDiagnoser extends Diagnoser {
 			pastrpmfl = rpmfl;
 			pastrpmbr = rpmbr;
 			pastrpmbl = rpmbl;
-			rpmfr = ((DataBase.getDeviceValue(keyfrs)/100)/this.EncoderTicksPerSecond)*(2*Math.PI);
-			rpmfl = ((DataBase.getDeviceValue(keyfls)/100)/this.EncoderTicksPerSecond)*(2*Math.PI);
-			rpmbr = ((DataBase.getDeviceValue(keybrs)/100)/this.EncoderTicksPerSecond)*(2*Math.PI);
-			rpmbl = ((DataBase.getDeviceValue(keybls)/100)/this.EncoderTicksPerSecond)*(2*Math.PI);
+			rpmfr = (((DataBase.getDeviceValue(keyfrs)*600)*(DiagnosticMap.DRIVETRAIN_GEARRATIO))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
+			rpmfl = (((DataBase.getDeviceValue(keyfls)*600)*(DiagnosticMap.DRIVETRAIN_GEARRATIO))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
+			rpmbr = (((DataBase.getDeviceValue(keybrs)*600)*(DiagnosticMap.DRIVETRAIN_GEARRATIO))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
+			rpmbl = (((DataBase.getDeviceValue(keybls)*600)*(DiagnosticMap.DRIVETRAIN_GEARRATIO))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
 			torquefr = (rpmfr - pastrpmfr);
 			torquefl = (rpmfl - pastrpmfl);
 			torquebr = (rpmbr - pastrpmbr);
 			torquebl = (rpmbl - pastrpmbl);
 		}	
-		if(torquefr >= MAX_TORQUE || torquefl >= MAX_TORQUE || 
-		   torquebr >= MAX_TORQUE || torquebl >= MAX_TORQUE ||
-		   currentfr >= MAX_CURRENT || currentfl >= MAX_CURRENT ||
-		   currentbr >= MAX_CURRENT || currentbl >= MAX_CURRENT){
+		if(torquefr >= DiagnosticMap.MAX_TORQUE775 || torquefl >= DiagnosticMap.MAX_TORQUE775 || 
+		   torquebr >= DiagnosticMap.MAX_TORQUE775 || torquebl >= DiagnosticMap.MAX_TORQUE775 ||
+		   currentfr >= DiagnosticMap.MAX_CURRENT775 || currentfl >= DiagnosticMap.MAX_CURRENT775 ||
+		   currentbr >= DiagnosticMap.MAX_CURRENT775 || currentbl >= DiagnosticMap.MAX_CURRENT775){
 			System.out.println("Drive Train in CRITICAL condition, lowering max speed");
 			this.SpeedMultiplier -= 0.1;
 		}else{
