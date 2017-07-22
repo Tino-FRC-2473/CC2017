@@ -1,6 +1,8 @@
 package org.usfirst.frc.team2473.robot;
 
 import com.ctre.CANTalon;
+
+import org.usfirst.frc.team2473.framework.Database;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -89,15 +91,15 @@ public class DriverTrainDiagnoser extends Diagnoser {
 	@Override
 	public void RunOneTimeTest() {
 		// TODO Auto-generated method stub
-		double encoderfr = DataBase.getDeviceValue(keyfre);
-		double encoderfl = DataBase.getDeviceValue(keyfle);
-		double encoderbl = DataBase.getDeviceValue(keyble);
-		double encoderbr = DataBase.getDeviceValue(keybre);
+		double encoderfr = Database.getInstance().getNumeric(keyfre);
+		double encoderfl = Database.getInstance().getNumeric(keyfle);
+		double encoderbl = Database.getInstance().getNumeric(keyble);
+		double encoderbr = Database.getInstance().getNumeric(keybre);
 		
 		reset();
 		
 		while(encoderfr <= encoders || encoderfl <= encoders){
-			if(DataBase.getDeviceValue(keyfrp) != 0.5){
+			if(Database.getInstance().getNumeric(keyfrp) != 0.5){
 				setPowerToALl(0.5);
 			}
 		}
@@ -141,20 +143,20 @@ public class DriverTrainDiagnoser extends Diagnoser {
 		double pastrpmbr;
 		double pastrpmbl;
 		
-		double currentfr = DataBase.getDeviceValue(keyfrc);
-		double currentfl = DataBase.getDeviceValue(keyflc);
-		double currentbr = DataBase.getDeviceValue(keybrc);
-		double currentbl = DataBase.getDeviceValue(keyblc);
+		double currentfr = Database.getInstance().getNumeric(keyfrc);
+		double currentfl = Database.getInstance().getNumeric(keyflc);
+		double currentbr = Database.getInstance().getNumeric(keybrc);
+		double currentbl = Database.getInstance().getNumeric(keyblc);
 		
 		if(DiagnosticThread.getTime()%1000 == 0){
 			pastrpmfr = rpmfr;
 			pastrpmfl = rpmfl;
 			pastrpmbr = rpmbr;
 			pastrpmbl = rpmbl;
-			rpmfr = (((DataBase.getDeviceValue(keyfrs)*600)*(DiagnosticMap.DRIVETRAIN_GEARRATIO))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
-			rpmfl = (((DataBase.getDeviceValue(keyfls)*600)*(DiagnosticMap.DRIVETRAIN_GEARRATIO))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
-			rpmbr = (((DataBase.getDeviceValue(keybrs)*600)*(DiagnosticMap.DRIVETRAIN_GEARRATIO))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
-			rpmbl = (((DataBase.getDeviceValue(keybls)*600)*(DiagnosticMap.DRIVETRAIN_GEARRATIO))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
+			rpmfr = (((Database.getInstance().getNumeric(keyfrs)*600)*(DiagnosticMap.DRIVETRAIN_GEARRATIO))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
+			rpmfl = (((Database.getInstance().getNumeric(keyfls)*600)*(DiagnosticMap.DRIVETRAIN_GEARRATIO))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
+			rpmbr = (((Database.getInstance().getNumeric(keybrs)*600)*(DiagnosticMap.DRIVETRAIN_GEARRATIO))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
+			rpmbl = (((Database.getInstance().getNumeric(keybls)*600)*(DiagnosticMap.DRIVETRAIN_GEARRATIO))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
 			torquefr = (rpmfr - pastrpmfr);
 			torquefl = (rpmfl - pastrpmfl);
 			torquebr = (rpmbr - pastrpmbr);

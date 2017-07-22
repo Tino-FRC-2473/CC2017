@@ -9,40 +9,34 @@ import edu.wpi.first.wpilibj.Servo;
 public class GyroDiagnoser extends Diagnoser{
 	
 	int deviceID;
-	String rightEncoder;
-	String leftEncoder;
+	String trackedDeviceValue;
 	String angleKey;
-	Type type;
+	//Type type;
+	double range;
 	
-	public GyroDiagnoser(int deviceID, String angleKey){
+	public GyroDiagnoser(int deviceID, String angleKey, String trackedDeviceValue, double gyroRange){
 		this.deviceID = deviceID;
 		this.angleKey = angleKey;
-		this.type = Type.ARM;
-		Diagnostics.addToQueue(this);
+		this.range = range;
+		this.trackedDeviceValue = trackedDeviceValue;
+		//this.type = type;
+		//Diagnostics.addToQueue(this);
 	}
 	
-	public GyroDiagnoser(int deviceID, String angleKey, String rightEncoderKey, String leftEncoderKey){
-		this.leftEncoder = leftEncoderKey;
-		this.rightEncoder = rightEncoderKey;
-		this.deviceID = deviceID;
-		this.angleKey = angleKey;
-		this.type = Type.DRIVE_TRAIN;
-		Diagnostics.addToQueue(this);
-	}
-	
-	public enum Type{
-		ARM,
-		
-		DRIVE_TRAIN
-	}
+//	public enum Type{
+//		MOTOR,
+//		
+//		SERVO
+//	}
 
 	@Override
 	public void RunSimultaneousTest() {
-		if(type.equals(Type.ARM)){
-//			if((Database.getInstance().getNumeric(leftEncoder)-Database.getInstance().getNumeric(rightEncoder))){
+//		if(type.equals(Type.SERVO)){
+//
+//		}else if(type.equals(Type.MOTOR)){
 //			
-//			}
-		}else if(type.equals(Type.DRIVE_TRAIN)){
+//		}
+		if(Database.getInstance().getNumeric(angleKey) <= range + 5 || Database.getInstance().getNumeric(angleKey) >= range - 5){
 			
 		}
 	}

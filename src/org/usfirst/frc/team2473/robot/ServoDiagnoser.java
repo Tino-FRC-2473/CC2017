@@ -11,8 +11,7 @@ public class ServoDiagnoser extends Diagnoser{
 		this.servo = servo;
 		this.key = key;
 		this.range = range;
-		
-		Diagnostics.addToQueue(this);
+		//Diagnostics.addToQueue(this);
 	}
 
 
