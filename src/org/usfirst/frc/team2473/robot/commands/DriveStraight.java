@@ -13,9 +13,9 @@ public class DriveStraight extends Command implements PIDOutput {
 	private PIDController pidController;
 	private double rotateToAngleRate;
 
-	private static final double KP = 0.035;
-	private static final double KI = 0.00;
-	private static final double KD = 0.04;
+	private static final double KP = 0.025;
+	private static final double KI = 0.005;
+	private static final double KD = 0.00;
 	private static final double KF = 0.00;
 
 	private static final double K_TOLERANCE_DEGREES = 2.0f;
