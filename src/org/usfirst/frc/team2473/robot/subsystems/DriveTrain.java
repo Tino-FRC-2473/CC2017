@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2473.robot.subsystems;
 
+import org.usfirst.frc.team2473.framework.components.Devices;
 import org.usfirst.frc.team2473.robot.Robot;
 import org.usfirst.frc.team2473.robot.RobotMap;
 import org.usfirst.frc.team2473.robot.commands.JoystickControl;
@@ -20,29 +21,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class DriveTrain extends Subsystem {
-	private CANTalon leftFrontCAN;
-	private CANTalon rightFrontCAN;
-	private CANTalon leftBackCAN;
-	private CANTalon rightBackCAN;
-	
-public CANTalon front_right, front_left, back_right, back_left;
 
 	private RobotDrive drive;
 	
 	public DriveTrain() {
 		super();
 		System.out.println("DT CREATED");
-		front_right = new CANTalon(RobotMap.FRONT_RIGHT);
-    	front_left = new CANTalon(RobotMap.FRONT_LEFT);
-    	back_right = new CANTalon(RobotMap.BACK_RIGHT);
-    	back_left = new CANTalon(RobotMap.BACK_LEFT);
-		
-		leftFrontCAN = new CANTalon(RobotMap.FRONT_LEFT);
-		rightFrontCAN = new CANTalon(RobotMap.FRONT_RIGHT);
-		leftBackCAN = new CANTalon(RobotMap.BACK_LEFT);
-		rightBackCAN = new CANTalon(RobotMap.BACK_RIGHT);
-		
-		drive = new RobotDrive(leftFrontCAN, leftBackCAN, rightFrontCAN, rightBackCAN);
+
+		drive = new RobotDrive(Devices.getInstance().getTalon(RobotMap.FRONT_LEFT),Devices.getInstance().getTalon(RobotMap.BACK_LEFT), Devices.getInstance().getTalon(RobotMap.FRONT_RIGHT), Devices.getInstance().getTalon(RobotMap.BACK_RIGHT));
 		
 		drive.setMaxOutput(.70);
 		drive.setInvertedMotor(MotorType.kFrontLeft, true);
@@ -62,27 +48,26 @@ public CANTalon front_right, front_left, back_right, back_left;
 	}
     
     public double getLeftPow() {
-    	return leftFrontCAN.get();
+    	return Devices.getInstance().getTalon(RobotMap.FRONT_LEFT).get();
     }
 
     public double getRightPow() {
-    	return rightFrontCAN.get();
+    	return Devices.getInstance().getTalon(RobotMap.BACK_RIGHT).get();
     }
     
     public void driveArcade(double speed, double rotate) {
     	drive.arcadeDrive(speed, rotate);
 	}
 
+   
     public void resetEncoders(){
-    	front_right.changeControlMode(TalonControlMode.Position);
-    	front_left.changeControlMode(TalonControlMode.Position);
-    	front_right.setPosition(0);
-    	front_left.setPosition(0);
-    	front_right.changeControlMode(TalonControlMode.PercentVbus);
-    	front_left.changeControlMode(TalonControlMode.PercentVbus);
-
+    	
+    	Devices.getInstance().getTalon(RobotMap.FRONT_RIGHT).changeControlMode(TalonControlMode.Position);
+    	Devices.getInstance().getTalon(RobotMap.FRONT_LEFT).changeControlMode(TalonControlMode.Position);
+    	Devices.getInstance().getTalon(RobotMap.FRONT_RIGHT).setEncPosition(0);
+    	Devices.getInstance().getTalon(RobotMap.FRONT_LEFT).setEncPosition(0);
+    	Devices.getInstance().getTalon(RobotMap.FRONT_RIGHT).changeControlMode(TalonControlMode.PercentVbus);
+    	Devices.getInstance().getTalon(RobotMap.FRONT_LEFT).changeControlMode(TalonControlMode.PercentVbus);
     }
-
-    
     
 }
