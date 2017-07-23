@@ -116,26 +116,28 @@ while True:
 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-    zero_red = np.array([0, 100, 100]);
-    low_red = np.array([10, 255, 255]);
-    high_red = np.array([160, 100, 100]);
-    pi_red = np.array([180, 255, 255]);
+    # zero_red = np.array([0, 100, 100]);
+    # low_red = np.array([10, 255, 255]);
+    # high_red = np.array([160, 100, 100]);
+    # pi_red = np.array([180, 255, 255]);
     
     #make mask
-    maskLow = cv2.inRange(hsv, zero_red, low_red)
-    maskHigh = cv2.inRange(hsv, high_red, pi_red)
-    mask = maskLow + maskHigh
+    # maskLow = cv2.inRange(hsv, zero_red, low_red)
+    # maskHigh = cv2.inRange(hsv, high_red, pi_red)
+    # mask = maskLow + maskHigh
 
     #low_white = np.array([118 - 10,22.95 - 20,181.05 - 30]);
     #high_white = np.array([123 + 10, 22.95 + 20, 181.05 + 30]);
     #mask = cv2.inRange(hsv, low_white, high_white);
     
-    # #green thresholds
-    # low_green = np.array([40, 100, 100])
-    # high_green = np.array([80, 255, 255])
+    #green thresholds
+    #180, 17, 100
+    #180, 1, 100
+    low_green = np.array([90, 2.55, 255])
+    high_green = np.array([90, 63.75, 255])
 
-    # #make mask
-    # mask = cv2.inRange(hsv, low_green, high_green)
+    #make mask
+    mask = cv2.inRange(hsv, low_green, high_green)
 
     #show mask
 
