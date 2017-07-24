@@ -3,6 +3,12 @@ package org.usfirst.frc.team2473.robot;
 import com.ctre.CANTalon;
 
 import org.usfirst.frc.team2473.framework.Database;
+import org.usfirst.frc.team2473.framework.components.Devices;
+import org.usfirst.frc.team2473.framework.components.Trackers;
+import org.usfirst.frc.team2473.framework.trackers.DeviceTracker;
+import org.usfirst.frc.team2473.framework.trackers.EncoderTracker;
+import org.usfirst.frc.team2473.framework.trackers.TalonTracker;
+
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -10,22 +16,22 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class DriverTrainDiagnoser extends Diagnoser {
 	//contructor values
-	private CANTalon fr; //front right motor
-	private CANTalon fl; //front left motor
-	private CANTalon bl; //back left motor
-	private CANTalon br; //back right motor
-	private String keyfre; //encoder
-	private String keyfle;
-	private String keyble;
-	private String keybre;
+	private int fr; //front right motor
+	private int fl; //front left motor
+	private int bl; //back left motor
+	private int br; //back right motor
+	private int gyro; //gyro
+	private String gyroangle;
+	private String keyre; //encoder
+	private String keyle;
+	//private String keyble;
+	//private String keybre;
 	private String keyfrp; //power
 	private String keyflp;
 	private String keyblp;
 	private String keybrp;
-	private String keyfrs; //speed
-	private String keyfls;
-	private String keybls;
-	private String keybrs;
+	private String keyrs; //speed
+	private String keyls;
 	private String keyfrc; //current
 	private String keyflc;
 	private String keyblc;
@@ -34,14 +40,10 @@ public class DriverTrainDiagnoser extends Diagnoser {
 	//private Joystick stick; unused code for now
 	
 	//torque calculations
-	private double rpmfr = 0.0;
-	private double rpmfl = 0.0;
-	private double rpmbr = 0.0;
-	private double rpmbl = 0.0;
-	private double torquefr = 0.0;
-	private double torquefl = 0.0;
-	private double torquebr = 0.0;
-	private double torquebl = 0.0;
+	private double rpmr = 0.0;
+	private double rpml = 0.0;
+	private double torquer = 0.0;
+	private double torquel = 0.0;
 	
 	//encoder goal for onetime test
 	private double encoders = 1600;
@@ -55,115 +57,132 @@ public class DriverTrainDiagnoser extends Diagnoser {
 	//speed multiplier
 	private double SpeedMultiplier = 1.0;
 	
-	public DriverTrainDiagnoser(CANTalon fr, CANTalon fl, CANTalon bl, CANTalon br, Joystick stick, 
-								String keyfrp, String keyflp, String keybrp, String keyblp, 
-								String keyfre, String keyfle, String keybre, String keyble, 
-								String keyfrs, String keyfls, String keybrs, String keybls, 
-								String keyfrc, String keyflc, String keybrc, String keyblc){
-		this.fr = fr;
-		this.fl = fl;
-		this.bl = bl;
-		this.br = br;
-		//encoder values
-		this.keyfre = keyfre;
-		this.keyfle = keyfle;
-		this.keybre = keybre;
-		this.keyble = keyble;
-		//power values
-		this.keyfrp = keyfrp;
-		this.keyflp = keyflp;
-		this.keybrp = keybrp;
-		this.keyblp = keyblp;
-		//speed values(CANTalon.getSpeed())
-		this.keyfrs = keyfrs;
-		this.keyfls = keyfls;
-		this.keybrs = keybrs;
-		this.keybls = keybls;
-		//input current values
-		this.keyfrc = keyfrc;
-		this.keyflc = keyflc;
-		this.keybrc = keybrc;
-		this.keyblc = keyblc;
-		//the joystick
-		//this.stick = stick; unused code for now
+	public DriverTrainDiagnoser(int keyfr, int keyfl, int keybl, int keybr, int gyro){
+		this.fr = keyfr;
+		this.fl = keyfl;
+		this.bl = keybl;
+		this.br = keybr;
+		this.gyro = gyro;
+		for(DeviceTracker tracker : Trackers.getInstance().getTrackers())
+			if(tracker.getClass().getName().equals("TalonTracker") && tracker.getPort() == fr) {
+				switch(((TalonTracker) tracker).getTarget()) {
+				case POWER:
+					keyfrp = tracker.getKey();
+					break;
+				case CURRENT:
+					keyfrc = tracker.getKey();
+					break;
+				case SPEED:
+					keyrs = tracker.getKey();
+					break;
+				default:
+					break;
+				}
+			} else if(tracker.getClass().getName().equals("EncoderTracker")) {
+				keyre = ((EncoderTracker) tracker).getKey();
+			}else if(tracker.getClass().getName().equals("TalonTracker") && tracker.getPort() == fl) {
+				switch(((TalonTracker) tracker).getTarget()) {
+				case POWER:
+					keyflp = tracker.getKey();
+					break;
+				case CURRENT:
+					keyflc = tracker.getKey();
+					break;
+				case SPEED:
+					keyls = tracker.getKey();
+					break;
+				default:
+					break;
+				}
+			} else if(tracker.getClass().getName().equals("EncoderTracker")) {
+				keyle = ((EncoderTracker) tracker).getKey();
+			}else if(tracker.getClass().getName().equals("TalonTracker") && tracker.getPort() == br) {
+				switch(((TalonTracker) tracker).getTarget()) {
+				case POWER:
+					keybrp = tracker.getKey();
+					break;
+				case CURRENT:
+					keybrc = tracker.getKey();
+					break;
+				default:
+					break;
+				}
+			} else if(tracker.getClass().getName().equals("TalonTracker") && tracker.getPort() == bl) {
+				switch(((TalonTracker) tracker).getTarget()) {
+				case POWER:
+					keyblp = tracker.getKey();
+					break;
+				case CURRENT:
+					keyblc = tracker.getKey();
+					break;
+				default:
+					break;
+				}
+			} else if(tracker.getClass().getName().equals("GyroTracker") && tracker.getPort() == gyro){
+				gyroangle = tracker.getKey();
+			}
 	}
 
 	@Override
 	public void RunOneTimeTest() {
-		// TODO Auto-generated method stub
-		double encoderfr = Database.getInstance().getNumeric(keyfre);
-		double encoderfl = Database.getInstance().getNumeric(keyfle);
-		double encoderbl = Database.getInstance().getNumeric(keyble);
-		double encoderbr = Database.getInstance().getNumeric(keybre);
-		
 		reset();
-		
-		while(encoderfr <= encoders || encoderfl <= encoders){
+		while(Database.getInstance().getNumeric(keyre) <= encoders || Database.getInstance().getNumeric(keyre) <= encoders){
 			if(Database.getInstance().getNumeric(keyfrp) != 0.5){
 				setPowerToALl(0.5);
 			}
 		}
 		
-		if((encoderfr + encoderfl + encoderbr + encoderbl)/4 > encoders + 50 &&
-				(encoderfr + encoderfl + encoderbr + encoderbl)/4 < encoders - 50){
-					System.out.println("Overall System: Positive");
+		if((Database.getInstance().getNumeric(keyre) + Database.getInstance().getNumeric(keyle))/2 > encoders + 50 &&
+				(Database.getInstance().getNumeric(keyre) + Database.getInstance().getNumeric(keyle))/2 < encoders - 50){
+					System.out.println("Overall Drivetrain Status: Positive");
 		}else{
-			if(encoders - encoderfr < -50 || encoders - encoderfr > 50){
-				System.out.println("Front Right Motor: Functional");
+			if(encoders - Database.getInstance().getNumeric(keyre) < -50 || encoders - Database.getInstance().getNumeric(keyre) > 50){
+				System.out.println("Right Encoder: Functional");
 			}else{
-				System.out.println("Front Right Motor: Disfunctional");
+				System.out.println("Right Encoder: Disfunctional");
 			}
-			if(encoders - encoderfl < -50 || encoders - encoderfl > 50){
-				System.out.println("Front Left Motor: Functional");
+			if(encoders - Database.getInstance().getNumeric(keyle) < -50 || encoders - Database.getInstance().getNumeric(keyle) > 50){
+				System.out.println("Left Encoder: Functional");
 			}else{
-				System.out.println("Front Left Motor: Disfunctional");
-			}
-			if(encoders - encoderbl < -50 || encoders - encoderbl > 50){
-				System.out.println("Back Left Motor: Functional");
-			}else{
-				System.out.println("Back Left Motor: Disfunctional");
-			}
-			if(encoders - encoderbr < -50 || encoders - encoderbr > 50){
-				System.out.println("Back Right Motor: Functional");
-			}else{
-				System.out.println("Back Right Motor: Disfunctional");
+				System.out.println("Left Encoder: Disfunctional");
 			}
 		}
-		
 		reset();
-		
+		System.out.println("Turn both the left and the right wheel forward.");
+		while(Database.getInstance().getNumeric(keyre) <= DiagnosticMap.ENCODER_PER_ROTATION775 && Database.getInstance().getNumeric(keyle) <= DiagnosticMap.ENCODER_PER_ROTATION775){
+			System.out.println("Right Encoder Count: " + Database.getInstance().getNumeric(keyre));
+			System.out.println("Right Encoder Count: " + Database.getInstance().getNumeric(keyle));
+		}
+		System.out.println("If both wheels completed one rotation, the encoders are in good condition.");
+		reset();
+		System.out.println("Now, turn the robot  90 degrees");
+		while(Database.getInstance().getNumeric(gyroangle) <= 90){
+			System.out.println("Gyro Angle: " + Database.getInstance().getNumeric(gyroangle));
+		}
+		System.out.println("If this looks like 90 degrees, the gyro is in good condition.");
 	}
 
 	@Override
 	public void RunSimultaneousTest() {
 		// TODO Auto-generated method stub
 		//current power speed
-		double pastrpmfr;
-		double pastrpmfl;
-		double pastrpmbr;
-		double pastrpmbl;
+		double pastrpmr;
+		double pastrpml;
 		
 		double currentfr = Database.getInstance().getNumeric(keyfrc);
 		double currentfl = Database.getInstance().getNumeric(keyflc);
 		double currentbr = Database.getInstance().getNumeric(keybrc);
 		double currentbl = Database.getInstance().getNumeric(keyblc);
 		
-		if(DiagnosticThread.getTime()%1000 == 0){
-			pastrpmfr = rpmfr;
-			pastrpmfl = rpmfl;
-			pastrpmbr = rpmbr;
-			pastrpmbl = rpmbl;
-			rpmfr = (((Database.getInstance().getNumeric(keyfrs)*600)*(DiagnosticMap.DRIVETRAIN_GEARRATIO))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
-			rpmfl = (((Database.getInstance().getNumeric(keyfls)*600)*(DiagnosticMap.DRIVETRAIN_GEARRATIO))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
-			rpmbr = (((Database.getInstance().getNumeric(keybrs)*600)*(DiagnosticMap.DRIVETRAIN_GEARRATIO))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
-			rpmbl = (((Database.getInstance().getNumeric(keybls)*600)*(DiagnosticMap.DRIVETRAIN_GEARRATIO))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
-			torquefr = (rpmfr - pastrpmfr);
-			torquefl = (rpmfl - pastrpmfl);
-			torquebr = (rpmbr - pastrpmbr);
-			torquebl = (rpmbl - pastrpmbl);
+		if(DiagnosticThread.getInstance().getTime()%1000 == 0){
+			pastrpmr = rpmr;
+			pastrpml = rpml;
+			rpmr = (((Database.getInstance().getNumeric(keyrs)*600)*(DiagnosticMap.DRIVETRAIN_GEAR_RATIO))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
+			rpml = (((Database.getInstance().getNumeric(keyls)*600)*(DiagnosticMap.DRIVETRAIN_GEAR_RATIO))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
+			torquer = (rpmr - pastrpmr);
+			torquel = (rpml - pastrpml);
 		}	
-		if(torquefr >= DiagnosticMap.MAX_TORQUE775 || torquefl >= DiagnosticMap.MAX_TORQUE775 || 
-		   torquebr >= DiagnosticMap.MAX_TORQUE775 || torquebl >= DiagnosticMap.MAX_TORQUE775 ||
+		if(torquer >= DiagnosticMap.MAX_TORQUE775 || torquel >= DiagnosticMap.MAX_TORQUE775 || 
 		   currentfr >= DiagnosticMap.MAX_CURRENT775 || currentfl >= DiagnosticMap.MAX_CURRENT775 ||
 		   currentbr >= DiagnosticMap.MAX_CURRENT775 || currentbl >= DiagnosticMap.MAX_CURRENT775){
 			System.out.println("Drive Train in CRITICAL condition, lowering max speed");
@@ -171,32 +190,42 @@ public class DriverTrainDiagnoser extends Diagnoser {
 		}else{
 			this.SpeedMultiplier = 1.0;
 		}
+		
+		if(Database.getInstance().getNumeric(keyle) != 0 && Math.abs(Database.getInstance().getNumeric(keyre)/Database.getInstance().getNumeric(keyle)) < 1 && (Database.getInstance().getNumeric(gyroangle) < 180 && Database.getInstance().getNumeric(gyroangle) > 0)){
+			System.out.println("Drive Train Gyro: not calibrated");
+		}
+		if(Database.getInstance().getNumeric(keyre) != 0 && Math.abs(Database.getInstance().getNumeric(keyle)/Database.getInstance().getNumeric(keyre)) < 1 && (Database.getInstance().getNumeric(gyroangle) <= 359 && Database.getInstance().getNumeric(gyroangle) > 180)){
+			System.out.println("Drive Train Gyro: not calibrated");
+		}
 	}
 	
 	private void setPowerToALl(double pow){
-		fl.set(pow);
-		fr.set(pow);
-		bl.set(pow);
-		br.set(pow);
+		Devices.getInstance().getTalon(fr).set(pow);
+		Devices.getInstance().getTalon(fl).set(pow);
+		Devices.getInstance().getTalon(br).set(pow);
+		Devices.getInstance().getTalon(bl).set(pow);
 	}
 	
 	private void reset(){
-		fr.changeControlMode(TalonControlMode.Position);
-		fl.changeControlMode(TalonControlMode.Position);
-		bl.changeControlMode(TalonControlMode.Position);
-		br.changeControlMode(TalonControlMode.Position);
+		Devices.getInstance().getTalon(fr).changeControlMode(TalonControlMode.Position);
+		Devices.getInstance().getTalon(fl).changeControlMode(TalonControlMode.Position);
+		Devices.getInstance().getTalon(bl).changeControlMode(TalonControlMode.Position);
+		Devices.getInstance().getTalon(br).changeControlMode(TalonControlMode.Position);
 	
-		fr.setPosition(0);
-		fl.setPosition(0);
-		bl.setPosition(0);
-		br.setPosition(0);
+		Devices.getInstance().getTalon(fr).setPosition(0);
+		Devices.getInstance().getTalon(fl).setPosition(0);
+		Devices.getInstance().getTalon(br).setPosition(0);
+		Devices.getInstance().getTalon(bl).setPosition(0);
 		
-		fr.changeControlMode(TalonControlMode.PercentVbus);
-		fl.changeControlMode(TalonControlMode.PercentVbus);
-		bl.changeControlMode(TalonControlMode.PercentVbus);
-		br.changeControlMode(TalonControlMode.PercentVbus);
+		Devices.getInstance().getTalon(fr).changeControlMode(TalonControlMode.PercentVbus);
+		Devices.getInstance().getTalon(fl).changeControlMode(TalonControlMode.PercentVbus);
+		Devices.getInstance().getTalon(bl).changeControlMode(TalonControlMode.PercentVbus);
+		Devices.getInstance().getTalon(br).changeControlMode(TalonControlMode.PercentVbus);
+		
+		Devices.getInstance().getGyro(gyro).reset();
 	}
 	
+	@Override
 	public double getMultiplier(){
 		return SpeedMultiplier;
 	}

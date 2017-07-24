@@ -24,5 +24,9 @@ public class ServoDiagnoser extends Diagnoser{
 	public void RunOneTimeTest() {
 		
 	}
+	@Override
+	public double getMultiplier(){
+		return 1.0;
+	}
 
 }

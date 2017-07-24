@@ -3,6 +3,11 @@ package org.usfirst.frc.team2473.robot;
 import com.ctre.CANTalon;
 import org.usfirst.frc.team2473.framework.Database;
 import org.usfirst.frc.team2473.framework.components.Devices;
+import org.usfirst.frc.team2473.framework.components.Trackers;
+import org.usfirst.frc.team2473.framework.trackers.DeviceTracker;
+import org.usfirst.frc.team2473.framework.trackers.EncoderTracker;
+import org.usfirst.frc.team2473.framework.trackers.TalonTracker;
+import org.usfirst.frc.team2473.robot.DiagnosticMap;
 
 import com.ctre.CANTalon.TalonControlMode;
 
@@ -33,8 +38,26 @@ public class MotorDiagnoser extends Diagnoser{
 //	private final double EcnoderTicksPerRotation = 6000.0;
 //	private final double GearRatio = 14;
 	
-	public MotorDiagnoser(int deviceID, String keys, String keyc, String keye, String keyp, Double range, Type type){
+	public MotorDiagnoser(int deviceID, Double range, Type type){
 		this.deviceID = deviceID;
+		for(DeviceTracker tracker : Trackers.getInstance().getTrackers())
+			if(tracker.getClass().getName().equals("TalonTracker") && tracker.getPort()==deviceID) {
+				switch(((TalonTracker) tracker).getTarget()) {
+				case POWER:
+					keyp = tracker.getKey();
+					break;
+				case CURRENT:
+					keyc = tracker.getKey();
+					break;
+				case SPEED:
+					keys = tracker.getKey();
+					break;
+				default:
+						break;
+				}
+			} else if(tracker.getClass().getName().equals("EncoderTracker")) {
+				keye = ((EncoderTracker) tracker).getKey();
+			}
 		this.keys = keys;
 		this.keye = keye;
 		this.keyc = keyc;
@@ -52,7 +75,7 @@ public class MotorDiagnoser extends Diagnoser{
 	public void RunSimultaneousTest() {
 		double pastrpm;
 		double current = (Database.getInstance().getNumeric(keyc));
-		if(DiagnosticThread.getTime()%1000 == 0){
+		if(DiagnosticThread.getInstance().getTime()%1000 == 0){
 			if(type.equals(Type.M775)){
 				pastrpm = rpm;
 				rpm = (((Database.getInstance().getNumeric(keys)*600))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
@@ -81,7 +104,7 @@ public class MotorDiagnoser extends Diagnoser{
 			System.out.println("Motor: " + deviceID + "Disfunctional");
 		}
 		reset();
-		System.out.println("Turn motor mannually in any direction");
+		System.out.println("Start Turn motor: " + deviceID + "mannually");
 		while(Math.abs(Database.getInstance().getNumeric(keye)) <= range){
 				System.out.println("Motor: " + deviceID + "Encoder Count: " + Database.getInstance().getNumeric(keye));
 		}
@@ -93,7 +116,7 @@ public class MotorDiagnoser extends Diagnoser{
 		Devices.getInstance().getTalon(deviceID).setPosition(0);
 		Devices.getInstance().getTalon(deviceID).changeControlMode(TalonControlMode.PercentVbus);
 	}
-	
+	@Override
 	public double getMultiplier(){
 		return SpeedMultiplier;
 	}

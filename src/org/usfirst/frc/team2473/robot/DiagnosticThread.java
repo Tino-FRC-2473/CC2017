@@ -1,17 +1,30 @@
 package org.usfirst.frc.team2473.robot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DiagnosticThread extends Thread{
-	private static ArrayList<Diagnoser> diagnosers = new ArrayList<Diagnoser>();
+	private ArrayList<Diagnoser> diagnosers = new ArrayList<Diagnoser>();
+	private HashMap<String, String> errors = new HashMap<String, String>();
 	
-	public static double initialTime;
+	public double initialTime;
+	
+	private static DiagnosticThread theInstance;
+	
+	static {
+		theInstance = new DiagnosticThread();
+	}
+	
+	public static DiagnosticThread getInstance() {
+		return theInstance;
+	}
+
 	
 	public DiagnosticThread(){
 		initialTime = System.currentTimeMillis();
 	}
 	
-	public static void addToList(Diagnoser diagnoser){
+	public void addToList(Diagnoser diagnoser){
 		diagnosers.add(diagnoser);
 	}
 	
@@ -20,15 +33,15 @@ public class DiagnosticThread extends Thread{
 			for(Diagnoser diagnoser:diagnosers){
 				diagnoser.RunSimultaneousTest();
 			}
-			errorPrinting();
+			errors();
 		}
 	}
 	
-	private void errorPrinting(){
+	private void errors(){
 		
 	}
 	
-	public static double getTime(){
+	public double getTime(){
 		return System.currentTimeMillis() - initialTime;
 	}
 }
