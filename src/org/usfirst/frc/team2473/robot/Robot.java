@@ -30,7 +30,6 @@ public class Robot extends IterativeRobot {
 	DeviceReader reader;
 	Timer robotControlLoop;
 	private boolean timerRunning = true;
-	public static OI oi;
 	public static DriveTrain driveTrain;
 	public static JoystickControl joycom;
 	Command autonomousCommand;
@@ -69,9 +68,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		timerRunning = false;
-		joycom.start();
-		if (autonomousCommand != null)
-			autonomousCommand.cancel();
+		if(joycom != null)
+			joycom.start();
 	}
 
 	@Override
