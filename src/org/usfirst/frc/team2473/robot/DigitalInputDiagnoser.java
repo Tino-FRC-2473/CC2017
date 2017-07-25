@@ -21,7 +21,7 @@ public class DigitalInputDiagnoser extends Diagnoser {
 		this.range = range;
 		this.type = type;
 		this.trackedDeviceID = trackedDeviceID;
-		if(type == type.LIMIT_SWITCH_MOTOR && (type != null)){
+		if((type != null) && type == type.LIMIT_SWITCH_MOTOR){
 			for(DeviceTracker tracker : Trackers.getInstance().getTrackers())
 				if(tracker.getClass().getName().equals("EncoderTracker")) {
 					trackedDeviceEncoder = ((EncoderTracker) tracker).getKey();
