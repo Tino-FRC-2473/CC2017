@@ -62,13 +62,13 @@ for i, dist in enumerate(distance):
         if dist >= BAR_MIN and dist <= BAR_MAX:
                 floatBarIdxs.append(angle[i])
 
-print("floats")
-print(floatBarIdxs)
+# print("floats")
+# print(floatBarIdxs)
 
 for i in range(0, len(floatBarIdxs)):
         intBarIdxs.append(int(floatBarIdxs[i]*1000))
-print("int before")
-print(intBarIdxs)
+# print("int before")
+# print(intBarIdxs)
 
 def rejectOutliers(data):
     m = 2
@@ -79,13 +79,13 @@ def rejectOutliers(data):
 
 intBarIdxs = rejectOutliers(intBarIdxs)
 
-print("int after")
-print(intBarIdxs)
+# print("int after")
+# print(intBarIdxs)
 
 for i in range(0, len(intBarIdxs)):
-        barIdxs.append(barIdxs[i]/1000.0)
+        barIdxs.append(intBarIdxs[i]/1000.0)
 
-print("floats")
+# print("floats")
 print(barIdxs)
 
 
