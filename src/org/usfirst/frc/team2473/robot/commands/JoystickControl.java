@@ -23,8 +23,8 @@ public class JoystickControl extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    		Robot.driveTrain.driveArcade(squareWithSign(Database.getInstance().getNumeric(ControlsMap.THROTTLE_Y)),Database.getInstance().getNumeric(ControlsMap.STEERING_WHEEL_X));
-			System.out.println(Database.getInstance().getNumeric(ControlsMap.THROTTLE_Y));
+    		Robot.driveTrain.driveArcade(squareWithSign(Database.getInstance().getNumeric(ControlsMap.THROTTLE_Z)),Database.getInstance().getNumeric(ControlsMap.STEERING_WHEEL_X));
+			System.out.println(Database.getInstance().getNums());
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2473.robot;
 
 public class ControlsMap {
-	public static final String THROTTLE_Y = "throttleY";
+	public static final String THROTTLE_Z = "throttleY";
 	public static final String STEERING_WHEEL_X = "wheelX";
 	
 	public static final int THROTTLE = 0;
