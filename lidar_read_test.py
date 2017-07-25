@@ -54,27 +54,34 @@ for i in range(dLen):
         xd.append(distance[i]*np.cos(angle[i]*np.pi/180.0))
         yd.append(distance[i]*np.sin(angle[i]*np.pi/180.0))
 
+floatBarIdxs = []
+intBarIdxs = []
 barIdxs = []
 
 for i, dist in enumerate(distance):
         if dist >= BAR_MIN and dist <= BAR_MAX:
-                barIdxs.append(angle[i])
+                floatBarIdxs.append(angle[i])
 
-print("before outlier removal")
-print(barIdxs)
+print("floats")
+print(floatBarIdxs)
 
-for i in range(0, len(barIdxs)):
-        barIdxs[i] = int(barIdxs[i]*1000)
+for i in range(0, len(floatBarIdxs)):
+        intBarIdxs.append(int(floatBarIdxs[i]*1000))
+print("int before")
+print(intBarIdxs)
 
 def rejectOutliers(data, m=2):
     return data[abs(data - np.mean(data)) < m * np.std(data)]
 
-barIdxs = rejectOutliers(barIdxs)
+intBarIdxs = rejectOutliers(intBarIdxs)
 
-for i in range(0, len(barIdxs)):
-        barIdxs[i] = barIdxs[i]/1000.0
+print("int after")
+print(intBarIdxs)
 
-print("after outlier removal")
+for i in range(0, len(intBarIdxs)):
+        barIdxs.append(barIdxs[i]/1000.0)
+
+print("floats")
 print(barIdxs)
 
 
