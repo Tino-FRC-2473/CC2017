@@ -14,9 +14,9 @@ public class DigitalInputDiagnoser extends Diagnoser {
 	private int trackedDeviceID;
 	private String trackedDeviceEncoder;
 	private double range;
-	private type type;
+	private Type type;
 	
-	public DigitalInputDiagnoser(String digitalinputkey, double range, int trackedDeviceID, type type){
+	public DigitalInputDiagnoser(String digitalinputkey, double range, int trackedDeviceID, Type type){
 		this.digitalinputkey = digitalinputkey;
 		this.range = range;
 		this.type = type;
@@ -29,27 +29,39 @@ public class DigitalInputDiagnoser extends Diagnoser {
 		}
 	}
 	
-	public enum type{
+	public enum Type{
 		LIMIT_SWITCH_SERVO,
 		
-		LIMIT_SWITCH_MOTOR
+		LIMIT_SWITCH_MOTOR,
+		
+		BREAKBEAM,
+		
+		ROTARY_SWITCH
 	}
 	@Override
 	public void RunOneTimeTest() {
 		// TODO Auto-generated method stub
-		if(type.equals(type.LIMIT_SWITCH_SERVO)){
+		switch(type){
+		case LIMIT_SWITCH_SERVO:
 			Devices.getInstance().getServo(trackedDeviceID).setPosition(range);
 			if(!Database.getInstance().getConditional(digitalinputkey)){
-				System.out.println("Limit Switch: " + digitalinputkey + " - not functional");
+				System.out.println("Limit Switch(SERVO): " + digitalinputkey + " - not functional");
 			}
-		}
-		if(type.equals(type.LIMIT_SWITCH_MOTOR)){
+			break;
+		case LIMIT_SWITCH_MOTOR:
 			while(Database.getInstance().getNumeric(trackedDeviceEncoder) < range){
 				Devices.getInstance().getTalon(trackedDeviceID).set(0.2);
 			}
 			if(!Database.getInstance().getConditional(digitalinputkey)){
-				System.out.println("Limit Switch: " + digitalinputkey + " - not functional");
+				System.out.println("Limit Switch(MOTOR): " + digitalinputkey + " - not functional");
 			}
+			break;
+		case BREAKBEAM:
+			
+			break;
+		case ROTARY_SWITCH:
+			
+			break;
 		}
 	}
 
