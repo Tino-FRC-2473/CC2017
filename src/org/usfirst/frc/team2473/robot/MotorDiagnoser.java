@@ -104,7 +104,7 @@ public class MotorDiagnoser extends Diagnoser{
 			System.out.println("Motor: " + deviceID + "Disfunctional");
 		}
 		reset();
-		System.out.println("Start Turn motor: " + deviceID + "mannually");
+		System.out.println("Start Turning Motor: " + deviceID + ", mannually");
 		while(Math.abs(Database.getInstance().getNumeric(keye)) <= range){
 				System.out.println("Motor: " + deviceID + "Encoder Count: " + Database.getInstance().getNumeric(keye));
 		}
