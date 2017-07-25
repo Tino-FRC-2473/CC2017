@@ -54,6 +54,10 @@ public class Database {
 		numerical_values.get(key).setValue(value);
 	}
 	
+	public void putNumeric(String key){
+		numerical_values.put(key, new ThreadSafeDouble());
+	}
+	
 	public double getNumeric(String key) {
 		return numerical_values.get(key).getValue();
 	}

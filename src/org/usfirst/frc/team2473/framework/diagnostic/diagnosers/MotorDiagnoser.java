@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2473.framework.diagnostic.diagnosers;
+	package org.usfirst.frc.team2473.framework.diagnostic.diagnosers;
 
 import com.ctre.CANTalon;
 import org.usfirst.frc.team2473.framework.Database;
@@ -39,10 +39,12 @@ public class MotorDiagnoser extends Diagnoser{
 //	private final double EcnoderTicksPerRotation = 6000.0;
 //	private final double GearRatio = 14;
 	
-	public MotorDiagnoser(int deviceID, Double range, Type type){
+	public MotorDiagnoser(int deviceID, double range, Type type){
 		this.deviceID = deviceID;
-		for(DeviceTracker tracker : Trackers.getInstance().getTrackers())
-			if(tracker.getClass().getName().equals("TalonTracker") && tracker.getPort()==deviceID) {
+		this.range = range;
+		this.type = type;
+		for(DeviceTracker tracker : Trackers.getInstance().getTrackers()) {
+			if(tracker.getClass().getName().indexOf("TalonTracker") != -1 && tracker.getPort()==deviceID) {
 				switch(((TalonTracker) tracker).getTarget()) {
 				case POWER:
 					powerKey = tracker.getKey();
@@ -56,15 +58,10 @@ public class MotorDiagnoser extends Diagnoser{
 				default:
 						break;
 				}
-			} else if(tracker.getClass().getName().equals("EncoderTracker")) {
+			} else if(tracker.getClass().getName().indexOf("EncoderTracker") != -1 && tracker.getPort()==deviceID) {
 				encoderKey = ((EncoderTracker) tracker).getKey();
 			}
-		this.speedKey = speedKey;
-		this.encoderKey = encoderKey;
-		this.currentKey = currentKey;
-		this.powerKey = powerKey;
-		this.range = range;
-		this.type = type;
+		}
 		//Diagnostics.addToQueue(this);
 	}
 	
@@ -74,6 +71,7 @@ public class MotorDiagnoser extends Diagnoser{
 	
 	@Override
 	public void RunSimultaneousTest() {
+		System.out.println("simul test running");
 		double pastrpm;
 		double current = (Database.getInstance().getNumeric(currentKey));
 		if(DiagnosticThread.getInstance().getTime()%1000 == 0){

@@ -6,18 +6,25 @@ import java.util.TimerTask;
 
 import org.usfirst.frc.team2473.framework.components.Trackers;
 import org.usfirst.frc.team2473.framework.Networking;
+import org.usfirst.frc.team2473.framework.diagnostic.DiagnosticThread;
 import org.usfirst.frc.team2473.framework.diagnostic.Diagnostics;
 import org.usfirst.frc.team2473.framework.diagnostic.Diagnostics.TestType;
 import org.usfirst.frc.team2473.framework.diagnostic.diagnosers.MotorDiagnoser;
+import org.usfirst.frc.team2473.framework.diagnostic.diagnosers.MotorDiagnoser.Type;
 import org.usfirst.frc.team2473.framework.readers.ControlsReader;
 import org.usfirst.frc.team2473.framework.readers.DeviceReader;
+import org.usfirst.frc.team2473.framework.trackers.DeviceTracker;
 import org.usfirst.frc.team2473.framework.trackers.EncoderTracker;
 import org.usfirst.frc.team2473.framework.trackers.TalonTracker;
 import org.usfirst.frc.team2473.framework.trackers.TalonTracker.Target;
+import org.usfirst.frc.team2473.robot.commands.OneTime;
+import org.usfirst.frc.team2473.robot.commands.Simultaneous;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 /**
  * Central class for RIO-side code-base. Calls to commands and directly executable code are made here. Threads are created and run in this class.
@@ -33,7 +40,8 @@ public class Robot extends IterativeRobot {
 	private DeviceReader reader; //this is the device reader thread, which reads device values and looks up memes
 	private Timer robotControlLoop = new Timer(); //timer allows for even periodic execution of teleOpPeriodic
 	private Networking network; //this is the networking thread
-	
+	private SendableChooser<String> chooser;
+	private boolean diagnosticsRunning = false;
 	/*no special constructor is required for this class. you will never need to make an object of this class*/
 	
 	/**
@@ -44,12 +52,28 @@ public class Robot extends IterativeRobot {
 	 * */
 	@Override
 	public void robotInit() {
+//		System.out.println("robot started");
+//		chooser = new SendableChooser<>();
+//		chooser.addObject(name, );
+//		String in= chooser.getSelected();
+//		if(in.equals("1")){
+//			OneTime onetime = new OneTime();
+//			onetime.execute();
+//		} else {
+//			DiagnosticThread.getInstance().start();
+//		}
 		if(deviceReadingRunning) {
 			addTrackers(); //add the trackers before anything else
 			addDevices(); //add the devices if not covered by trackers
 			reader = new DeviceReader(); //create device reader thread
 			reader.start(); //start the thread once the robot is started			
 		}
+		if(diagnosticsRunning){
+			addDiagnosers();
+			//Diagnostics.getInstance().startTests(TestType.ONETIME);
+		}
+		
+		//Diagnostics.getInstance().startTests(TestType.ONETIME);
 		if(networkingRunning) {
 			try {
 				network = new Networking(); //create the networking thread
@@ -58,8 +82,6 @@ public class Robot extends IterativeRobot {
 			} 
 			network.start(); //start the thread once the robot is started			
 		}
-		Diagnostics.getInstance().startTests(TestType.ONETIME);
-		Diagnostics.getInstance().startTests(TestType.SIMULTANEOUS);
 		
 	}
 
@@ -70,6 +92,10 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledInit() {
 
+	}
+	
+	public void addDiagnosers() {
+		
 	}
 
 	/**
@@ -90,7 +116,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		timerRunning = true; //the competition timer is running now that autonomous mode has started
-	}
+	}	
 
 	/**
 	 * Is executed during the robot's autonomous mode as a looping method. Overridden from <code>IterativeRobot</code>

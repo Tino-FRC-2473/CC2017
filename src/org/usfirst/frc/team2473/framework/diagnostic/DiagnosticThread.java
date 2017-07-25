@@ -6,7 +6,6 @@ import org.usfirst.frc.team2473.framework.diagnostic.diagnosers.Diagnoser;
 
 public class DiagnosticThread extends Thread{
 	private ArrayList<Diagnoser> diagnosers = new ArrayList<Diagnoser>();
-	
 	public double initialTime;
 	
 	private static DiagnosticThread theInstance;
@@ -27,7 +26,9 @@ public class DiagnosticThread extends Thread{
 		diagnosers.add(diagnoser);
 	}
 	
+	@Override
 	public void run(){
+		
 		while(isAlive()){
 			for(Diagnoser diagnoser:diagnosers){
 				diagnoser.RunSimultaneousTest();

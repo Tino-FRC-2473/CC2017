@@ -29,15 +29,17 @@ public class Diagnostics {
 	}
 
 	public void startTests(TestType type){		
+//		System.out.println(type);
 		for(Diagnoser diagnoser : diagnosers){
 			if(type.equals(TestType.SIMULTANEOUS)){
 				DiagnosticThread.getInstance().addToList(diagnoser);
 			}
 			if(type.equals(TestType.ONETIME)){
 				diagnoser.runOneTimeTest();
-				diagnosers.remove(diagnoser);
+//				diagnosers.remove(diagnoser);
 			}
 		}
+//		System.out.println(DiagnosticThread.getInstance());
 		if(type.equals(TestType.SIMULTANEOUS)) DiagnosticThread.getInstance().start();
 	}
 }

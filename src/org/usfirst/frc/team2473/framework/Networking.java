@@ -35,6 +35,8 @@ public class Networking extends Thread{
 		s = new Socket(host, port); //Create socket connecting to the specified host and port
 		sc1= new Scanner(System.in); //Scanner for client input
 		sc2 = new Scanner(s.getInputStream()); //Scanner for server input
+		Database.getInstance().putNumeric(RobotMap.PEG_DISTANCE);
+		Database.getInstance().putNumeric(RobotMap.PEG_ANGLE);
 	}
 
 	/**
