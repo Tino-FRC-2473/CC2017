@@ -13,7 +13,7 @@ SMALL_CUTOFF = 1
 BIG_CUTOFF = 3000
 
 BAR_MIN = 3
-BAR_MAX = 20
+BAR_MAX = 10
 
 
 
@@ -86,7 +86,10 @@ for i in range(0, len(intBarIdxs)):
         barIdxs.append(intBarIdxs[i]/1000.0)
 
 # print("floats")
+print("final array")
 print(barIdxs)
+print("mean")
+print(np.mean(barIdxs))
 
 
 # RECORD DATA IN FILES
