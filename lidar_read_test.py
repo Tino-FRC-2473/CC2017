@@ -70,8 +70,11 @@ for i in range(0, len(floatBarIdxs)):
 print("int before")
 print(intBarIdxs)
 
-def rejectOutliers(data, m=2):
-    return data[abs(data - np.mean(data)) < m * np.std(data)]
+def reject_outliers(data, m = 2):
+    d = np.abs(data - np.median(data))
+    mdev = np.median(d)
+    s = d/mdev if mdev else 0.
+    return data[s<m]
 
 intBarIdxs = rejectOutliers(intBarIdxs)
 
