@@ -35,7 +35,7 @@ public class DriveStraight extends Command implements PIDOutput {
 
 	@Override
 	protected void initialize() {
-		System.out.println("Init");
+		Robot.DT.getGyro().zeroYaw();
 	}
 
 	@Override
