@@ -8,10 +8,12 @@ import org.usfirst.frc.team2473.framework.trackers.DeviceTracker;
 import org.usfirst.frc.team2473.framework.trackers.EncoderTracker;
 import org.usfirst.frc.team2473.framework.trackers.TalonTracker;
 import org.usfirst.frc.team2473.robot.DiagnosticMap;
+import org.usfirst.frc.team2473.robot.commands.MotorDiagnoserCommand;
 
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.command.Command;
 
 public class MotorDiagnoser extends Diagnoser{
 	//constructor values
@@ -29,6 +31,8 @@ public class MotorDiagnoser extends Diagnoser{
 	
 	//speed multiplier
 	private double SpeedMultiplier;
+	
+	private Command command;
 	
 	//time
 	//private double time;
@@ -145,22 +149,10 @@ public class MotorDiagnoser extends Diagnoser{
 	}
 
 	@Override
-	public void RunOneTimeTest() {
-		reset();
-		while(Database.getInstance().getNumeric(keye) <= range){
-			if(Database.getInstance().getNumeric(keyp) != 0.3){
-				Devices.getInstance().getTalon(deviceID).set(0.3);
-			}
-		}
-		if(Database.getInstance().getNumeric(keye) <= range + 50 && Database.getInstance().getNumeric(keye) >= range - 50){
-			System.out.println("Motor: " + deviceID + "Disfunctional");
-		}
-		reset();
-		System.out.println("Start Turning Motor: " + deviceID + ", mannually");
-		while(Math.abs(Database.getInstance().getNumeric(keye)) <= range){
-				System.out.println("Motor: " + deviceID + "Encoder Count: " + Database.getInstance().getNumeric(keye));
-		}
-		System.out.println("STOP! If this is as far as the motor goes, everything is working.");
+	public Command RunOneTimeTest() {
+		command = new MotorDiagnoserCommand(deviceID,keye,keyp,range);
+		return command;
+		
 	}
 	
 	private void reset(){

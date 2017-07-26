@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2473.robot;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team2473.framework.Database;
 import org.usfirst.frc.team2473.framework.components.Devices;
@@ -8,6 +9,7 @@ import org.usfirst.frc.team2473.framework.components.Trackers;
 import org.usfirst.frc.team2473.framework.trackers.DeviceTracker;
 import org.usfirst.frc.team2473.framework.trackers.EncoderTracker;
 import org.usfirst.frc.team2473.framework.trackers.TalonTracker;
+import org.usfirst.frc.team2473.robot.commands.DigitalInputDiagnoserCommand;
 
 public class DigitalInputDiagnoser extends Diagnoser {
 	private String digitalinputkey;
@@ -15,6 +17,8 @@ public class DigitalInputDiagnoser extends Diagnoser {
 	private String trackedDeviceEncoder;
 	private double range;
 	private Type type;
+	
+	private Command command;
 	
 	public DigitalInputDiagnoser(String digitalinputkey, double range, int trackedDeviceID, Type type){
 		this.digitalinputkey = digitalinputkey;
@@ -39,30 +43,10 @@ public class DigitalInputDiagnoser extends Diagnoser {
 		ROTARY_SWITCH
 	}
 	@Override
-	public void RunOneTimeTest() {
+	public Command RunOneTimeTest() {
 		// TODO Auto-generated method stub
-		switch(type){
-		case LIMIT_SWITCH_SERVO:
-			Devices.getInstance().getServo(trackedDeviceID).setPosition(range);
-			if(!Database.getInstance().getConditional(digitalinputkey)){
-				System.out.println("Limit Switch(SERVO): " + digitalinputkey + " - not functional");
-			}
-			break;
-		case LIMIT_SWITCH_MOTOR:
-			while(Database.getInstance().getNumeric(trackedDeviceEncoder) < range){
-				Devices.getInstance().getTalon(trackedDeviceID).set(0.2);
-			}
-			if(!Database.getInstance().getConditional(digitalinputkey)){
-				System.out.println("Limit Switch(MOTOR): " + digitalinputkey + " - not functional");
-			}
-			break;
-		case BREAKBEAM:
-			
-			break;
-		case ROTARY_SWITCH:
-			
-			break;
-		}
+		command = new DigitalInputDiagnoserCommand(type,trackedDeviceID,digitalinputkey,trackedDeviceEncoder,range);
+		return command;
 	}
 
 	@Override

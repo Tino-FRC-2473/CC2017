@@ -3,6 +3,7 @@ package org.usfirst.frc.team2473.robot;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.usfirst.frc.team2473.robot.commands.DiagnosticCommands;
 import org.usfirst.frc.team2473.robot.commands.ManualTestCommand;
 import org.usfirst.frc.team2473.robot.commands.ManualTestCommands;
 
@@ -11,6 +12,7 @@ import com.ctre.CANTalon;
 public class Diagnostics {
 	private ArrayList<Diagnoser> diagnosers = new ArrayList<Diagnoser>();
 	private HashMap<String, Diagnoser> diagnosersmap = new HashMap<String,Diagnoser>();
+	private DiagnosticCommands commands = new DiagnosticCommands();
 	//private ManualTestCommands command;
 	
 	private static Diagnostics theInstance;
@@ -40,12 +42,16 @@ public class Diagnostics {
 				DiagnosticThread.getInstance().addToList(diagnoser);
 			}
 			if(type.equals(TestType.ONETIME)){
-				diagnoser.RunOneTimeTest();
-				diagnosers.remove(diagnoser);				
+				commands.addSequential(diagnoser.RunOneTimeTest());				
 			}
 		}
-		DiagnosticThread thread = new DiagnosticThread();
-		thread.start();
+		if(type.equals(TestType.SIMULTANEOUS)){
+			DiagnosticThread thread = new DiagnosticThread();
+			thread.start();
+		}
+		if(type.equals(TestType.ONETIME)){
+			commands.start();
+		}
 	}
 	
 	public double getMultiplier(String key){

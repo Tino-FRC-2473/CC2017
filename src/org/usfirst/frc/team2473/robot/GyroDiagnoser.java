@@ -2,9 +2,11 @@ package org.usfirst.frc.team2473.robot;
 
 import org.usfirst.frc.team2473.framework.Database;
 import org.usfirst.frc.team2473.framework.components.Devices;
+import org.usfirst.frc.team2473.robot.commands.GyroDiagnoserCommand;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.command.Command;
 
 public class GyroDiagnoser extends Diagnoser{
 	
@@ -14,6 +16,8 @@ public class GyroDiagnoser extends Diagnoser{
 	Double maxDeviceValue = null;
 	//Type type;
 	double range;
+	
+	private Command command;
 	
 	public GyroDiagnoser(int deviceID, String angleKey, String trackedDeviceValue, double gyroRange){
 		this.deviceID = deviceID;
@@ -49,13 +53,9 @@ public class GyroDiagnoser extends Diagnoser{
 	}
 
 	@Override
-	public void RunOneTimeTest() {
-		Devices.getInstance().getGyro(deviceID).reset();
-		System.out.println("Turn the gyro 90 degrees");
-		while(Database.getInstance().getNumeric(angleKey) <= range){
-			System.out.println("Gyro: " + deviceID + " Angle: " + Database.getInstance().getNumeric(angleKey));
-		}
-		System.out.println("STOP! If this looks like " + range + " degrees, the gyro is working.");
+	public Command RunOneTimeTest() {
+		command = new GyroDiagnoserCommand(deviceID,angleKey,range);
+		return command;
 	}
 	@Override
 	public double getMultiplier(){
