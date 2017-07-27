@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 public class PIDriveTrain extends PIDSubsystem {
 
-	private static final double KP = 0.025;
-	private static final double KI = 0.002;
+	private static final double KP = 0.05;
+	private static final double KI = 0.001;
 	private static final double KD = 0.00;
 
 	private RobotDrive driver;
