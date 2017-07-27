@@ -99,7 +99,7 @@ for i in range(1, len(originalAngle)):
         thisDist = polarDist(originalDistance[i], originalAngle[i], originalDistance[i-1], originalAngle[i-1])
 
         if(within(originalAngle[i], (EXPECTED_THETA-THETA_MARGIN)%360, (EXPECTED_THETA+THETA_MARGIN)%360)
-                and (len(betweenDistances) < 30 or sum(betweenDistances)/float(len(betweenDistances)) )
+                and (len(betweenDistances) < 30 or thisDist > 10*sum(betweenDistances)/float(len(betweenDistances)) )
         ):
                 betweenDistances.append(thisDist)
                 angle.append(originalAngle[i])
