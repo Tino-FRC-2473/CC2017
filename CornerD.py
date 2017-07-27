@@ -68,7 +68,7 @@ with Sweep('/dev/ttyUSB0') as sweep:
 
 
 
-# CONVERT LIDAR DATA TO X/Y AND GRAPH
+# CONVERT RAW LIDAR DATA TO X/Y AND GRAPH
 
 xd = []
 yd = []
@@ -77,6 +77,8 @@ for i in range(len(originalDistance)):
         xd.append(originalDistance[i]*np.cos(originalAngle[i]*np.pi/180.0))
         yd.append(originalDistance[i]*np.sin(originalAngle[i]*np.pi/180.0))
 
+plt.xlabel("Raw X")
+plt.ylabel("Raw Y")
 plt.scatter(xd, yd)
 plt.axhline(0)
 plt.axvline(0)
@@ -94,6 +96,10 @@ for i in range(len(originalAngle)):
                 angle.append(originalAngle[i])
                 distance.append(originalDistance[i])
 
+
+
+# CONVERT TRIMMED LIDAR DATA TO X/Y AND GRAPH
+
 xd = []
 yd = []
 
@@ -101,168 +107,156 @@ for i in range(len(distance)):
         xd.append(distance[i]*np.cos(angle[i]*np.pi/180.0))
         yd.append(distance[i]*np.sin(angle[i]*np.pi/180.0))
 
+plt.xlabel("Cut X")
+plt.ylabel("Cut Y")
 plt.scatter(xd, yd)
 plt.axhline(0)
 plt.axvline(0)
 plt.show()
 
-#STUFF
-
-# if(endAngle<startAngle):
-#         for i in range(0,len(angle)):
-#                 if(angle[i]>startAngle):
-#                         angle = angle[i:]+angle[:i]
-#                         distance = distance[i:]+distance[:i]
-#                         break
-
-# for i in range(0,len(angle)):
-#         angle[i] = angle[i]+adjust
-#         if(angle[i]>360):angle[i]-=360
-#         if(angle[i]<0):angle[i]+=360
-
-# l = len(distance)
 
 
+# CORNER DETECTION
 
-# smooth = XYSMOOTH
+smooth = XYSMOOTH
 
-# xdata = []
-# ydata = []
+smoothx = []
+smoothy = []
 
+for i in range(smooth, l-smooth):
+        sumX = 0
+        sumY = 0
+        for x in range(i-smooth,i+smooth+1):
+                sumX+=xd[x]
+                sumY+=yd[x]
+        smoothx.append(sumX/(2*smooth+1))
+        smoothy.append(sumY/(2*smooth+1))
 
-# for i in range(smooth,l-smooth):
-#         sumX = 0
-#         sumY = 0
-#         for x in range(i-smooth,i+smooth+1):
-#                 sumX+=xd[x]
-#                 sumY+=yd[x]
-#         xdata.append(sumX/(2*smooth+1))
-#         ydata.append(sumY/(2*smooth+1))
+l = len(smoothx)
 
-# l = len(xdata)
+if GRAPHXY:
+    plt.xlabel("Smooth X")
+    plt.ylabel("Smooth Y")
+    plt.scatter(smoothx, smoothy)
+    plt.axhline(0)
+    plt.axvline(0)
+    plt.show()
 
-# if GRAPHXY:plt.scatter(xd, yd)
+cartD = []
+d = 0;
+dist = []
 
-# cartD = []
-# d = 0;
-# dist = []
-
-# for i in range(0,l-1):
-#         cX = xdata[i+1]-xdata[i]
-#         cY = ydata[i+1]-ydata[i]
-#         s=cY/cX
-#         aTan = np.arctan(s)*180.0/np.pi
-#         if i>0:
-#                 last = cartD[len(cartD)-1]
-#                 curDif = abs(aTan-last)
-#                 altDif = abs(aTan+180-last)
-#                 if(altDif<curDif):aTan += 180
-#         cartD.append(aTan)
-#         d += np.sqrt(cX*cX+cY*cY)
-#         dist.append(d)
-
-
-# def inVal(i):
-#         return 0.5*(cartD[i]+cartD[i+1])*(dist[i+1]-dist[i])
-
-# smooth = DSMOOTH
-
-# length = len(dist)
-
-# sD = []
-
-# sumd = 0
+for i in range(0,l-1):
+        cX = smoothx[i+1]-smoothx[i]
+        cY = smoothy[i+1]-smoothy[i]
+        s=cY/cX
+        aTan = np.arctan(s)*180.0/np.pi
+        if i>0:
+                last = cartD[len(cartD)-1]
+                curDif = abs(aTan-last)
+                altDif = abs(aTan+180-last)
+                if(altDif<curDif):aTan += 180
+        cartD.append(aTan)
+        d += np.sqrt(cX*cX+cY*cY)
+        dist.append(d)
 
 
-# for i in range(0,smooth-1):
-#                 sumd+=inVal(i)
+def inVal(i):
+        return 0.5*(cartD[i]+cartD[i+1])*(dist[i+1]-dist[i])
+
+smooth = DSMOOTH
+
+length = len(dist)
+
+sD = []
+
+sumd = 0
+
+
+for i in range(0,smooth-1):
+                sumd+=inVal(i)
 
 
 
-# if(not DSMOOTH == 0):
-#         for i in range(0,length):
-#                 start = 0;
-#                 if(i>smooth):
-#                         sumd-=inVal(i-smooth-1)
-#                         start = i-smooth
-#                 end = length-1
-#                 if(i<(length-smooth)):
-#                         sumd+=inVal(i+smooth-1)
-#                         end = i+smooth
-#                 startX = dist[0]
-#                 if(start>0):startX=dist[start]
-#                 endX = dist[length-1]
-#                 if end<length:
-#                         endX = dist[end]
-#                 totD = endX-startX
-#                 sD.append(sumd/totD)
+if(not DSMOOTH == 0):
+        for i in range(0,length):
+                start = 0;
+                if(i>smooth):
+                        sumd-=inVal(i-smooth-1)
+                        start = i-smooth
+                end = length-1
+                if(i<(length-smooth)):
+                        sumd+=inVal(i+smooth-1)
+                        end = i+smooth
+                startX = dist[0]
+                if(start>0):startX=dist[start]
+                endX = dist[length-1]
+                if end<length:
+                        endX = dist[end]
+                totD = endX-startX
+                sD.append(sumd/totD)
 
-# if(DSMOOTH == 0):
-#         sD = cartD
+if(DSMOOTH == 0):
+        sD = cartD
 
-# if GRAPHD:
-#         plt.plot(dist, cartD, 'r-', label='raw')
-#         plt.plot(dist, sD, 'b-', label='smooth')
+if GRAPHD:
+        plt.plot(dist, cartD, 'r-', label='raw')
+        plt.plot(dist, sD, 'b-', label='smooth')
 
-# slopeTotals = []
-# sign = (sD[1]-sD[0])>0
-# xSlope = []
-# mx = 0
+slopeTotals = []
+sign = (sD[1]-sD[0])>0
+xSlope = []
+mx = 0
 
-# thisSlopes = [sD[1]-sD[0]]
-# maxThisSlope = 0
-# maxCorner = 0
+thisSlopes = [sD[1]-sD[0]]
+maxThisSlope = 0
+maxCorner = 0
 
-# for i in range(1,length-1):
-#         thisSlope = sD[i+1]-sD[i]
-#         thisSign = thisSlope>0
-#         if(sign==thisSign):
-#                 thisSlopes.append(thisSlope)
-#                 if(abs(thisSlope)>maxThisSlope):
-#                         maxThisSlope = abs(thisSlope)
-#                         maxCorner = i+1
-#         else:
-#                 slopeTotals.append(sum(thisSlopes))
-#                 aL = abs(sum(thisSlopes))
-#                 if(aL>mx):
-#                         mx = aL
-#                 sign = thisSign
-#                 xSlope.append(maxCorner)
-#                 thisSlopes = [thisSlope]
-#                 maxThisSlope = abs(thisSlope)
-#                 maxCorner = i+1
+for i in range(1,length-1):
+        thisSlope = sD[i+1]-sD[i]
+        thisSign = thisSlope>0
+        if(sign==thisSign):
+                thisSlopes.append(thisSlope)
+                if(abs(thisSlope)>maxThisSlope):
+                        maxThisSlope = abs(thisSlope)
+                        maxCorner = i+1
+        else:
+                slopeTotals.append(sum(thisSlopes))
+                aL = abs(sum(thisSlopes))
+                if(aL>mx):
+                        mx = aL
+                sign = thisSign
+                xSlope.append(maxCorner)
+                thisSlopes = [thisSlope]
+                maxThisSlope = abs(thisSlope)
+                maxCorner = i+1
 
-# slopeTotals.append(sum(thisSlopes))
-# aL = abs(sum(thisSlopes))
-# if(aL>mx):
-#         mx = aL
-# xSlope.append(maxCorner)
+slopeTotals.append(sum(thisSlopes))
+aL = abs(sum(thisSlopes))
+if(aL>mx):
+        mx = aL
+xSlope.append(maxCorner)
 
-# cornerX = []
-# cornerY = []
+cornerX = []
+cornerY = []
 
-# for i in range(0,len(slopeTotals)):
-#         if(abs(slopeTotals[i]-CORNERDETECT)<CORNERBUFFER):
-#                 cornerX.append(xdata[xSlope[i]])
-#                 cornerY.append(ydata[xSlope[i]])
-
-
-# plt.legend()
-# plt.show()
-# if CORNERST:plt.scatter(cornerX, cornerY)
+for i in range(0,len(slopeTotals)):
+        if(abs(slopeTotals[i]-CORNERDETECT)<CORNERBUFFER):
+                cornerX.append(smoothx[xSlope[i]])
+                cornerY.append(smoothy[xSlope[i]])
 
 
-# if GRAPHST:plt.plot(xSlope, slopeTotals, 'r-', label='raw')
+if CORNERST:
+    plt.scatter(cornerX, cornerY)
+
+if GRAPHST:
+    plt.plot(xSlope, slopeTotals, 'r-', label='raw')
 
 
-# plt.xlabel('X')
-# plt.ylabel('Y')
-# plt.show()
-
-# back = 38.1 #distance between lidar to back of robot in cm
-# side = 38.1 #disance between lidar to side of robot in cm
-# width = 76.2 #width of robot
-# blue = True #whether or not we are on blue 
+back = 38.1 #distance between lidar to back of robot in cm
+side = 38.1 #disance between lidar to side of robot in cm
+width = 76.2 #width of robot
+blue = True #whether or not we are on blue 
 
 # def isclose(a, b, rel_tol=1e-09, abs_tol=0.0):
 #     	return abs(a-b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
