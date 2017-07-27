@@ -35,7 +35,11 @@ IDEAL_Y = ROBOT_IDEAL_Y - LIDAR_POSITION; # CM Y DISTANCE FROM THE CORNER THAT T
 EXPECTED_THETA = math.degrees(math.atan2(LIDAR_X, IDEAL_Y))
 THETA_MARGIN = 90
 
-print(EXPECTED_THETA)
+def within(a, startAngle, endAngle):
+        if(startAngle<endAngle):
+                return a>startAngle and a<endAngle
+        if(startAngle>endAngle):
+                return a>startAngle or a<endAngle
 
 # GET RAW LIDAR ANGLES AND DISTANCES
 
@@ -86,7 +90,7 @@ angle = []
 distance = []
 
 for i in range(len(originalAngle)):
-        if(originalAngle[i] >= EXPECTED_THETA-THETA_MARGIN and originalAngle[i] <= EXPECTED_THETA+THETA_MARGIN):
+        if(within(originalAngle[i], EXPECTED_THETA-THETA_MARGIN, EXPECTED_THETA+THETA_MARGIN)):
                 angle.append(originalAngle[i])
                 distance.append(originalDistance[i])
 
