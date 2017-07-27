@@ -5,11 +5,9 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team2473.robot.commands.DriveStraight;
-import org.usfirst.frc.team2473.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team2473.robot.subsystems.PIDriveTrain;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -20,11 +18,11 @@ import org.usfirst.frc.team2473.robot.subsystems.DriveTrain;
  */
 public class Robot extends IterativeRobot {
 
-	public static final DriveTrain DT = new DriveTrain();
-	public static final DriveStraight DS = new DriveStraight();
+	public static final PIDriveTrain driveTrain = new PIDriveTrain();
+	public static final DriveStraight driveStraight = new DriveStraight();
 	public static OI oi;
 
-	Command command;
+	private Command command;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -84,7 +82,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-		command = DS;
+		command = driveStraight;
 		if (command != null) {
 			command.start();
 		}

@@ -14,7 +14,7 @@ public class OI {
 		return wheel;
 	}
 
-	public Joystick getThrottleStick() {
+	public Joystick getThrottle() {
 		return throttle;
 	}
 }
