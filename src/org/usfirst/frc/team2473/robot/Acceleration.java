@@ -4,7 +4,7 @@ public class Acceleration {
 	public static final double START_POWER = 0.3;
 	public static final double END_POWER = 0.3;
 	
-	//Comment
+	//Comment 
 	
 	public static final double MAX_POWER = 0.7;
 	

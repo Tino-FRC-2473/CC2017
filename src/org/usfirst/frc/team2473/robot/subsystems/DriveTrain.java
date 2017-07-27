@@ -62,7 +62,7 @@ public class DriveTrain extends Subsystem {
 
 	public int getRightEnc() {
 		return frontRightTalon.getEncPosition();
-	}
+	} 
 
 	public int getLeftEnc() {
 		return frontLeftTalon.getEncPosition();

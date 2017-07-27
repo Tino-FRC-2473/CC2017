@@ -6,7 +6,7 @@ package org.usfirst.frc.team2473.robot;
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
  */
-public class RobotMap {
+public class RobotMap { 
 	
 	public static final int FRONT_RIGHT = 4; // Ask electrical for exact values
 	public static final int FRONT_LEFT = 2; // Ask electrical for exact values

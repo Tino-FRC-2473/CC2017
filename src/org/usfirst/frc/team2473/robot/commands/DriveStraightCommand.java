@@ -54,7 +54,7 @@ public class DriveStraightCommand extends Command implements PIDOutput{
 			turnController.setSetpoint(Robot.driveTrain.getGyro().getYaw());
 			rotateToAngleRate = 0;
 			turnController.enable();
-		}
+		} 
 		
 		int averageEncoderVal = ((Robot.driveTrain.getLeftEnc() * -1) + (Robot.driveTrain.getRightEnc()) * -1) /2;
 		if(averageEncoderVal >= Acceleration.TOTAL_ENCODER_DISTANCE){

@@ -19,7 +19,7 @@ public class TestCommand extends Command{
 		if(firstTime){
 			Robot.driveTrain.resetEncoders();
 			firstTime = false;
-		}
+		} 
 		
 		Robot.driveTrain.setPower(0.1);
 		if(Robot.driveTrain.getLeftEnc() > 500000 || Robot.driveTrain.getRightEnc() > 500000){
