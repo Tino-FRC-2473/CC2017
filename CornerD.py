@@ -88,11 +88,22 @@ plt.show()
 
 # TRIM LIDAR DATA TO AROUND WHERE THE BOILER CORNER IS EXPECTED TO BE
 
+def polarDist(dist1, ang1, dist2, ang2):
+        return math.sqrt(dist1*dist1 + dist2*dist2 - 2*dist1*dist2*math.cos(math.radians(ang2-ang1)))
+
 angle = []
 distance = []
+avgDistance = -1
+nAddedToAvg = 0
 
-for i in range(len(originalAngle)):
-        if(within(originalAngle[i], (EXPECTED_THETA-THETA_MARGIN)%360, (EXPECTED_THETA+THETA_MARGIN)%360)):
+for i in range(1, len(originalAngle)):
+        thisDist = polarDist(originalDistance[i], originalAngle[i], originalDistance[i-1], originalAngle[i-1])
+
+        if(within(originalAngle[i], (EXPECTED_THETA-THETA_MARGIN)%360, (EXPECTED_THETA+THETA_MARGIN)%360)
+                and (avgDistance == -1 or thisDist > avgDistance*10)
+        ):
+                avgDistance = avgDistance*nAddedToAvg/(nAddedToAvg+1) + thisDist/(nAddedToAvg+1)
+                nAddedToAvg += 1
                 angle.append(originalAngle[i])
                 distance.append(originalDistance[i])
 
