@@ -56,6 +56,7 @@ public class DriveStraightCommand extends Command implements PIDOutput{
 			turnController.enable();
 		} 
 		
+		// Change below based on testing
 		int averageEncoderVal = ((Robot.driveTrain.getLeftEnc() * -1) + (Robot.driveTrain.getRightEnc()) * -1) /2;
 		if(averageEncoderVal >= Acceleration.TOTAL_ENCODER_DISTANCE){
 			finished = true;
