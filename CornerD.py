@@ -93,19 +93,20 @@ def polarDist(dist1, ang1, dist2, ang2):
 
 angle = []
 distance = []
-avgDistance = -1
-nAddedToAvg = 0
+betweenDistances = []
 
 for i in range(1, len(originalAngle)):
         thisDist = polarDist(originalDistance[i], originalAngle[i], originalDistance[i-1], originalAngle[i-1])
 
         if(within(originalAngle[i], (EXPECTED_THETA-THETA_MARGIN)%360, (EXPECTED_THETA+THETA_MARGIN)%360)
-                and (nAddedToAvg < 20 or avgDistance == -1 or thisDist > avgDistance*10)
+                and (len(betweenDistances) < 30 or sum(betweenDistances)/float(len(betweenDistances)) )
         ):
-                avgDistance = avgDistance*nAddedToAvg/(nAddedToAvg+1) + thisDist/(nAddedToAvg+1)
-                nAddedToAvg += 1
+                betweenDistances.append(thisDist)
                 angle.append(originalAngle[i])
                 distance.append(originalDistance[i])
+
+        else if(within(originalAngle[i], (EXPECTED_THETA-THETA_MARGIN)%360, (EXPECTED_THETA+THETA_MARGIN)%360):
+            print("cut " + i)
 
 
 
