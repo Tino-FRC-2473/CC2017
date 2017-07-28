@@ -15,7 +15,7 @@ GRAPHST = False
 #Graph Derivative
 GRAPHD = False
 #CornerST is current method
-CORNERST = False
+CORNERST = True
 
 IN_PER_FT = 12;
 CM_PER_IN = 2.54;
@@ -82,8 +82,7 @@ for i in range(len(originalDistance)):
         xd.append(originalDistance[i]*np.cos(originalAngle[i]*np.pi/180.0))
         yd.append(originalDistance[i]*np.sin(originalAngle[i]*np.pi/180.0))
 
-plt.xlabel("Raw X")
-plt.ylabel("Raw Y")
+plt.title("Raw X/Y")
 plt.scatter(xd, yd)
 plt.axhline(0)
 plt.axvline(0)
@@ -125,8 +124,7 @@ for i in range(len(distance)):
         xd.append(distance[i]*np.cos(angle[i]*np.pi/180.0))
         yd.append(distance[i]*np.sin(angle[i]*np.pi/180.0))
 
-plt.xlabel("Cut X")
-plt.ylabel("Cut Y")
+plt.title("Cut X/Y")
 plt.scatter(xd, yd)
 plt.axhline(0)
 plt.axvline(0)
@@ -154,8 +152,7 @@ for i in range(smooth, l-smooth):
 l = len(smoothx)
 
 if GRAPHXY:
-    plt.xlabel("Smooth X")
-    plt.ylabel("Smooth Y")
+    plt.title("Smooth X/Y")
     plt.scatter(smoothx, smoothy)
     plt.axhline(0)
     plt.axvline(0)
@@ -266,6 +263,11 @@ for i in range(0,len(slopeTotals)):
 
 
 if CORNERST:
+    plt.title("With Corner")
+    plt.scatter(smoothx, smoothy)
+    plt.axhline(0)
+    plt.axvline(0)
+    plt.show()
     plt.scatter(cornerX, cornerY)
 
 if GRAPHST:
