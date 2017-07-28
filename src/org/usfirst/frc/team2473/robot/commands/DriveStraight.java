@@ -18,6 +18,7 @@ public class DriveStraight extends Command {
 	@Override
 	protected void execute() {
 		Robot.driveTrain.drive(Robot.oi.getThrottle().getZ(), Robot.driveTrain.getAngleRate());
+		System.out.println(Robot.driveTrain.getGyro().getYaw());
 	}
 
 	@Override
@@ -32,7 +33,7 @@ public class DriveStraight extends Command {
 
 	@Override
 	protected void interrupted() {
-		end();
+		Robot.driveTrain.disable();
 	}
 
 }

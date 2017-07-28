@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 public class PIDriveTrain extends PIDSubsystem {
 
-	private static final double KP = 0.05;
-	private static final double KI = 0.001;
-	private static final double KD = 0.00;
+	private static final double KP = 0.035;
+	private static final double KI = 0.0005;
+	private static final double KD = 0.035;
 
 	private RobotDrive driver;
 	private AHRS gyro;
@@ -32,6 +32,7 @@ public class PIDriveTrain extends PIDSubsystem {
 
 		try {
 			gyro = new AHRS(SPI.Port.kMXP);
+			gyro.zeroYaw();
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}

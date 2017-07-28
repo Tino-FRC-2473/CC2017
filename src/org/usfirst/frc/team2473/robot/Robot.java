@@ -84,6 +84,7 @@ public class Robot extends IterativeRobot {
 	public void teleopInit() {
 		command = driveStraight;
 		if (command != null) {
+			driveTrain.getGyro().zeroYaw();
 			command.start();
 		}
 	}
