@@ -110,8 +110,9 @@ for i in range(1, len(originalAngle)):
                 angle.append(originalAngle[i])
                 distance.append(originalDistance[i])
 
-        else if(within(originalAngle[i], (EXPECTED_THETA-THETA_MARGIN)%360, (EXPECTED_THETA+THETA_MARGIN)%360):
-            print("cut " + i)
+        elif(within(originalAngle[i], (EXPECTED_THETA-THETA_MARGIN)%360, (EXPECTED_THETA+THETA_MARGIN)%360)):
+            print("cut ")
+            print(i)
 
 
 
@@ -259,7 +260,7 @@ cornerX = []
 cornerY = []
 
 for i in range(0,len(slopeTotals)):
-        if(abs(slopeTotals[i]-CORNERDETECT)<CORNERBUFFER):
+        if(abs(slopeTotals[i]-EXPECTED_THETA)<THETA_MARGIN):
                 cornerX.append(smoothx[xSlope[i]])
                 cornerY.append(smoothy[xSlope[i]])
 
