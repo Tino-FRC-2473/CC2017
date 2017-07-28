@@ -38,7 +38,7 @@ THETA_MARGIN = 45
 #Angle of corner we want to detect(for boiler corner set to 45)
 CORNERDETECT = 135
 #Buffer we allow for corner so if cornerdetect=45 cornerbuffer=5 we look for 40-50 deg
-CORNERBUFFER = 10
+CORNERBUFFER = 45
 
 def within(a, startAngle, endAngle):
         if(startAngle<endAngle):
@@ -104,15 +104,15 @@ for i in range(1, len(originalAngle)):
         thisDist = polarDist(originalDistance[i], originalAngle[i], originalDistance[i-1], originalAngle[i-1])
 
         if(within(originalAngle[i], (EXPECTED_THETA-THETA_MARGIN)%360, (EXPECTED_THETA+THETA_MARGIN)%360)
-                and (len(betweenDistances) < 30 or thisDist > 10*sum(betweenDistances)/float(len(betweenDistances)) )
+                #and (len(betweenDistances) < 30 or thisDist > 10*sum(betweenDistances)/float(len(betweenDistances)) )
         ):
-                betweenDistances.append(thisDist)
+                #betweenDistances.append(thisDist)
                 angle.append(originalAngle[i])
                 distance.append(originalDistance[i])
 
-        elif(within(originalAngle[i], (EXPECTED_THETA-THETA_MARGIN)%360, (EXPECTED_THETA+THETA_MARGIN)%360)):
-            print("cut ")
-            print(i)
+        #elif(within(originalAngle[i], (EXPECTED_THETA-THETA_MARGIN)%360, (EXPECTED_THETA+THETA_MARGIN)%360)):
+            #print("cut ")
+            #print(i)
 
 
 
