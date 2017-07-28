@@ -2,12 +2,20 @@
 package org.usfirst.frc.team2473.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team2473.framework.components.Devices;
+import org.usfirst.frc.team2473.framework.components.Trackers;
+import org.usfirst.frc.team2473.framework.trackers.EncoderTracker;
+import org.usfirst.frc.team2473.framework.trackers.TalonTracker;
+import org.usfirst.frc.team2473.framework.trackers.TalonTracker.Target;
+import org.usfirst.frc.team2473.robot.Diagnostics.TestType;
+import org.usfirst.frc.team2473.robot.MotorDiagnoser.Type;
 import org.usfirst.frc.team2473.robot.commands.ClimberRun;
 import org.usfirst.frc.team2473.robot.commands.RunAll;
 import org.usfirst.frc.team2473.robot.subsystems.Climber;
@@ -36,7 +44,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		oi = new OI();
+		//oi = new OI();
+		Diagnostics.getInstance().addToQueue("motorboi", new MotorDiagnoser(6, 6000.0, Type.M775));
+		Diagnostics.getInstance().startTests(TestType.ONETIME);
 	}
 
 	/**
@@ -106,7 +116,16 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 	}
-
+	public void addTrackers(){
+		Trackers.getInstance().addTracker(new EncoderTracker("motore",6));
+		Trackers.getInstance().addTracker(new TalonTracker("motorc",6,Target.CURRENT));
+		Trackers.getInstance().addTracker(new TalonTracker("motorp",6,Target.POWER));
+		Trackers.getInstance().addTracker(new TalonTracker("motors",6,Target.SPEED));
+		Trackers.getInstance().addTracker(new TalonTracker("motorv",6,Target.VOLTAGE));
+	}
+	public void addDevices(){
+		//Devices.getInstance().addTalon(4);
+	}
 	/**
 	 * This function is called periodically during test mode
 	 */
