@@ -263,6 +263,8 @@ for i in range(0,len(slopeTotals)):
 
 
 if CORNERST:
+    print("X:", cornerX)
+    print("Y:", cornerY)
     plt.title("With Corner")
     plt.scatter(smoothx, smoothy)
     plt.axhline(0)
