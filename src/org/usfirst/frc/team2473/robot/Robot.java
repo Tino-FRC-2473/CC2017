@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team2473.robot.commands.DriveStraight;
-import org.usfirst.frc.team2473.robot.subsystems.PIDriveTrain;
+import org.usfirst.frc.team2473.robot.subsystems.PIDDriveTrain;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -18,7 +18,7 @@ import org.usfirst.frc.team2473.robot.subsystems.PIDriveTrain;
  */
 public class Robot extends IterativeRobot {
 
-	public static final PIDriveTrain driveTrain = new PIDriveTrain();
+	public static final PIDDriveTrain driveTrain = new PIDDriveTrain();
 	public static final DriveStraight driveStraight = new DriveStraight();
 	public static OI oi;
 

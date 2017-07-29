@@ -12,6 +12,7 @@ public class DriveStraight extends Command {
 
 	@Override
 	protected void initialize() {
+		Robot.driveTrain.setTargetAngle(Robot.driveTrain.getGyro().getYaw());
 		Robot.driveTrain.enable();
 	}
 
