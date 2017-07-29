@@ -276,9 +276,10 @@ if CORNERST:
     plt.title("With Corner")
     plt.axhline(0)
     plt.axvline(0)
+    plt.scatter(smoothx, smoothy)
     plt.scatter(cornerX, cornerY)
-    cornerRangeX = []
-    cornerRangeY = []
+    #cornerRangeX = []
+    #cornerRangeY = []
     #for i in range(len(smoothx)):
     #        if (smoothx[i] <= cornerX[0]+25 and smoothx[i] >= cornerX[0]-25 and smoothy[i] <= cornerY[0] + 25 and smoothy >= cornerY[0] - 25):
     #                cornerRangeX.append(smoothx[i])
