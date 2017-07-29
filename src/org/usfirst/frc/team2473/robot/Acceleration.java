@@ -2,6 +2,7 @@ package org.usfirst.frc.team2473.robot;
 
 public class Acceleration {
 	
+	
 	// Center start - 6ft 8 inches
 	// 1/3 of the path is accel, 1/3 is drive, 1/3 is decel
 	// one motor is at normal power, the other is multiplied by a constant r

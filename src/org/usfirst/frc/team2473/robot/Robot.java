@@ -21,7 +21,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	//Comment
 
 	public static OI oi;
 	public static DriveTrain driveTrain;
@@ -60,7 +59,6 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 	}
 	
-	//Comment 
 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
