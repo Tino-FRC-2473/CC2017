@@ -257,10 +257,17 @@ xSlope.append(maxCorner)
 cornerX = []
 cornerY = []
 
+maxIdx = 0
 for i in range(0,len(slopeTotals)):
-        if(abs(slopeTotals[i]-CORNERDETECT)<CORNERBUFFER):
-                cornerX.append(smoothx[xSlope[i]])
-                cornerY.append(smoothy[xSlope[i]])
+        if(abs(slopeTotals[i]) > max):
+                maxIdx = i
+
+        # if(abs(slopeTotals[i]-CORNERDETECT)<CORNERBUFFER):
+        #         cornerX.append(smoothx[xSlope[i]])
+        #         cornerY.append(smoothy[xSlope[i]])
+
+cornerX.append(smoothx[xSlope[maxIdx]])
+cornerY.append(smoothy[xSlope[maxIdx]])
 
 
 if CORNERST:
