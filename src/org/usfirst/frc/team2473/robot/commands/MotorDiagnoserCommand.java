@@ -19,9 +19,10 @@ public class MotorDiagnoserCommand extends Command {
 	private int deviceID;
 	private String keye;
 	private String keyp;
+	private String limitswitchkey;
 	private double range;
 	
-    public MotorDiagnoserCommand(int deviceID, String keye, String keyp, double range) {
+    public MotorDiagnoserCommand(int deviceID, String keye, String keyp, double range, String limitswitchkey) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(bs);
@@ -29,6 +30,7 @@ public class MotorDiagnoserCommand extends Command {
     	this.keye = keye;
     	this.keyp = keyp;
     	this.range = range;
+    	this.limitswitchkey = limitswitchkey;
     }
 
     // Called just before this Command runs the first time
@@ -37,35 +39,37 @@ public class MotorDiagnoserCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
-    	Devices.getInstance().getTalon(deviceID).changeControlMode(TalonControlMode.Position);
-		Devices.getInstance().getTalon(deviceID).setPosition(0);
-		Devices.getInstance().getTalon(deviceID).changeControlMode(TalonControlMode.PercentVbus);
-		
-		while(Database.getInstance().getNumeric(keye) <= range){
-			if(Database.getInstance().getNumeric(keyp) != 0.3){
-				Devices.getInstance().getTalon(deviceID).set(0.3);
+    	if(range != (Double)null){
+	    	Devices.getInstance().getTalon(deviceID).changeControlMode(TalonControlMode.Position);
+			Devices.getInstance().getTalon(deviceID).setPosition(0);
+			Devices.getInstance().getTalon(deviceID).changeControlMode(TalonControlMode.PercentVbus);
+			while(Database.getInstance().getNumeric(keye) <= range){
+				if(Database.getInstance().getNumeric(keyp) != 0.3){
+					Devices.getInstance().getTalon(deviceID).set(0.3);
+				}
 			}
-		}
-		if(Database.getInstance().getNumeric(keye) <= range + 50 && Database.getInstance().getNumeric(keye) >= range - 50){
-			System.out.println("Motor: " + deviceID + "Disfunctional");
-		}
-		
-		Devices.getInstance().getTalon(deviceID).changeControlMode(TalonControlMode.Position);
-		Devices.getInstance().getTalon(deviceID).setPosition(0);
-		Devices.getInstance().getTalon(deviceID).changeControlMode(TalonControlMode.PercentVbus);
-		
-		System.out.println("Start Turning Motor: " + deviceID + ", mannually");
-		while(Math.abs(Database.getInstance().getNumeric(keye)) <= range){
-				System.out.println("Motor: " + deviceID + "Encoder Count: " + Database.getInstance().getNumeric(keye));
-		}
-		System.out.println("STOP! If this is as far as the motor goes, everything is working.");
-		done = true;
+			Devices.getInstance().getTalon(deviceID).set(0.0);
+			if(Database.getInstance().getNumeric(keye) >= range + 50 && Database.getInstance().getNumeric(keye) <= range - 50){
+				System.out.println("Motor: " + deviceID + "Disfunctional");
+			}
+			Devices.getInstance().getTalon(deviceID).changeControlMode(TalonControlMode.Position);
+			Devices.getInstance().getTalon(deviceID).setPosition(0);
+			Devices.getInstance().getTalon(deviceID).changeControlMode(TalonControlMode.PercentVbus);
+    	}else{
+    		while(!Database.getInstance().getConditional(limitswitchkey)){
+    			if(Database.getInstance().getNumeric(keyp) != 0.5){
+    				Devices.getInstance().getTalon(deviceID).set(0.5);
+    			}
+    		}
+    		Devices.getInstance().getTalon(deviceID).set(0.0);
+    		System.out.println("If motor-" + deviceID + "-hit its maximum range, it is functional.");
+    	}
+    	done = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return done;
     }
 
     // Called once after isFinished returns true

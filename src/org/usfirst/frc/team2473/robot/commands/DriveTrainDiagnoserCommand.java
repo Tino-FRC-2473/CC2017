@@ -56,7 +56,7 @@ public class DriveTrainDiagnoserCommand extends Command {
 				setPowerToALl(0.5);
 			}
 		}
-		
+		setPowerToALl(0.0);
 		if((Database.getInstance().getNumeric(keyre) + Database.getInstance().getNumeric(keyle))/2 > encoders + 50 &&
 				(Database.getInstance().getNumeric(keyre) + Database.getInstance().getNumeric(keyle))/2 < encoders - 50){
 					System.out.println("Overall Drivetrain Status: Positive");
