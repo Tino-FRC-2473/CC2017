@@ -26,7 +26,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static DriveTrain driveTrain;
 
-	Command autonomousCommand;
+	DriveStraightCommand autonomousCommand;
 	Command testCommand;
 
 	/**
@@ -89,6 +89,7 @@ public class Robot extends IterativeRobot {
 			//autonomousCommand.start();
 		
 		if(autonomousCommand != null){
+			autonomousCommand.reset();
 			autonomousCommand.start();
 		}
 	}

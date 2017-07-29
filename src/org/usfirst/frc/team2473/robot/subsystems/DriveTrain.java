@@ -61,15 +61,19 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public int getRightEnc() {
-		return frontRightTalon.getEncPosition();
+		return Math.abs(frontRightTalon.getEncPosition());
 	} 
 
 	public int getLeftEnc() {
-		return frontLeftTalon.getEncPosition();
+		return Math.abs(frontLeftTalon.getEncPosition()) ;
 	}
 
 	public AHRS getGyro() {
 		return gyro;
+	}
+	
+	public void resetGyro() {
+		gyro.reset();
 	}
 
 	public void drive(double d, double rotateToAngleRate) {

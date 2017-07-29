@@ -13,9 +13,9 @@ public class DriveStraightCommand extends Command implements PIDOutput{
 	private double rotateToAngleRate;
 
 	
-	private static final double KP = 0.05;
-	private static final double KI = 0.00;
-	private static final double KD = 0.00;
+	private static final double KP = 0.035;
+	private static final double KI = 0.0005;
+	private static final double KD = 0.04;
 	private static final double KF = 0.00;
 
 	private static final double K_TOLERANCE_DEGREES = 2.0f;
@@ -23,6 +23,7 @@ public class DriveStraightCommand extends Command implements PIDOutput{
 	private boolean finished = false;
 	
 	private double currentPower = Acceleration.START_POWER;
+	
 
 	public DriveStraightCommand(){
 		requires(Robot.driveTrain);
@@ -43,11 +44,6 @@ public class DriveStraightCommand extends Command implements PIDOutput{
 	}
 	
 	@Override
-	public void initialize() {
-		Robot.driveTrain.resetEncoders();
-	}
-	
-	@Override
 	public void execute(){
 		
 		if (!turnController.isEnabled()) {
@@ -56,8 +52,10 @@ public class DriveStraightCommand extends Command implements PIDOutput{
 			turnController.enable();
 		} 
 		
+		System.out.println("1 ----------- Current power of the robot = " + currentPower);
+		
 		// Change below based on testing
-		int averageEncoderVal = ((Robot.driveTrain.getLeftEnc() * -1) + (Robot.driveTrain.getRightEnc()) * -1) /2;
+		int averageEncoderVal = ((Robot.driveTrain.getLeftEnc()) + (Robot.driveTrain.getRightEnc())) /2;
 		if(averageEncoderVal >= Acceleration.TOTAL_ENCODER_DISTANCE){
 			finished = true;
 			Robot.driveTrain.drive(0, rotateToAngleRate);
@@ -67,7 +65,7 @@ public class DriveStraightCommand extends Command implements PIDOutput{
 			currentPower = motorPower;
 			Robot.driveTrain.drive(motorPower, rotateToAngleRate);
 			
-			System.out.println("Current power of the robot = " + currentPower);
+			System.out.println("2 ------------ Current power of the robot = " + currentPower);
 		}
 	}
 	
@@ -86,6 +84,14 @@ public class DriveStraightCommand extends Command implements PIDOutput{
 
 	@Override
 	public void pidWrite(double output) {
+		System.out.println("PID method called");
 		rotateToAngleRate = output;
+	}
+	
+	public void reset() {
+		currentPower = Acceleration.START_POWER;
+		finished = false;
+		Robot.driveTrain.resetEncoders();
+		Robot.driveTrain.resetGyro();
 	}
 }

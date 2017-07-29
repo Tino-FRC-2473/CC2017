@@ -8,16 +8,14 @@ public class Acceleration {
 	
 	
 	// User set values
-	public static final int TOTAL_ENCODER_DISTANCE = 2000;
-	public static final int ACCELERATION_INTERVAL = 100;
+	public static final int TOTAL_ENCODER_DISTANCE = 50000;
+	public static final int ACCELERATION_INTERVAL = 2500;
 	
 	
 	
-	public static final double START_POWER = 0.3;
-	public static final double END_POWER = 0.3;
-	public static final double MAX_POWER = 0.7;
-	
-	public static final double POWER_RATIO = 1.5;
+	public static final double START_POWER = 0.4;
+	public static final double END_POWER = 0.4;
+	public static final double MAX_POWER = 0.8;
 	
 	public static final int START_ACCELERATION_ENCODER = TOTAL_ENCODER_DISTANCE / 18;
 	public static final int END_ACCELERATION_ENCODER = TOTAL_ENCODER_DISTANCE / 3;
@@ -31,11 +29,13 @@ public class Acceleration {
 		System.out.println("Encoder" + encoderCount);
 		
 		if(encoderCount >= START_ACCELERATION_ENCODER && encoderCount <= END_ACCELERATION_ENCODER){
+			System.out.println("If statement 1");
 			int speedFactor = (encoderCount - START_ACCELERATION_ENCODER) / ACCELERATION_INTERVAL;
 			return START_POWER + speedFactor * ACCELERATION_RATE;
 		}
 		
 		else if(encoderCount >= START_DECELERATION_ENCODER && encoderCount <= END_DECELERATION_ENCODER){
+			System.out.println("If statement 2");
 			int speedReductionFactor = (encoderCount - START_DECELERATION_ENCODER) / ACCELERATION_INTERVAL;
 			return MAX_POWER - speedReductionFactor * ACCELERATION_RATE;
 		}
