@@ -9,8 +9,7 @@ import org.usfirst.frc.team2473.framework.readers.ControlsReader;
 import org.usfirst.frc.team2473.framework.readers.DeviceReader;
 import org.usfirst.frc.team2473.framework.trackers.JoystickTracker;
 import org.usfirst.frc.team2473.framework.trackers.JoystickTracker.Type;
-import org.usfirst.frc.team2473.robot.commands.JoystickControl;
-import org.usfirst.frc.team2473.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team2473.robot.commands.DriveStraight;
 import org.usfirst.frc.team2473.robot.subsystems.PIDriveTrain;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -31,8 +30,7 @@ public class Robot extends IterativeRobot {
 	DeviceReader reader;
 	Timer robotControlLoop;
 	private boolean timerRunning = true;
-	public static DriveTrain driveTrain;
-	public static JoystickControl joycom;
+	public static DriveStraight driveCommand;
 	public static PIDriveTrain piDriveTrain;
 	Command autonomousCommand;
 
@@ -45,8 +43,7 @@ public class Robot extends IterativeRobot {
 		
 		piDriveTrain = new PIDriveTrain();
 		robotControlLoop = new Timer();
-		driveTrain = new DriveTrain();
-		joycom = new JoystickControl();
+		driveCommand = new DriveStraight();
 		
 	}
 
@@ -57,7 +54,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledPeriodic() {
-		Scheduler.getInstance().add(joycom);
+		Scheduler.getInstance().add(driveCommand);
 		Scheduler.getInstance().run();
 	}
 
@@ -74,8 +71,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		timerRunning = false;
-		if (joycom != null)
-			joycom.start();
+		if (driveCommand != null)
+			driveCommand.start();
 	}
 
 	@Override
