@@ -11,6 +11,7 @@ import org.usfirst.frc.team2473.framework.trackers.JoystickTracker;
 import org.usfirst.frc.team2473.framework.trackers.JoystickTracker.Type;
 import org.usfirst.frc.team2473.robot.commands.JoystickControl;
 import org.usfirst.frc.team2473.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team2473.robot.subsystems.PIDriveTrain;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 
@@ -33,6 +34,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static DriveTrain driveTrain;
 	public static JoystickControl joycom;
+	public static PIDriveTrain piDriveTrain;
 	Command autonomousCommand;
 
 	@Override
@@ -42,8 +44,10 @@ public class Robot extends IterativeRobot {
 		reader = new DeviceReader();
 		reader.start();
 		
+		piDriveTrain = new PIDriveTrain();
 		driveTrain = new DriveTrain();
 		joycom = new JoystickControl();
+		
 	}
 
 	@Override
@@ -100,6 +104,6 @@ public class Robot extends IterativeRobot {
 	}
 	public void addTrackers(){
 		Trackers.getInstance().addTracker(new JoystickTracker(ControlsMap.STEERING_WHEEL_X,ControlsMap.STEERING_WHEEL,Type.X));
-		Trackers.getInstance().addTracker(new JoystickTracker(ControlsMap.THROTTLE_Y,ControlsMap.THROTTLE,Type.Y));
+		Trackers.getInstance().addTracker(new JoystickTracker(ControlsMap.THROTTLE_Z,ControlsMap.THROTTLE,Type.Z));
 	}
 }

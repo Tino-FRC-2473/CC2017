@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="/Users/miles/Downloads/CTRE_FRCLibs_NON-WINDOWS.zip"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/TalonSRXLibJava.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/ThreadingRobot.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/navx_frc.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
