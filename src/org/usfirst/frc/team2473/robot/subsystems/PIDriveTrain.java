@@ -1,8 +1,9 @@
 package org.usfirst.frc.team2473.robot.subsystems;
 
+import com.ctre.CANTalon;
+
 import org.usfirst.frc.team2473.robot.RobotMap;
 
-import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -10,7 +11,6 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 public class PIDriveTrain extends PIDSubsystem {
-
 	private static final double KP = 0.035;
 	private static final double KI = 0.0005;
 	private static final double KD = 0.035;
@@ -73,5 +73,5 @@ public class PIDriveTrain extends PIDSubsystem {
 
 	public double getAngleRate() {
 		return rotateToAngleRate;
-	}
+}
 }
