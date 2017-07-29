@@ -4,6 +4,8 @@ import math
 from sweeppy import Sweep
 import itertools
 
+USING_LIDAR = False;
+
 #Smooth on XY Graph
 XYSMOOTH = 0
 #Smooth on Derivative
@@ -52,25 +54,46 @@ def within(a, startAngle, endAngle):
 originalAngle = []
 originalDistance = []
 
-with Sweep('/dev/ttyUSB0') as sweep:
-    sweep.set_motor_speed(2)
-    sweep.set_sample_rate(2000)
-    sweep.start_scanning()
+if(USING_LIDAR):
+    with Sweep('/dev/ttyUSB0') as sweep:
+        sweep.set_motor_speed(2)
+        sweep.set_sample_rate(2000)
+        sweep.start_scanning()
 
-    first = True
-    for scan in itertools.islice(sweep.get_scans(),3):
-        if(not first):
-            s = scan[0]
-            for dataSample in s:
-                distanceReading = dataSample[1]
+        first = True
+        for scan in itertools.islice(sweep.get_scans(),3):
+            if(not first):
+                s = scan[0]
+                for dataSample in s:
+                    distanceReading = dataSample[1]
 
-                if(distanceReading > LIDAR_D_SMALL_CUTOFF and distanceReading < LIDAR_D_BIG_CUTOFF):
-                    originalAngle.append((dataSample[0]/1000.0 - BEARING_TO_WALL)%360)
-                    originalDistance.append(distanceReading)
-            break
-        first = False
+                    if(distanceReading > LIDAR_D_SMALL_CUTOFF and distanceReading < LIDAR_D_BIG_CUTOFF):
+                        originalAngle.append((dataSample[0]/1000.0 - BEARING_TO_WALL)%360)
+                        originalDistance.append(distanceReading)
+                break
+            first = False
 
-    sweep.stop_scanning()
+        sweep.stop_scanning()
+else:
+    goodInd = []
+        fx = open("angle.txt","r")
+        counter = 0
+        for line in fx:
+                ang = float(line)
+                if(within(ang)):
+                        originalAngle.append(ang)
+                        goodInd.append(counter)
+                counter+=1
+
+        fy = open("distance.txt","r")
+        counter = 0
+        for line in fy:
+                if(len(goodInd)==0):
+                        break
+                if(goodInd[0]==counter):
+                        goodInd.pop(0)
+                        originalDistance.append(float(line))
+                counter+=1
 
 
 

@@ -1,4 +1,5 @@
 from sweeppy import Sweep
+import itertools
 
 SMALL_CUTOFF = 1
 BIG_CUTOFF = 3000
