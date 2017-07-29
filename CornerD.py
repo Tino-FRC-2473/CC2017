@@ -34,7 +34,7 @@ IDEAL_Y = ROBOT_IDEAL_Y - LIDAR_POSITION; # CM Y DISTANCE FROM THE CORNER THAT T
 
 EXPECTED_THETA = 360 - math.degrees(math.atan2(IDEAL_Y, LIDAR_DISTANCE))
 THETA_MARGIN = 17
-print(EXPECTED_THETA)
+print("THETA", EXPECTED_THETA)
 #Angle of corner we want to detect(for boiler corner set to 45)
 CORNERDETECT = 45
 #Buffer we allow for corner so if cornerdetect=45 cornerbuffer=5 we look for 40-50 deg
