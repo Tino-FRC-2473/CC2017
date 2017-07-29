@@ -4,6 +4,7 @@ import org.usfirst.frc.team2473.framework.Database;
 import org.usfirst.frc.team2473.framework.components.Devices;
 import org.usfirst.frc.team2473.robot.DigitalInputDiagnoser;
 import org.usfirst.frc.team2473.robot.DigitalInputDiagnoser.Type;
+import org.usfirst.frc.team2473.robot.subsystems.BS;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -13,7 +14,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DigitalInputDiagnoserCommand extends Command {
 	
-	private Subsystem bs;
+	private Subsystem bs = new BS();
 	private boolean done = false;
 	private org.usfirst.frc.team2473.robot.DigitalInputDiagnoser.Type type;
 	private int trackedDeviceID;

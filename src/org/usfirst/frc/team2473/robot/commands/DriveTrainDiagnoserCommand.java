@@ -3,6 +3,7 @@ package org.usfirst.frc.team2473.robot.commands;
 import org.usfirst.frc.team2473.framework.Database;
 import org.usfirst.frc.team2473.framework.components.Devices;
 import org.usfirst.frc.team2473.robot.DiagnosticMap;
+import org.usfirst.frc.team2473.robot.subsystems.BS;
 
 import com.ctre.CANTalon.TalonControlMode;
 
@@ -14,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveTrainDiagnoserCommand extends Command {
 	
-	private Subsystem bs;
+	private Subsystem bs = new BS();
 	private boolean done = false;
 	
 	private String keyre;

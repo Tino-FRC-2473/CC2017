@@ -2,6 +2,7 @@ package org.usfirst.frc.team2473.robot.commands;
 
 import org.usfirst.frc.team2473.framework.Database;
 import org.usfirst.frc.team2473.framework.components.Devices;
+import org.usfirst.frc.team2473.robot.subsystems.BS;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -11,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class GyroDiagnoserCommand extends Command {
 	
-	private Subsystem bs;
+	private Subsystem bs = new BS();
 	private int deviceID;
 	private String angleKey;
 	private double range;
@@ -34,7 +35,7 @@ public class GyroDiagnoserCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Devices.getInstance().getGyro(deviceID).reset();
-		System.out.println("Turn the gyro 90 degrees");
+		System.out.println("Turn the gyro to its range.");
 		while(Database.getInstance().getNumeric(angleKey) <= range){
 			System.out.println("Gyro: " + deviceID + " Angle: " + Database.getInstance().getNumeric(angleKey));
 		}
