@@ -31,7 +31,6 @@ public class Robot extends IterativeRobot {
 	DeviceReader reader;
 	Timer robotControlLoop;
 	private boolean timerRunning = true;
-	public static OI oi;
 	public static DriveTrain driveTrain;
 	public static JoystickControl joycom;
 	public static PIDriveTrain piDriveTrain;
@@ -45,6 +44,7 @@ public class Robot extends IterativeRobot {
 		reader.start();
 		
 		piDriveTrain = new PIDriveTrain();
+		robotControlLoop = new Timer();
 		driveTrain = new DriveTrain();
 		joycom = new JoystickControl();
 		
@@ -57,6 +57,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledPeriodic() {
+		Scheduler.getInstance().add(joycom);
 		Scheduler.getInstance().run();
 	}
 
@@ -73,21 +74,20 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		timerRunning = false;
-		joycom.start();
-		if (autonomousCommand != null)
-			autonomousCommand.cancel();
+		if (joycom != null)
+			joycom.start();
 	}
 
 	@Override
 	public void teleopPeriodic() {
-		if(!timerRunning){
-			robotControlLoop.scheduleAtFixedRate(new TimerTask(){
+		if (!timerRunning) {
+			robotControlLoop.scheduleAtFixedRate(new TimerTask() {
 				@Override
-				public void run(){
+				public void run() {
 					Scheduler.getInstance().run();
 				}
 			}, 0, 20);
-			timerRunning=true;
+			timerRunning = true;
 		}
 		ControlsReader.getInstance().updateAll();
 	}
@@ -96,14 +96,17 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 		LiveWindow.run();
 	}
-	public void addDevices(){
+
+	public void addDevices() {
 		Devices.getInstance().addTalon(RobotMap.FRONT_LEFT);
 		Devices.getInstance().addTalon(RobotMap.FRONT_RIGHT);
 		Devices.getInstance().addTalon(RobotMap.BACK_LEFT);
 		Devices.getInstance().addTalon(RobotMap.BACK_RIGHT);
 	}
+
 	public void addTrackers(){
 		Trackers.getInstance().addTracker(new JoystickTracker(ControlsMap.STEERING_WHEEL_X,ControlsMap.STEERING_WHEEL,Type.X));
 		Trackers.getInstance().addTracker(new JoystickTracker(ControlsMap.THROTTLE_Z,ControlsMap.THROTTLE,Type.Z));
+
 	}
 }

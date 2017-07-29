@@ -69,6 +69,7 @@ public class Database {
 		/* gets the ThreadSafeDouble from numerical_values under the given key, and calls the ThreadSafeDouble method setValue,
 		 * assigning the correct value
 		 */
+//		System.out.println(Thread.currentThread().getName());
 		numerical_values.get(key).setValue(value);
 	}
 	
@@ -121,6 +122,16 @@ public class Database {
 		 * assigning the correct value
 		 */
 		message_values.get(key).setValue(message);
+	}
+	
+	public String getNums()
+	{
+		StringBuilder sb = new StringBuilder();
+		for(String s : numerical_values.keySet())
+		{
+			sb.append(s +":" + numerical_values.get(s).getValue());
+		}
+		return sb.toString();
 	}
 	
 	/**
