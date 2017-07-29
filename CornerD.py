@@ -218,6 +218,7 @@ if(DSMOOTH == 0):
 if GRAPHD:
         plt.plot(dist, cartD, 'r-', label='raw')
         plt.plot(dist, sD, 'b-', label='smooth')
+        plt.show()
 
 slopeTotals = []
 sign = (sD[1]-sD[0])>0
