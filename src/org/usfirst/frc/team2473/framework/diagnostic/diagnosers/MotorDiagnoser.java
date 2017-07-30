@@ -1,28 +1,31 @@
-	package org.usfirst.frc.team2473.framework.diagnostic.diagnosers;
+package org.usfirst.frc.team2473.framework.diagnostic.diagnosers;
 
 import com.ctre.CANTalon;
 import org.usfirst.frc.team2473.framework.Database;
 import org.usfirst.frc.team2473.framework.components.Devices;
 import org.usfirst.frc.team2473.framework.components.Trackers;
-import org.usfirst.frc.team2473.framework.diagnostic.DiagnosticThread;
 import org.usfirst.frc.team2473.framework.trackers.DeviceTracker;
 import org.usfirst.frc.team2473.framework.trackers.EncoderTracker;
 import org.usfirst.frc.team2473.framework.trackers.TalonTracker;
 import org.usfirst.frc.team2473.robot.DiagnosticMap;
+import org.usfirst.frc.team2473.framework.diagnostic.DiagnosticThread;
+import org.usfirst.frc.team2473.framework.diagnostic.commands.*;
 
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.command.Command;
 
 public class MotorDiagnoser extends Diagnoser{
 	//constructor values
-	private String speedKey; //speed
-	private String currentKey; //current
-	private String encoderKey; //encoder
-	private String powerKey; //power
+	private String keys; //speed
+	private String keyc; //current
+	private String keye; //encoder
+	private String keyp; //power
 	private int deviceID; //device id
 	private double range;
-	private Type type; 
+	private Type Type; 
+	private String limitswitchkey;
 	
 	//torque calculations
 	private double rpm;
@@ -30,6 +33,8 @@ public class MotorDiagnoser extends Diagnoser{
 	
 	//speed multiplier
 	private double SpeedMultiplier;
+	
+	private Command command;
 	
 	//time
 	//private double time;
@@ -39,81 +44,190 @@ public class MotorDiagnoser extends Diagnoser{
 //	private final double EcnoderTicksPerRotation = 6000.0;
 //	private final double GearRatio = 14;
 	
-	public MotorDiagnoser(int deviceID, double range, Type type){
+	public MotorDiagnoser(int deviceID, Double range, Type type){
 		this.deviceID = deviceID;
-		this.range = range;
-		this.type = type;
-		for(DeviceTracker tracker : Trackers.getInstance().getTrackers()) {
-			if(tracker.getClass().getName().indexOf("TalonTracker") != -1 && tracker.getPort()==deviceID) {
+		for(DeviceTracker tracker : Trackers.getInstance().getTrackers())
+			if(tracker.getClass().getName().equals("TalonTracker") && tracker.getPort()==deviceID) {
 				switch(((TalonTracker) tracker).getTarget()) {
 				case POWER:
-					powerKey = tracker.getKey();
+					keyp = tracker.getKey();
 					break;
 				case CURRENT:
-					currentKey = tracker.getKey();
+					keyc = tracker.getKey();
 					break;
 				case SPEED:
-					speedKey = tracker.getKey();
+					keys = tracker.getKey();
 					break;
 				default:
 						break;
 				}
-			} else if(tracker.getClass().getName().indexOf("EncoderTracker") != -1 && tracker.getPort()==deviceID) {
-				encoderKey = ((EncoderTracker) tracker).getKey();
+			} else if(tracker.getClass().getName().equals("EncoderTracker")) {
+				keye = ((EncoderTracker) tracker).getKey();
 			}
-		}
+		this.keys = keys;
+		this.keye = keye;
+		this.keyc = keyc;
+		this.keyp = keyp;
+		this.range = range;
+		this.Type = type;
+		//Diagnostics.addToQueue(this);
+	}
+	public MotorDiagnoser(int deviceID, Type type, String limitswitchkey){
+		this.deviceID = deviceID;
+		for(DeviceTracker tracker : Trackers.getInstance().getTrackers())
+			if(tracker.getClass().getName().equals("TalonTracker") && tracker.getPort()==deviceID) {
+				switch(((TalonTracker) tracker).getTarget()) {
+				case POWER:
+					keyp = tracker.getKey();
+					break;
+				case CURRENT:
+					keyc = tracker.getKey();
+					break;
+				case SPEED:
+					keys = tracker.getKey();
+					break;
+				default:
+						break;
+				}
+			} else if(tracker.getClass().getName().equals("EncoderTracker")) {
+				keye = ((EncoderTracker) tracker).getKey();
+			}
+		this.keys = keys;
+		this.keye = keye;
+		this.keyc = keyc;
+		this.keyp = keyp;
+		this.Type = type;
+		this.limitswitchkey = limitswitchkey;
 		//Diagnostics.addToQueue(this);
 	}
 	
 	public enum Type{
-		M775
+		M775,
+		
+		M550,
+		
+		AM3102,
+		
+		CIM
 	}
 	
 	@Override
 	public void RunSimultaneousTest() {
-		System.out.println("simul test running");
-		double pastrpm;
-		double current = (Database.getInstance().getNumeric(currentKey));
-		if(DiagnosticThread.getInstance().getTime()%1000 == 0){
-			if(type.equals(Type.M775)){
-				pastrpm = rpm;
-				rpm = (((Database.getInstance().getNumeric(speedKey)*600))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
-				torque = (rpm - pastrpm);
+		double current = (Database.getInstance().getNumeric(keyc));
+		if(range != (Double)null){
+			double pastrpm;
+			if(DiagnosticThread.getInstance().getTime()%1000 == 0){
+				switch(Type){
+				case M775:
+					pastrpm = rpm;
+					rpm = (((Database.getInstance().getNumeric(keys)*600))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
+					torque = (rpm - pastrpm);
+					break;
+				case M550:
+					pastrpm = rpm;
+					rpm = (((Database.getInstance().getNumeric(keys)*600))/DiagnosticMap.ENCODER_PER_ROTATION550)*(2*Math.PI);
+					torque = (rpm - pastrpm);
+					break;
+				case AM3102:
+					pastrpm = rpm;
+					rpm = (((Database.getInstance().getNumeric(keys)*600))/DiagnosticMap.ENCODER_PER_ROTATION3102)*(2*Math.PI);
+					torque = (rpm - pastrpm);
+					break;
+				case CIM:
+					pastrpm = rpm;
+					rpm = (((Database.getInstance().getNumeric(keys)*600))/DiagnosticMap.ENCODER_PER_ROTATIONCIM)*(2*Math.PI);
+					torque = (rpm - pastrpm);
+				default:
+					break;
+				}
 			}
 		}
-		if(type.equals(Type.M775)){
-			if((torque >= DiagnosticMap.MAX_TORQUE775) || (current >= DiagnosticMap.MAX_CURRENT775)){
-				System.out.println("Motor: " + deviceID + " -Lowering max speed");
-				this.SpeedMultiplier -= 0.1;
-			}else{
-				this.SpeedMultiplier = 1.0;
+		if(range != (Double)null){
+			switch(Type){
+			case M775:
+				if((torque >= DiagnosticMap.MAX_TORQUE775) || (current >= DiagnosticMap.MAX_CURRENT775)){
+					System.out.println("Motor: " + deviceID + " -Lowering max speed");
+					this.SpeedMultiplier -= 0.1;
+				}else{
+					this.SpeedMultiplier = 1.0;
+				}
+				break;
+			case M550:
+				if((torque >= DiagnosticMap.MAX_TORQUE550) || (current >= DiagnosticMap.MAX_CURRENT550)){
+					System.out.println("Motor: " + deviceID + " -Lowering max speed");
+					this.SpeedMultiplier -= 0.1;
+				}else{
+					this.SpeedMultiplier = 1.0;
+				}
+				break;
+			case AM3102:
+				if((torque >= DiagnosticMap.MAX_TORQUE3102) || (current >= DiagnosticMap.MAX_CURRENT3102)){
+					System.out.println("Motor: " + deviceID + " -Lowering max speed");
+					this.SpeedMultiplier -= 0.1;
+				}else{
+					this.SpeedMultiplier = 1.0;
+				}
+				break;
+			case CIM:
+				if((torque >= DiagnosticMap.MAX_TORQUECIM) || (current >= DiagnosticMap.MAX_CURRENTCIM)){
+					System.out.println("Motor: " + deviceID + " -Lowering max speed");
+					this.SpeedMultiplier -= 0.1;
+				}else{
+					this.SpeedMultiplier = 1.0;
+				}
+			default:
+				break;
+			}
+		}else{
+			switch(Type){
+			case M775:
+				if((current >= DiagnosticMap.MAX_CURRENT775)){
+					System.out.println("Motor: " + deviceID + " -Lowering max speed");
+					this.SpeedMultiplier -= 0.1;
+				}else{
+					this.SpeedMultiplier = 1.0;
+				}
+				break;
+			case M550:
+				if((current >= DiagnosticMap.MAX_CURRENT550)){
+					System.out.println("Motor: " + deviceID + " -Lowering max speed");
+					this.SpeedMultiplier -= 0.1;
+				}else{
+					this.SpeedMultiplier = 1.0;
+				}
+				break;
+			case AM3102:
+				if((current >= DiagnosticMap.MAX_CURRENT3102)){
+					System.out.println("Motor: " + deviceID + " -Lowering max speed");
+					this.SpeedMultiplier -= 0.1;
+				}else{
+					this.SpeedMultiplier = 1.0;
+				}
+				break;
+			case CIM:
+				if((current >= DiagnosticMap.MAX_CURRENTCIM)){
+					System.out.println("Motor: " + deviceID + " -Lowering max speed");
+					this.SpeedMultiplier -= 0.1;
+				}else{
+					this.SpeedMultiplier = 1.0;
+				}
+			default:
+				break;
 			}
 		}
 	}
 
 	@Override
-	public void runOneTimeTest() {
-		reset();
-		while(Database.getInstance().getNumeric(encoderKey) <= range){
-			if(Database.getInstance().getNumeric(powerKey) != 0.3){
-				Devices.getInstance().getTalon(deviceID).set(0.3);
-			}
-		}
-		if(Database.getInstance().getNumeric(encoderKey) <= range + 50 && Database.getInstance().getNumeric(encoderKey) >= range - 50){
-			System.out.println("Motor: " + deviceID + "Dysfunctional");
-		}
-		reset();
-		System.out.println("Turn motor-driven wheel manually in any direction");
-		while(Math.abs(Database.getInstance().getNumeric(encoderKey)) <= range){
-				System.out.println("Motor: " + deviceID + "Encoder Count: " + Database.getInstance().getNumeric(encoderKey));
-		}
-		System.out.println("STOP! If this is as far as the motor goes, everything is working.");
+	public Command RunOneTimeTest() {
+		return new MotorDiagnoserCommand(deviceID,keye,keyp,range,limitswitchkey);
 	}
 	
 	private void reset(){
-		for(DeviceTracker tracker : Trackers.getInstance().getTrackers()) if(tracker.getKey().equals(encoderKey)) ((EncoderTracker)tracker).resetEncoder();
+		Devices.getInstance().getTalon(deviceID).changeControlMode(TalonControlMode.Position);
+		Devices.getInstance().getTalon(deviceID).setPosition(0);
+		Devices.getInstance().getTalon(deviceID).changeControlMode(TalonControlMode.PercentVbus);
 	}
-	
+	@Override
 	public double getMultiplier(){
 		return SpeedMultiplier;
 	}

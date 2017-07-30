@@ -1,11 +1,14 @@
 package org.usfirst.frc.team2473.framework.diagnostic;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.usfirst.frc.team2473.framework.diagnostic.diagnosers.Diagnoser;
 
 public class DiagnosticThread extends Thread{
 	private ArrayList<Diagnoser> diagnosers = new ArrayList<Diagnoser>();
+	private HashMap<String, String> errors = new HashMap<String, String>();
+	
 	public double initialTime;
 	
 	private static DiagnosticThread theInstance;
@@ -18,7 +21,8 @@ public class DiagnosticThread extends Thread{
 		return theInstance;
 	}
 
-	private DiagnosticThread(){
+	
+	public DiagnosticThread(){
 		initialTime = System.currentTimeMillis();
 	}
 	
@@ -26,24 +30,16 @@ public class DiagnosticThread extends Thread{
 		diagnosers.add(diagnoser);
 	}
 	
-	@Override
 	public void run(){
-		
 		while(isAlive()){
 			for(Diagnoser diagnoser:diagnosers){
 				diagnoser.RunSimultaneousTest();
 			}
-			errorPrinting();
-			
-			try {
-				Thread.sleep(1);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			errors();
 		}
 	}
 	
-	private void errorPrinting(){
+	private void errors(){
 		
 	}
 	

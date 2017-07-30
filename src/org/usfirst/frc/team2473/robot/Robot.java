@@ -41,7 +41,7 @@ public class Robot extends IterativeRobot {
 	private Timer robotControlLoop = new Timer(); //timer allows for even periodic execution of teleOpPeriodic
 	private Networking network; //this is the networking thread
 	private SendableChooser<String> chooser;
-	private boolean diagnosticsRunning = false;
+	private boolean diagnosticsRunning = true;
 	/*no special constructor is required for this class. you will never need to make an object of this class*/
 	
 	/**
@@ -70,6 +70,7 @@ public class Robot extends IterativeRobot {
 		}
 		if(diagnosticsRunning){
 			addDiagnosers();
+			addTests();
 			//Diagnostics.getInstance().startTests(TestType.ONETIME);
 		}
 		
@@ -210,6 +211,6 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void addTests() {
-		Diagnostics.getInstance().addToQueue(new MotorDiagnoser(RobotMap.MOTOR, DiagnosticMap.MOTOR_RANGE, DiagnosticMap.MOTOR_TYPE));
+		Diagnostics.getInstance().addToQueue("MOTORBOI", new MotorDiagnoser(RobotMap.MOTOR, DiagnosticMap.MOTOR_RANGE, Type.M550));
 	}
 }
