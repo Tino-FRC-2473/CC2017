@@ -1,13 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import math
-from sweeppy import Sweep
+#from sweeppy import Sweep
 import itertools
 
 USING_LIDAR = False;
 
 #Smooth on XY Graph
-XYSMOOTH = 0
+XYSMOOTH = 1
 #Smooth on Derivative
 DSMOOTH = 1
 
@@ -34,14 +34,14 @@ LIDAR_X = 4*CM_PER_IN; # IN CM, CENTER OF ROBOT TO CENTER OF LIDAR ON Y LINE
 LIDAR_POSITION = 0
 IDEAL_Y = ROBOT_IDEAL_Y - LIDAR_POSITION; # CM Y DISTANCE FROM THE CORNER THAT THE LIDAR SHOULD BE ALIGNED TO
 
-EXPECTED_THETA = 360 - math.degrees(math.atan2(IDEAL_Y, LIDAR_DISTANCE))
+EXPECTED_THETA = 360 - math.degrees(math.atan2(IDEAL_Y, LIDAR_DISTANCE)) + 35
 THETA_MARGIN = 15
 print("THETA", EXPECTED_THETA)
 
 #Angle of corner we want to detect(for boiler corner set to 45)
 CORNERDETECT = 45
 #Buffer we allow for corner so if cornerdetect=45 cornerbuffer=5 we look for 40-50 deg
-CORNERBUFFER = 10
+CORNERBUFFER = 8
 
 def within(a, startAngle, endAngle):
         if(startAngle<endAngle):
@@ -76,24 +76,23 @@ if(USING_LIDAR):
         sweep.stop_scanning()
 else:
     goodInd = []
-        fx = open("angle.txt","r")
-        counter = 0
-        for line in fx:
-                ang = float(line)
-                if(within(ang)):
-                        originalAngle.append(ang)
-                        goodInd.append(counter)
-                counter+=1
+    fx = open("angle.txt","r")
+    counter = 0
+    for line in fx:
+            ang = float(line)
+            originalAngle.append(ang)
+            goodInd.append(counter)
+            counter+=1
 
-        fy = open("distance.txt","r")
-        counter = 0
-        for line in fy:
-                if(len(goodInd)==0):
-                        break
-                if(goodInd[0]==counter):
-                        goodInd.pop(0)
-                        originalDistance.append(float(line))
-                counter+=1
+    fy = open("distance.txt","r")
+    counter = 0
+    for line in fy:
+            if(len(goodInd)==0):
+                    break
+            if(goodInd[0]==counter):
+                    goodInd.pop(0)
+                    originalDistance.append(float(line))
+            counter+=1
 
 
 
@@ -283,7 +282,7 @@ cornerY = []
 
 maxIdx = 0
 for i in range(0,len(slopeTotals)):
-        if(abs(slopeTotals[i]) > max):
+        if(abs(slopeTotals[i]) > slopeTotals[maxIdx]):
                 maxIdx = i
 
         # if(abs(slopeTotals[i]-CORNERDETECT)<CORNERBUFFER):
@@ -300,7 +299,7 @@ if CORNERST:
     plt.title("With Corner")
     plt.axhline(0)
     plt.axvline(0)
-    plt.scatter(cornerX, cornerY)
+    plt.scatter(smoothx, smoothy)
     cornerRangeX = []
     cornerRangeY = []
     #for i in range(len(smoothx)):
@@ -309,6 +308,7 @@ if CORNERST:
     #                cornerRangeY.append(smoothy[i])
     #plt.scatter(cornerRangeX, cornerRangeY)                
     plt.show()
+    plt.scatter(cornerX, cornerY)
 
 if GRAPHST:
     plt.plot(xSlope, slopeTotals, 'r-', label='raw')
