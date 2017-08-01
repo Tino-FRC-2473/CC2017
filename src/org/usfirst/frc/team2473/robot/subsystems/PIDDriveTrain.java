@@ -102,4 +102,19 @@ public class PIDDriveTrain extends PIDSubsystem {
 	public void setTargetAngle(double angle) {
 		setSetpoint(angle);
 	}
+	
+	/**
+	 * Turns the robot using PID to the specified angle
+	 * 
+	 * @param angle The angle to turn
+	 * @param throttle The throttle value of the robot
+	 */
+	public void turn(double angle, double throttle) {
+		setTargetAngle(angle);
+		enable();
+		if (gyro.getYaw() <= angle) {
+			drive(throttle, rotateToAngleRate);
+		}
+		disable();
+	}
 }

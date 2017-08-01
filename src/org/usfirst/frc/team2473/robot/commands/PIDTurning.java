@@ -14,14 +14,12 @@ public class PIDTurning extends Command {
 
 	@Override
 	protected void initialize() {
-		Robot.driveTrain.setTargetAngle(90.0f); //sets target angle to 90 degrees
-		Robot.driveTrain.enable(); //enables the PID
+		
 	}
 
 	@Override
 	protected void execute() {
-		Robot.driveTrain.drive(SPEED, Robot.driveTrain.getAngleRate()); //turns the robot with PID
-		System.out.println(Robot.driveTrain.getGyro().getYaw()); //prints out gyro yaw
+		Robot.driveTrain.turn(90.0f, SPEED);
 	}
 
 	@Override
@@ -36,7 +34,7 @@ public class PIDTurning extends Command {
 
 	@Override
 	protected void interrupted() {
-		end();
+		end(); //disable the PID
 	}
 
 }
