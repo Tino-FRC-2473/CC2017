@@ -11,26 +11,26 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 public class PIDDriveTrain extends PIDSubsystem {
 
-	//KP, KI, and KD values used for PID
+	// KP, KI, and KD values used for PID
 	private static final double KP = 0.035;
 	private static final double KI = 0.0005;
 	private static final double KD = 0.04;
 
 	private RobotDrive driver;
-	private AHRS gyro; //navx mxp
+	private AHRS gyro; // navx mxp
 
-	private double rotateToAngleRate; //the value changed by PID
+	private double rotateToAngleRate; // the value changed by PID
 
 	private CANTalon frontLeft, frontRight, backLeft, backRight;
 
-	private static final double K_TOLERANCE_DEGREES = 2.0f; //the absolute error that is tolerable in the PID system
+	private static final double K_TOLERANCE_DEGREES = 2.0f; // the absolute error that is tolerable in the PID system
 
 	public PIDDriveTrain() {
-		super(KP, KI, KD); //creates a PID controller with the KP, KI, and KD values
+		super(KP, KI, KD); // creates a PID controller with the KP, KI, and KD values
 
 		rotateToAngleRate = 0;
 
-		//instantiates the gyro
+		// instantiates the gyro
 		try {
 			gyro = new AHRS(SPI.Port.kMXP);
 			gyro.zeroYaw();
@@ -38,18 +38,18 @@ public class PIDDriveTrain extends PIDSubsystem {
 			e.printStackTrace();
 		}
 
-		setInputRange(-180.0f, 180.0f); //sets the maximum and minimum values expected from the gyro
-		setOutputRange(-1.0, 1.0); //sets the maximum and minimum output values
-		setAbsoluteTolerance(K_TOLERANCE_DEGREES); //sets the absolute error that is tolerable in the PID system
-		getPIDController().setContinuous(true); //sets the PID Controller to think of the gyro input as continuous
+		setInputRange(-180.0f, 180.0f); // sets the maximum and minimum values expected from the gyro
+		setOutputRange(-1.0, 1.0); // sets the maximum and minimum output values
+		setAbsoluteTolerance(K_TOLERANCE_DEGREES); // sets the absolute error that is tolerable in the PID system
+		getPIDController().setContinuous(true); // sets the PID Controller to think of the gyro input as continuous
 
-		//instantiates the CANTalons
+		// instantiates the CANTalons
 		frontLeft = new CANTalon(RobotMap.FL);
 		frontRight = new CANTalon(RobotMap.FR);
 		backLeft = new CANTalon(RobotMap.BL);
 		backRight = new CANTalon(RobotMap.BR);
 
-		//Creates a robot driver
+		// Creates a robot driver
 		driver = new RobotDrive(frontLeft, backLeft, frontRight, backRight);
 	}
 
@@ -67,7 +67,8 @@ public class PIDDriveTrain extends PIDSubsystem {
 	}
 
 	/**
-	 * Uses KP, KI, KD, and the input from returnPIDInput() to change and output value  
+	 * Uses KP, KI, KD, and the input from returnPIDInput() to change and output
+	 * value
 	 */
 	protected void usePIDOutput(double output) {
 		rotateToAngleRate = output;
@@ -101,20 +102,5 @@ public class PIDDriveTrain extends PIDSubsystem {
 	 */
 	public void setTargetAngle(double angle) {
 		setSetpoint(angle);
-	}
-	
-	/**
-	 * Turns the robot using PID to the specified angle
-	 * 
-	 * @param angle The angle to turn
-	 * @param throttle The throttle value of the robot
-	 */
-	public void turn(double angle, double throttle) {
-		setTargetAngle(angle);
-		enable();
-		if (gyro.getYaw() <= angle) {
-			drive(throttle, rotateToAngleRate);
-		}
-		disable();
 	}
 }
