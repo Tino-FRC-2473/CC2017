@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 
 #For distance
-DIST_CONSTANT = 100; #assigned a random number
+DIST_CONSTANT = 1; #assigned a random number
 #rectSize = 10; # set the rext size
 
 #For angle
@@ -106,7 +106,7 @@ def crossPinPos(x1, y1, w1, h1, x3, y3, w3, h3):
 
 
 
-camera = cv2.VideoCapture(0)
+camera = cv2.VideoCapture(1)
 _, frame = camera.read()
 SCREEN_HEIGHT, SCREEN_WIDTH = frame.shape[:2]
 ANGLE_CONST = (SCREEN_WIDTH / 2.0) / math.tan(FIELD_OF_VIEW_RAD / 2.0)
@@ -187,6 +187,13 @@ while True:
                 #change the modmh
                 modmh = int(calcLengthSideCase(my, mh, sy, sh) * 2 - sh)
             
+
+            if(modsh <= 0 or modmh <= 0):
+                cv2.putText(frame, "neg length: " + str(modmh) + ", " + str(modsh), (50, 200), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
+            else:
+                cv2.rectangle(frame,(modsx,modsy),(modsx+modsw,modsy+modsh),(255,0,255),thickness=5)
+                cv2.rectangle(frame,(modmx,modmy),(modmx+modmw,modmy+modmh),(255,0,255),thickness=5)
+                cv2.putText(frame, "DIST test: " + str(calcDistSideCase(my, mh, sy, sh)), (50, 150), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
             #draws the new rectangles, purple
             
 
@@ -216,12 +223,7 @@ while True:
     cv2.putText(frame, "DIST: " + str(calcDist((mh + sh) / 2.0)), (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
 
 
-    if(modsh <= 0 or modmh <= 0):
-        cv2.putText(frame, "neg length: " + str(modmh) + ", " + str(modsh), (50, 200), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
-    else:
-        cv2.rectangle(frame,(modsx,modsy),(modsx+modsw,modsy+modsh),(255,0,255),thickness=5)
-        cv2.rectangle(frame,(modmx,modmy),(modmx+modmw,modmy+modmh),(255,0,255),thickness=5)
-        cv2.putText(frame, "DIST test: " + str(calcDistSideCase(my, mh, sy, sh)), (50, 150), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
+    
         
     cv2.imshow("Mask", mask)
 
