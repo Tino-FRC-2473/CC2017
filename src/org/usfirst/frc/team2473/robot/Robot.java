@@ -9,6 +9,7 @@ import org.usfirst.frc.team2473.framework.Networking;
 import org.usfirst.frc.team2473.framework.diagnostic.DiagnosticThread;
 import org.usfirst.frc.team2473.framework.diagnostic.Diagnostics;
 import org.usfirst.frc.team2473.framework.diagnostic.Diagnostics.TestType;
+import org.usfirst.frc.team2473.framework.diagnostic.commands.DiagnosticCommands;
 import org.usfirst.frc.team2473.framework.diagnostic.diagnosers.MotorDiagnoser;
 import org.usfirst.frc.team2473.framework.diagnostic.diagnosers.MotorDiagnoser.Type;
 import org.usfirst.frc.team2473.framework.readers.ControlsReader;
@@ -69,12 +70,9 @@ public class Robot extends IterativeRobot {
 			reader.start(); //start the thread once the robot is started			
 		}
 		if(diagnosticsRunning){
-			addDiagnosers();
 			addTests();
-			//Diagnostics.getInstance().startTests(TestType.ONETIME);
 		}
 		
-		//Diagnostics.getInstance().startTests(TestType.ONETIME);
 		if(networkingRunning) {
 			try {
 				network = new Networking(); //create the networking thread
@@ -94,10 +92,6 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 
 	}
-	
-	public void addDiagnosers() {
-		
-	}
 
 	/**
 	 * Is executed during the robot's disabled mode as a looping method. Overridden from <code>IterativeRobot</code>
@@ -116,7 +110,7 @@ public class Robot extends IterativeRobot {
 	 * */
 	@Override
 	public void autonomousInit() {
-		timerRunning = true; //the competition timer is running now that autonomous mode has started
+		if(diagnosticsRunning) Diagnostics.getInstance().startTests(TestType.ONETIME);
 	}	
 
 	/**
@@ -125,15 +119,7 @@ public class Robot extends IterativeRobot {
 	 * */
 	@Override
 	public void autonomousPeriodic() {
-		if (!timerRunning) {
-			robotControlLoop.scheduleAtFixedRate(new TimerTask(){ //run the control loop timer if the competition timer is not running
-				@Override
-				public void run() {
-					Scheduler.getInstance().run(); //run the scheduler over the periodic function
-				}
-			}, 0, 20);
-			timerRunning = true; //ultimately set the running timer to true
-		}
+		Scheduler.getInstance().run(); //run the scheduler over the periodic function
 	}
 
 	/**

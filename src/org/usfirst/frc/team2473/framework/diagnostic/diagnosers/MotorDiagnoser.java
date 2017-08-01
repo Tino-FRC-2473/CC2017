@@ -47,7 +47,7 @@ public class MotorDiagnoser extends Diagnoser{
 	public MotorDiagnoser(int deviceID, Double range, Type type){
 		this.deviceID = deviceID;
 		for(DeviceTracker tracker : Trackers.getInstance().getTrackers())
-			if(tracker.getClass().getName().equals("TalonTracker") && tracker.getPort()==deviceID) {
+			if(tracker.getClass().getName().indexOf("TalonTracker") != -1 && tracker.getPort()==deviceID) {
 				switch(((TalonTracker) tracker).getTarget()) {
 				case POWER:
 					keyp = tracker.getKey();
@@ -61,7 +61,7 @@ public class MotorDiagnoser extends Diagnoser{
 				default:
 						break;
 				}
-			} else if(tracker.getClass().getName().equals("EncoderTracker")) {
+			} else if(tracker.getClass().getName().indexOf("EncoderTracker") != -1) {
 				keye = ((EncoderTracker) tracker).getKey();
 			}
 		this.keys = keys;
@@ -114,7 +114,7 @@ public class MotorDiagnoser extends Diagnoser{
 	@Override
 	public void RunSimultaneousTest() {
 		double current = (Database.getInstance().getNumeric(keyc));
-		if(range != (Double)null){
+		if(range != 0){
 			double pastrpm;
 			if(DiagnosticThread.getInstance().getTime()%1000 == 0){
 				switch(Type){
@@ -142,7 +142,7 @@ public class MotorDiagnoser extends Diagnoser{
 				}
 			}
 		}
-		if(range != (Double)null){
+		if(range != 0){
 			switch(Type){
 			case M775:
 				if((torque >= DiagnosticMap.MAX_TORQUE775) || (current >= DiagnosticMap.MAX_CURRENT775)){

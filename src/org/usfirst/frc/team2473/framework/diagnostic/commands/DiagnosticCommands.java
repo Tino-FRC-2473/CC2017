@@ -25,4 +25,12 @@ public class DiagnosticCommands extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     }
+    
+    @Override
+    protected void execute() {
+    	// TODO Auto-generated method stub
+    	System.out.println("diagnostic commands are being started");
+    	super.execute();
+    	
+    }
 }
