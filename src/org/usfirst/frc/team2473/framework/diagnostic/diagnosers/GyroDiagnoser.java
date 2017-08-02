@@ -41,21 +41,20 @@ public class GyroDiagnoser extends Diagnoser{
 //		}else if(type.equals(Type.MOTOR)){
 //			
 //		}
-		if(Database.getInstance().getNumeric(angleKey) <= range + 5 || Database.getInstance().getNumeric(angleKey) >= range - 5){
+		if(Database.getInstance().getNumeric(angleKey) <= range + 5 && Database.getInstance().getNumeric(angleKey) >= range - 5){
 			maxDeviceValue = Database.getInstance().getNumeric(trackedDeviceValue);
 		}
 		if(maxDeviceValue != null){
 			if(Database.getInstance().getNumeric(trackedDeviceValue)/maxDeviceValue <= (Database.getInstance().getNumeric(angleKey)/range - 0.05)
 			|| Database.getInstance().getNumeric(trackedDeviceValue)/maxDeviceValue >= (Database.getInstance().getNumeric(angleKey)/range + 0.05)){
-				System.out.println("gyro: " + deviceID + "-not callibrated");
+				System.out.println("gyro: " + deviceID + " - Disfunctional");
 			}
 		}
 	}
 
 	@Override
 	public Command RunOneTimeTest() {
-		command = new GyroDiagnoserCommand(deviceID,angleKey,range);
-		return command;
+		return new GyroDiagnoserCommand(deviceID,angleKey,range);
 	}
 	@Override
 	public double getMultiplier(){

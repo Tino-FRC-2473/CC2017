@@ -45,8 +45,7 @@ public class DigitalInputDiagnoser extends Diagnoser {
 	@Override
 	public Command RunOneTimeTest() {
 		// TODO Auto-generated method stub
-		command = new DigitalInputDiagnoserCommand(type,trackedDeviceID,digitalinputkey,trackedDeviceEncoder,range);
-		return command;
+		return new DigitalInputDiagnoserCommand(type,trackedDeviceID,digitalinputkey,trackedDeviceEncoder,range);
 	}
 
 	@Override

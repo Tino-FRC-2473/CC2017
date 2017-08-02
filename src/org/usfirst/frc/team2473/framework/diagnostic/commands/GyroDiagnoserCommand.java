@@ -35,11 +35,11 @@ public class GyroDiagnoserCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Devices.getInstance().getGyro(deviceID).reset();
-		System.out.println("Turn the gyro to its range.");
+		System.out.println("Turn the gyro till it reaches " + range + " degrees.");
 		while(Database.getInstance().getNumeric(angleKey) <= range){
 			System.out.println("Gyro: " + deviceID + " Angle: " + Database.getInstance().getNumeric(angleKey));
 		}
-		System.out.println("STOP! If this looks like " + range + " degrees, the gyro is working.");
+		System.out.println("If this looks like " + range + " degrees, the gyro is working.");
 		done = true;
     }
 

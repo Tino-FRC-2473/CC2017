@@ -52,25 +52,25 @@ public class DriveTrainDiagnoserCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	reset();
-		while(Database.getInstance().getNumeric(keyre) <= encoders || Database.getInstance().getNumeric(keyre) <= encoders){
+		while(Database.getInstance().getNumeric(keyre) <= encoders && Database.getInstance().getNumeric(keyle) <= encoders){
 			if(Database.getInstance().getNumeric(keyfrp) != 0.5){
 				setPowerToALl(0.5);
 			}
 		}
 		setPowerToALl(0.0);
-		if((Database.getInstance().getNumeric(keyre) + Database.getInstance().getNumeric(keyle))/2 > encoders + 50 &&
-				(Database.getInstance().getNumeric(keyre) + Database.getInstance().getNumeric(keyle))/2 < encoders - 50){
+		if((Database.getInstance().getNumeric(keyre) + Database.getInstance().getNumeric(keyle))/2 <= encoders + 50 &&
+				(Database.getInstance().getNumeric(keyre) + Database.getInstance().getNumeric(keyle))/2 >= encoders - 50){
 					System.out.println("Overall Drivetrain Status: Positive");
 		}else{
 			if(encoders - Database.getInstance().getNumeric(keyre) < -50 || encoders - Database.getInstance().getNumeric(keyre) > 50){
-				System.out.println("Right Encoder: Functional");
+				System.out.println("Right Encoder of Drive Train: Functional");
 			}else{
-				System.out.println("Right Encoder: Disfunctional");
+				System.out.println("Right Encoder of Drive Train: Disfunctional");
 			}
 			if(encoders - Database.getInstance().getNumeric(keyle) < -50 || encoders - Database.getInstance().getNumeric(keyle) > 50){
-				System.out.println("Left Encoder: Functional");
+				System.out.println("Left Encoder of Drive Train: Functional");
 			}else{
-				System.out.println("Left Encoder: Disfunctional");
+				System.out.println("Left Encoder of Drive Train: Disfunctional");
 			}
 		}
 		reset();

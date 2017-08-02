@@ -43,19 +43,32 @@ public class DigitalInputDiagnoserCommand extends Command {
 		case LIMIT_SWITCH_SERVO:
 			Devices.getInstance().getServo(trackedDeviceID).setPosition(range);
 			if(!Database.getInstance().getConditional(digitalinputkey)){
-				System.out.println("Limit Switch(SERVO): " + digitalinputkey + " - not functional");
+				System.out.println("Limit Switch(SERVO): " + digitalinputkey + " - Disfunctional");
+			}else{
+				System.out.println("Limit Switch(SERVO): " + digitalinputkey + " - Functional");
 			}
 			break;
 		case LIMIT_SWITCH_MOTOR:
-			while(Database.getInstance().getNumeric(trackedDeviceEncoder) < range){
-				Devices.getInstance().getTalon(trackedDeviceID).set(0.2);
+			while(Math.abs(Database.getInstance().getNumeric(trackedDeviceEncoder)) < Math.abs(range)){
+				if(range < 0){
+					Devices.getInstance().getTalon(trackedDeviceID).set(-0.2);
+				}else{
+					Devices.getInstance().getTalon(trackedDeviceID).set(0.2);
+				}
 			}
 			if(!Database.getInstance().getConditional(digitalinputkey)){
-				System.out.println("Limit Switch(MOTOR): " + digitalinputkey + " - not functional");
+				System.out.println("Limit Switch(MOTOR): " + digitalinputkey + " - Disfunctional");
+			}else{
+				System.out.println("Limit Switch(MOTOR): " + digitalinputkey + " - Functional");
 			}
 			break;
 		case BREAKBEAM:
-			
+			System.out.println("Wave your hand infront of breakbeam: " + digitalinputkey);
+			if(!Database.getInstance().getConditional(digitalinputkey)){
+				System.out.println("Breakbeam: " + digitalinputkey + " - Disfunctional");
+			}else{
+				System.out.println("Breakbeam: " + digitalinputkey + " - Functional");
+			}
 			break;
 		case ROTARY_SWITCH:
 			

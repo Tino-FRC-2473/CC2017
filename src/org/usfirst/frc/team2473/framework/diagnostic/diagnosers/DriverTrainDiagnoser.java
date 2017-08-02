@@ -131,8 +131,7 @@ public class DriverTrainDiagnoser extends Diagnoser {
 
 	@Override
 	public Command RunOneTimeTest() {
-		command = new DriveTrainDiagnoserCommand(fr,fl,br,bl,gyro,keyre,keyle,keyfrp,encoders,gyroangle);
-		return command;
+		return new DriveTrainDiagnoserCommand(fr,fl,br,bl,gyro,keyre,keyle,keyfrp,encoders,gyroangle);
 	}
 
 	@Override

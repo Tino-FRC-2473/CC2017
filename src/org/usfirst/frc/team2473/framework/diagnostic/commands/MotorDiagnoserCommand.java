@@ -43,7 +43,7 @@ public class MotorDiagnoserCommand extends Command {
     	if(range != 0){
     		Trackers.getInstance().resetEncoders();
     		System.out.println(Math.abs(Database.getInstance().getNumeric(keye)));
-			while(Database.getInstance().getNumeric(keye) <= range){
+			while(Math.abs(Database.getInstance().getNumeric(keye)) <= Math.abs(range)){
 				System.out.println("encoder: " + Database.getInstance().getNumeric(keye));
 				if(range < 0){
 					if(Database.getInstance().getNumeric(keyp) != -0.3){
@@ -56,19 +56,21 @@ public class MotorDiagnoserCommand extends Command {
 				}
 			}
 			Devices.getInstance().getTalon(deviceID).set(0.0);
-			done = true;
 			if(Database.getInstance().getNumeric(keye) >= range + 50 && Database.getInstance().getNumeric(keye) <= range - 50){
-				System.out.println("Motor: " + deviceID + "Disfunctional");
+				System.out.println("Motor: " + deviceID + " Disfunctional");
+			}else{
+				System.out.println("Motor: " + deviceID + " Functional");
 			}
 			Trackers.getInstance().resetEncoders();
+			done = true;
     	}else{
     		while(!Database.getInstance().getConditional(limitswitchkey)){
-    			if(Database.getInstance().getNumeric(keyp) != 0.5){
-    				Devices.getInstance().getTalon(deviceID).set(0.5);
+    			if(Database.getInstance().getNumeric(keyp) != 0.3){
+    				Devices.getInstance().getTalon(deviceID).set(0.3);
     			}
     		}
     		Devices.getInstance().getTalon(deviceID).set(0.0);
-    		System.out.println("If motor-" + deviceID + "-hit its maximum range, it is functional.");
+    		System.out.println("Motor:" + deviceID + " hit its max range and is functional.");
     		done = true;
     	}
     }
