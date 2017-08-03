@@ -25,7 +25,9 @@ pinDistToCenter = 0
 # Intersection of two lines with L1 = (x1, y1) to (x2, y2)
 #   						and  L2 = (x3, y3) to (x4, y4)
 def intersect(x1, y1, x2, y2, x3, y3, x4, y4):
-	return ((x1*y2-y1*x2)*(x3-x4)-(x1-x2)*(x3*y4-y3*x4))/((x1-x2)*(y3-y4)-(y1-y2)*(x3-x4)),((x1*y2-y1*x2)*(y3-y4)-(y1-y2)*(x3*y4-y3*x4))/((x1-x2)*(y3-y4)-(y1-y2)*(x3-x4))
+	if(((x1-x2)*(y3-y4)-(y1-y2)*(x3-x4)) != 0 and ((x1-x2)*(y3-y4)-(y1-y2)*(x3-x4)) != 0):
+		return ((x1*y2-y1*x2)*(x3-x4)-(x1-x2)*(x3*y4-y3*x4))/((x1-x2)*(y3-y4)-(y1-y2)*(x3-x4)),((x1*y2-y1*x2)*(y3-y4)-(y1-y2)*(x3*y4-y3*x4))/((x1-x2)*(y3-y4)-(y1-y2)*(x3-x4))
+	return (0,0)
 
 # Distance from rectangle given rectangle height
 def calcDist(height):
@@ -76,8 +78,8 @@ def find_marker(image):
 	#green thresholds
 	#180, 17, 100
 	#180, 1, 100
-	low_green = np.array([90, 2.55, 255])
-	high_green = np.array([90, 63.75, 255])
+	low_green = np.array([50, 100.0, 80.0])
+	high_green = np.array([92, 255, 244.6])
 	mask = cv2.inRange(hsv, low_green, high_green)
 
 	meme, contours, hierarchy = cv2.findContours(mask, 1, 2)
@@ -102,10 +104,13 @@ def find_marker(image):
 		# If rectangles do not overlap
 		if(doOverlap(x1, y1, x1+w1, y1+h1, x2, y2, x2+w2, y2+h2) != True):
 			# Find whether the top or the bottom is closer to each other
-			if(y2-y1 < y1+h1-(y2+h2)):
-				h2 = h1-2*(y2-y1)
+			# which ever difference in the y values between the rectangles is less
+			if(abs(y2-y1) < abs(y1+h1-(y2+h2))):
+				h2 = h1-2*abs(y2-y1)
 			else:
-				h2 = h1-2*(y1+h1-(y2+h2))
+				h2 = h1-2*abs(y1+h1-(y2+h2))
+				y2 = y1+abs(y1+h1-(y2+h2))
+
 
 				# Draw rectangle
 			cv2.rectangle(image,(x2,y2),(x2+w2,y2+h2),(0,255,0),2)
@@ -127,6 +132,8 @@ def find_marker(image):
 
 			print("Angle: ", str(calcAngleDeg(centx)))
 			print("Dist:  ", str(calcDist((h1+h2)/2.0)))
+			cv2.putText(image, "ANGLE: " + str(calcAngleDeg(centx)), (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
+    		cv2.putText(image, "DIST: " + str(calcDist((h1 + h2) / 2.0)), (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
 
 
 		cv2.rectangle(image,(x1,y1),(x1+w1,y1+h1),(0,255,0),2)
@@ -137,7 +144,9 @@ def find_marker(image):
 
 
 # Camera
-capture = cv2.VideoCapture(0)
+capture = cv2.VideoCapture(1)
+
+
 _, image = capture.read()
 #Initialize some constants
 SCREEN_HEIGHT, SCREEN_WIDTH = image.shape[:2]
