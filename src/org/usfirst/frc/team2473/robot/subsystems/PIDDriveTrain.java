@@ -14,7 +14,7 @@ public class PIDDriveTrain extends PIDSubsystem {
 	// KP, KI, and KD values used for PID
 	private static final double KP = 0.035;
 	private static final double KI = 0.0005;
-	private static final double KD = 0.045;
+	private static final double KD = 0.048;
 
 	private RobotDrive driver;
 	private AHRS gyro; // navx mxp
@@ -72,13 +72,13 @@ public class PIDDriveTrain extends PIDSubsystem {
 	 */
 	protected void usePIDOutput(double output) {
 		double out = output;
-		
+
 		if (Math.abs(out) < 0.01) {
 			out = 0;
 		} else if (Math.abs(out) < 0.2) {
 			out = 0.2 * Math.signum(out);
 		}
-		
+
 		rotateToAngleRate = out;
 	}
 
@@ -87,6 +87,13 @@ public class PIDDriveTrain extends PIDSubsystem {
 	 */
 	public void drive(double speed, double rotation) {
 		driver.arcadeDrive(speed, rotation);
+	}
+
+	/**
+	 * Stops the robot
+	 */
+	public void stop() {
+		driver.arcadeDrive(0, 0);
 	}
 
 	/**

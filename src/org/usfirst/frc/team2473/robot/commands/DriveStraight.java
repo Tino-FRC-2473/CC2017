@@ -12,14 +12,23 @@ public class DriveStraight extends Command {
 
 	@Override
 	protected void initialize() {
-		Robot.driveTrain.setTargetAngle(Robot.driveTrain.getGyro().getYaw());
+//		Robot.driveTrain.setTargetAngle(Robot.driveTrain.getGyro().getYaw());
+		Robot.driveTrain.setTargetAngle(30.0f);
 		Robot.driveTrain.enable();
 	}
 
 	@Override
 	protected void execute() {
-		Robot.driveTrain.drive(Robot.oi.getThrottle().getZ(), Robot.driveTrain.getAngleRate());
-		System.out.println(Robot.driveTrain.getGyro().getYaw());
+		if (Math.abs(Robot.oi.getThrottle().getZ()) < 0.2) {
+			Robot.driveTrain.disable();
+			Robot.driveTrain.stop();
+		} else {
+			if (!Robot.driveTrain.getPIDController().isEnabled()) {
+				Robot.driveTrain.enable();
+			}
+			Robot.driveTrain.drive(Robot.oi.getThrottle().getZ(), Robot.driveTrain.getAngleRate());
+			System.out.println(Robot.driveTrain.getAngleRate());
+		}
 	}
 
 	@Override
