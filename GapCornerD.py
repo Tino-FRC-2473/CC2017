@@ -34,9 +34,9 @@ LIDAR_X = 4*CM_PER_IN; # IN CM, CENTER OF ROBOT TO CENTER OF LIDAR ON Y LINE
 LIDAR_POSITION = 0
 IDEAL_Y = ROBOT_IDEAL_Y - LIDAR_POSITION; # CM Y DISTANCE FROM THE CORNER THAT THE LIDAR SHOULD BE ALIGNED TO
 
-EXPECTED_THETA = 360 - math.degrees(math.atan2(IDEAL_Y, LIDAR_DISTANCE)) 
-THETA_MARGIN = 25
-print("THETA", EXPECTED_THETA)
+EXPECTED_THETA = (360 - math.degrees(math.atan2(IDEAL_Y, LIDAR_DISTANCE)) + 15)%360
+THETA_MARGIN = 15
+print("THETA", EXPECTED_THETA-THETA_MARGIN, EXPECTED_THETA+THETA_MARGIN)
 
 #Angle of corner we want to detect(for boiler corner set to 45)
 CORNERDETECT = 45
@@ -116,17 +116,21 @@ plt.show()
 
 # TRIM LIDAR DATA TO AROUND WHERE THE BOILER CORNER IS EXPECTED TO BE
 
-def polarDist(dist1, ang1, dist2, ang2):
-        return math.sqrt(dist1*dist1 + dist2*dist2 - 2*dist1*dist2*math.cos(math.radians(ang2-ang1)))
+# def polarDist(dist1, ang1, dist2, ang2):
+#         return math.sqrt(dist1*dist1 + dist2*dist2 - 2*dist1*dist2*math.cos(math.radians(ang2-ang1)))
 
 angle = []
 distance = []
+# angleWall = []
+# distanceWall = []
+# angleBoiler = []
+# distanceBoiler = []
 betweenDistances = []
 
 for i in range(1, len(originalAngle)):
-        thisDist = polarDist(originalDistance[i], originalAngle[i], originalDistance[i-1], originalAngle[i-1])
+        # thisDist = polarDist(originalDistance[i], originalAngle[i], originalDistance[i-1], originalAngle[i-1])
 
-        if(within(originalAngle[i], (EXPECTED_THETA-THETA_MARGIN)%360, (EXPECTED_THETA+THETA_MARGIN)%360)
+        if(within(originalAngle[i]%360, (EXPECTED_THETA-THETA_MARGIN)%360, (EXPECTED_THETA+THETA_MARGIN)%360+45)
                 #and (len(betweenDistances) < 30 or thisDist > 10*sum(betweenDistances)/float(len(betweenDistances)) )
         ):
                 #betweenDistances.append(thisDist)
