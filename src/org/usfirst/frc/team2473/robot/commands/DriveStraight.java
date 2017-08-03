@@ -9,6 +9,9 @@ import org.usfirst.frc.team2473.robot.Robot;
 import org.usfirst.frc.team2473.robot.RobotMap;
 
 public class DriveStraight extends Command {
+	
+	private double maxTurn = 0.8;
+	private double deadzone = 0.04;
 
 	public DriveStraight() {
 		requires(Robot.piDriveTrain);
@@ -44,17 +47,54 @@ public class DriveStraight extends Command {
     }
 	
 	private void setRightPow(double pow){
-		
+		if(pow>maxTurn) pow = maxTurn;
+		else if(pow<-maxTurn) pow = -maxTurn;
 		Devices.getInstance().getTalon(RobotMap.FRONT_RIGHT).set(pow);
 		Devices.getInstance().getTalon(RobotMap.BACK_RIGHT).set(pow);
 
 	}
 	private void setLeftPow(double pow){
-		
+		if(pow>maxTurn) pow = maxTurn;
+		else if(pow<-maxTurn) pow = -maxTurn;
 		Devices.getInstance().getTalon(RobotMap.FRONT_LEFT).set(pow);
 		Devices.getInstance().getTalon(RobotMap.BACK_LEFT).set(pow);
 
 	}
+	private void turn(double pow, double turn){
+		if(turn>maxTurn) turn = maxTurn;
+		if(turn<-maxTurn) turn = -maxTurn;
+		//right turn
+		if(turn>deadzone){ 
+			if(pow>deadzone){
+				setLeftPow(0.9*pow);
+				setRightPow(0.1*pow);
+			}
+			else if(pow<-deadzone){
+				setLeftPow(0.1*pow);
+				setRightPow(0.9*pow);
+			}
+			else{
+				setLeftPow(turn);
+				setRightPow(-turn);
+			}
+		}
+		//left turn
+		else if(turn<deadzone){ 
+			if(pow>deadzone){
+				setLeftPow(0.1*pow);
+				setRightPow(0.9*pow);
+			}
+			else if(pow<-deadzone){
+				setLeftPow(0.9*pow);
+				setRightPow(0.1*pow);
+			}
+			else{
+				setLeftPow(-turn);
+				setRightPow(turn);
+			}
+		}
+	}
+	
 
 	@Override
 	protected boolean isFinished() {
