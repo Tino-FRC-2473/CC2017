@@ -93,6 +93,10 @@ public class DriveStraight extends Command {
 				setRightPow(turn);
 			}
 		}
+		else{
+			setLeftPow(pow);
+			setRightPow(pow);
+		}
 	}
 	
 
