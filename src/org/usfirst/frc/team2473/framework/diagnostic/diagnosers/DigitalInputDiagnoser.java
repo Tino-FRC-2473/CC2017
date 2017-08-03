@@ -25,18 +25,16 @@ public class DigitalInputDiagnoser extends Diagnoser {
 		this.range = range;
 		this.type = type;
 		this.trackedDeviceID = trackedDeviceID;
-		if((type != null) && type == type.LIMIT_SWITCH_MOTOR){
+		if((type != null) && type == type.LIMIT_SWITCH){
 			for(DeviceTracker tracker : Trackers.getInstance().getTrackers())
-				if(tracker.getClass().getName().equals("EncoderTracker")) {
+				if(tracker.getClass().getName().indexOf("EncoderTracker") != -1 && tracker.getPort() == trackedDeviceID) {
 					trackedDeviceEncoder = ((EncoderTracker) tracker).getKey();
 				}
 		}
 	}
 	
 	public enum Type{
-		LIMIT_SWITCH_SERVO,
-		
-		LIMIT_SWITCH_MOTOR,
+		LIMIT_SWITCH,
 		
 		BREAKBEAM,
 		

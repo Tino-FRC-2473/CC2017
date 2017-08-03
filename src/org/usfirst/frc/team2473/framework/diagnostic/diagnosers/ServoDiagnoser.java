@@ -1,21 +1,28 @@
 package org.usfirst.frc.team2473.framework.diagnostic.diagnosers;
 
+import org.usfirst.frc.team2473.framework.diagnostic.commands.ServoDiagnoserCommand;
+
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ServoDiagnoser extends Diagnoser{
-	Servo servo;
-	String key;
+	int id;
 	Double range;
 	private Command command;
+	Type type;
 	
-	public ServoDiagnoser(Servo servo,String key, Double range){
-		this.servo = servo;
-		this.key = key;
+	public ServoDiagnoser(int id, Double range, Type type){
+		this.id = id;
 		this.range = range;
+		this.type = type;
 		//Diagnostics.addToQueue(this);
 	}
-
+	
+	public enum Type{
+		FREE_ROTATION,
+		
+		ONE_EIGHTY
+	}
 
 	@Override
 	public void RunSimultaneousTest() {
@@ -24,7 +31,7 @@ public class ServoDiagnoser extends Diagnoser{
 
 	@Override
 	public Command RunOneTimeTest() {
-		return command;
+		return new ServoDiagnoserCommand(id,range,type);
 	}
 	@Override
 	public double getMultiplier(){

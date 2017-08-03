@@ -16,16 +16,18 @@ public class GyroDiagnoserCommand extends Command {
 	private int deviceID;
 	private String angleKey;
 	private double range;
+	private String device;
 	
 	private boolean done = false;
 
-    public GyroDiagnoserCommand(int deviceID, String angleKey, double range) {
+    public GyroDiagnoserCommand(int deviceID, String angleKey, double range, String device) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(bs);
     	this.deviceID = deviceID;
     	this.angleKey = angleKey;
     	this.range = range;
+    	this.device = device;
     }
 
     // Called just before this Command runs the first time
@@ -34,13 +36,20 @@ public class GyroDiagnoserCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Devices.getInstance().getGyro(deviceID).reset();
-		System.out.println("Turn the gyro till it reaches " + range + " degrees.");
-		while(Database.getInstance().getNumeric(angleKey) <= range){
-			System.out.println("Gyro: " + deviceID + " Angle: " + Database.getInstance().getNumeric(angleKey));
-		}
-		System.out.println("If this looks like " + range + " degrees, the gyro is working.");
-		done = true;
+    	if(device.equals("Motor")){
+    		while(Math.abs(Database.getInstance().getNumeric(angleKey)) <= Math.abs(range)){
+    			if(range < 0){
+    				Devices.getInstance().getTalon(deviceID).set(-0.3);
+    			}else{
+    				Devices.getInstance().getTalon(deviceID).set(0.3);
+    			}
+    			System.out.println("Gyro Angle: " + Database.getInstance().getNumeric(angleKey));
+    		}
+    		System.out.println("Gyro - Functional");
+    	}
+    	if(device.equals("Motor")){
+    		
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

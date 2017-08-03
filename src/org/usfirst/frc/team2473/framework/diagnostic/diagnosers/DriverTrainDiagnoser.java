@@ -70,7 +70,7 @@ public class DriverTrainDiagnoser extends Diagnoser {
 		this.br = keybr;
 		this.gyro = gyro;
 		for(DeviceTracker tracker : Trackers.getInstance().getTrackers())
-			if(tracker.getClass().getName().equals("TalonTracker") && tracker.getPort() == fr) {
+			if(tracker.getClass().getName().indexOf("TalonTracker") != -1 && tracker.getPort() == fr) {
 				switch(((TalonTracker) tracker).getTarget()) {
 				case POWER:
 					keyfrp = tracker.getKey();
@@ -86,7 +86,7 @@ public class DriverTrainDiagnoser extends Diagnoser {
 				}
 			} else if(tracker.getClass().getName().equals("EncoderTracker")) {
 				keyre = ((EncoderTracker) tracker).getKey();
-			}else if(tracker.getClass().getName().equals("TalonTracker") && tracker.getPort() == fl) {
+			}else if(tracker.getClass().getName().indexOf("TalonTracker") != -1 && tracker.getPort() == fl) {
 				switch(((TalonTracker) tracker).getTarget()) {
 				case POWER:
 					keyflp = tracker.getKey();
@@ -102,7 +102,7 @@ public class DriverTrainDiagnoser extends Diagnoser {
 				}
 			} else if(tracker.getClass().getName().equals("EncoderTracker")) {
 				keyle = ((EncoderTracker) tracker).getKey();
-			}else if(tracker.getClass().getName().equals("TalonTracker") && tracker.getPort() == br) {
+			}else if(tracker.getClass().getName().indexOf("TalonTracker") != -1 && tracker.getPort() == br) {
 				switch(((TalonTracker) tracker).getTarget()) {
 				case POWER:
 					keybrp = tracker.getKey();
@@ -113,7 +113,7 @@ public class DriverTrainDiagnoser extends Diagnoser {
 				default:
 					break;
 				}
-			} else if(tracker.getClass().getName().equals("TalonTracker") && tracker.getPort() == bl) {
+			} else if(tracker.getClass().getName().indexOf("TalonTracker") != -1 && tracker.getPort() == bl) {
 				switch(((TalonTracker) tracker).getTarget()) {
 				case POWER:
 					keyblp = tracker.getKey();
@@ -124,7 +124,7 @@ public class DriverTrainDiagnoser extends Diagnoser {
 				default:
 					break;
 				}
-			} else if(tracker.getClass().getName().equals("GyroTracker") && tracker.getPort() == gyro){
+			} else if(tracker.getClass().getName().indexOf("GyroTracker") != -1 && tracker.getPort() == gyro){
 				gyroangle = tracker.getKey();
 			}
 	}

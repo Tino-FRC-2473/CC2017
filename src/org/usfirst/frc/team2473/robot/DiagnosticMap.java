@@ -23,5 +23,5 @@ public class DiagnosticMap {
 	public static final double DRIVETRAIN_GEAR_RATIO = 14;
 	public static final double DISTANCE_PER_PULSE_DIGITALENC = 5; 
 	//ranges
-	public static final double MOTOR_RANGE = 300;	
+	public static final double MOTOR_RANGE = 7000;
 }
