@@ -10,9 +10,10 @@ import org.usfirst.frc.team2473.robot.RobotMap;
 
 public class DriveStraight extends Command {
 
-	private double maxTurn = 0.8;
+	private double maxPow = 0.8;
 	private double deadzone = 0.04;
-
+	private double maxWheelX = 0;
+	
 	public DriveStraight() {
 		requires(Robot.piDriveTrain);
 	}
@@ -24,79 +25,82 @@ public class DriveStraight extends Command {
 
 	@Override
 	protected void execute() {
-		if (Math.abs(Database.getInstance().getNumeric(ControlsMap.THROTTLE_Z)) <= 0.04) {
-			Robot.piDriveTrain.drive(Database.getInstance().getNumeric(ControlsMap.THROTTLE_Z),
-					Robot.piDriveTrain.getAngleRate());
-			System.out.println(Robot.piDriveTrain.getGyro().getYaw());
-		} else {
-			Robot.piDriveTrain.drive(squareWithSign(Database.getInstance().getNumeric(ControlsMap.THROTTLE_Z)),
+//		if (Math.abs(Database.getInstance().getNumeric(ControlsMap.THROTTLE_Z)) <= 0.04) {
+//			Robot.piDriveTrain.drive(Database.getInstance().getNumeric(ControlsMap.THROTTLE_Z),
+//					Robot.piDriveTrain.getAngleRate());
+//			System.out.println(Robot.piDriveTrain.getGyro().getYaw());
+		if(Math.abs(Database.getInstance().getNumeric(ControlsMap.THROTTLE_Z)) > 0.04){
+			turn(squareRtWithSign(Database.getInstance().getNumeric(ControlsMap.THROTTLE_Z)), Database.getInstance().getNumeric(ControlsMap.STEERING_WHEEL_X));
+		}
+		else {
+			Robot.piDriveTrain.drive(squareRtWithSign(Database.getInstance().getNumeric(ControlsMap.THROTTLE_Z)),
 					Database.getInstance().getNumeric(ControlsMap.STEERING_WHEEL_X));
 			System.out.println(Database.getInstance().getNums());
 		}
 	}
 
-	private double squareWithSign(double d) {
+	private double squareRtWithSign(double d) {
 		if (d >= 0.04) {
-			return -d * d;
+			return -Math.sqrt(d);
 		} else if (d <= -0.04) {
-			return d * d;
+			return Math.sqrt(d);
 		} else {
 			return 0;
 		}
 	}
 
 	private void setRightPow(double pow) {
-		if (pow > maxTurn)
-			pow = maxTurn;
-		else if (pow < -maxTurn)
-			pow = -maxTurn;
+		if (pow > maxPow)
+			pow = maxPow;
+		else if (pow < -maxPow)
+			pow = -maxPow;
 		Devices.getInstance().getTalon(RobotMap.FRONT_RIGHT).set(pow);
 		Devices.getInstance().getTalon(RobotMap.BACK_RIGHT).set(pow);
 
 	}
 
 	private void setLeftPow(double pow) {
-		if (pow > maxTurn)
-			pow = maxTurn;
-		else if (pow < -maxTurn)
-			pow = -maxTurn;
+		if (pow > maxPow)
+			pow = maxPow;
+		else if (pow < -maxPow)
+			pow = -maxPow;
 		Devices.getInstance().getTalon(RobotMap.FRONT_LEFT).set(pow);
 		Devices.getInstance().getTalon(RobotMap.BACK_LEFT).set(pow);
 
 	}
 
 	private void turn(double pow, double turn) {
-		if (turn > maxTurn)
-			turn = maxTurn;
-		if (turn < -maxTurn)
-			turn = -maxTurn;
+		if (pow > maxPow)
+			pow = maxPow;
+		if (pow < -maxPow)
+			pow = -maxPow;
 		// right turn
 		if (turn > deadzone) {
 			if (pow > deadzone) {
-				setLeftPow(0.4 / (maxTurn - deadzone) * (turn - deadzone) + 0.5);
-				setRightPow(-0.4 / (maxTurn - deadzone) * (turn - deadzone) + 0.5);
+				setLeftPow(0.4 / (maxWheelX - deadzone) * (turn - deadzone) + 0.5);
+				setRightPow(-0.4 / (maxWheelX - deadzone) * (turn - deadzone) + 0.5);
 				// setLeftPow(0.9*pow);
 				// setRightPow(0.1*pow);
 			} else if (pow < -deadzone) {
-				setLeftPow(-(0.4 / (maxTurn - deadzone) * (turn - deadzone) + 0.5));
-				setRightPow(-(-0.4 / (maxTurn - deadzone) * (turn - deadzone) + 0.5));
+				setLeftPow(-(0.4 / (maxWheelX - deadzone) * (turn - deadzone) + 0.5));
+				setRightPow(-(-0.4 / (maxWheelX - deadzone) * (turn - deadzone) + 0.5));
 				// setLeftPow(0.1*pow);
 				// setRightPow(0.9*pow);
 			} else {
-				setLeftPow(turn);
-				setRightPow(-turn);
+				setLeftPow(pow);
+				setRightPow(-pow);
 			}
 		}
 		// left turn
-		else if (turn < deadzone) {
+		else if (turn < -deadzone) {
 			if (pow > deadzone) {
-				setLeftPow(0.4 / (maxTurn - deadzone) * (turn + deadzone) + 0.5);
-				setRightPow(-0.4 / (maxTurn - deadzone) * (turn + deadzone) + 0.5);
+				setLeftPow(0.4 / (maxWheelX - deadzone) * (turn + deadzone) + 0.5);
+				setRightPow(-0.4 / (maxWheelX - deadzone) * (turn + deadzone) + 0.5);
 				// setLeftPow(0.1*pow);
 				// setRightPow(0.9*pow);
 			} else if (pow < -deadzone) {
-				setLeftPow(-(0.4 / (maxTurn - deadzone) * (turn + deadzone) + 0.5));
-				setRightPow(-(-0.4 / (maxTurn - deadzone) * (turn + deadzone) + 0.5));
+				setLeftPow(-(0.4 / (maxWheelX - deadzone) * (turn + deadzone) + 0.5));
+				setRightPow(-(-0.4 / (maxWheelX - deadzone) * (turn + deadzone) + 0.5));
 				// setLeftPow(0.9*pow);
 				// setRightPow(0.1*pow);
 			} else {
