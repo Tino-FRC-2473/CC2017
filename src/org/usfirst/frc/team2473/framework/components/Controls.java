@@ -125,34 +125,10 @@ public class Controls {
 	 * @param val a <code>boolean</code> representing the new pressed value of the button
 	 */	
 	public synchronized void setButtonValue(String key, boolean val) {
-		buttons.get(key).setPressed(val);
+		((ThreadSafeInternalButton)getButton(key)).setPressed(val);
 	}
 
-	/**
-	 * Assigns a button action listener to a button with a given reference key, allowing for a <code>Command</code> to be canceled or run.
-	 * @param key a <code>String</code> representing the key of the button to listen to
-	 * @param action a <code>ButtonAction</code> value representing an action to listen for
-	 * @param cmd a <code>Command</code> object representing the command to be run or canceled when the event has been fired
-	 * @throws InstantiationException if there is an error in <code>Command</code> instantiation
-	 * @throws IllegalAccessException if the <code>Command</code> is not accessible
-	 */
-	public void addButtonCommand(String key, ButtonAction action, Command cmd) throws InstantiationException, IllegalAccessException {
-		switch(action) { //based on the action trigger the correct Button method, passing in the command
-			case PRESSED:
-				buttons.get(key).whenPressed(cmd);
-				break;
-			case RELEASED:
-				buttons.get(key).whenReleased(cmd);
-				break;
-			case TOGGLE_PRESSED:
-				buttons.get(key).toggleWhenPressed(cmd);
-				break;
-			case CANCEL_PRESSED:
-				buttons.get(key).cancelWhenActive(cmd);
-				break;
-			case HELD:
-				buttons.get(key).whileHeld(cmd);
-				break;
-		}
+	public Map<String, ThreadSafeInternalButton> getButtons() {
+		return buttons;
 	}
 }

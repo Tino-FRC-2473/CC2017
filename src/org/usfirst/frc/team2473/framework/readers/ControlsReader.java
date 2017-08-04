@@ -51,8 +51,13 @@ public class ControlsReader {
 	 */
 	public void init() {
 		/*Loop through the trackers. Based on the tracker type(JoystickTracker/ButtonTracker), place it under the same key in the correct map*/
-		for(DeviceTracker tracker : Trackers.getInstance().getTrackers()) if(tracker.getClass().getName().equals("JoystickTracker")) joystickCalls.put(tracker.getKey(), tracker.getterNumeric());		
-		for(DeviceTracker tracker : Trackers.getInstance().getTrackers()) if(tracker.getClass().getName().equals("ButtonTracker")) buttonCalls.put(tracker.getKey(), tracker.getterConditional());
+		for(DeviceTracker tracker : Trackers.getInstance().getTrackers()) {
+			if(tracker.getClass().getName().indexOf("JoystickTracker") != -1) {
+				joystickCalls.put(tracker.getKey(), tracker.getterNumeric());					
+			} else if(tracker.getClass().getName().indexOf("ButtonTracker") != -1) {
+				buttonCalls.put(tracker.getKey(), tracker.getterConditional());
+			}
+		}
 	}
 
 	/**
@@ -70,5 +75,11 @@ public class ControlsReader {
 		for(String key : buttonCalls.keySet()) buttonSnapshot.put(key, buttonCalls.get(key).getAsBoolean());
 		//loop through the map of snapshot values by key and store them under the same key in Controls
 		for(String key : buttonSnapshot.keySet()) Controls.getInstance().setButtonValue(key, buttonSnapshot.get(key));
+	}
+	
+	public void printButtonsStatus() {
+		for(String key : buttonSnapshot.keySet()) 
+			System.out.println("button " + key + ": " + Controls.getInstance().getButton(key).get());
+
 	}
 }

@@ -14,12 +14,16 @@ import org.usfirst.frc.team2473.framework.components.Controls.ButtonAction;
 import org.usfirst.frc.team2473.framework.readers.ControlsReader;
 import org.usfirst.frc.team2473.framework.readers.DeviceReader;
 import org.usfirst.frc.team2473.framework.trackers.ButtonTracker;
+import org.usfirst.frc.team2473.framework.trackers.DeviceTracker;
+import org.usfirst.frc.team2473.framework.trackers.DigitalTracker;
 import org.usfirst.frc.team2473.framework.trackers.EncoderTracker;
+import org.usfirst.frc.team2473.framework.trackers.ServoTracker;
 import org.usfirst.frc.team2473.framework.trackers.TalonTracker;
 import org.usfirst.frc.team2473.framework.trackers.TalonTracker.Target;
 import org.usfirst.frc.team2473.robot.commands.ClimberTeleOp;
 import org.usfirst.frc.team2473.robot.commands.GearTele;
 import org.usfirst.frc.team2473.robot.commands.RunAll;
+import org.usfirst.frc.team2473.robot.commands.ShooterAuto;
 import org.usfirst.frc.team2473.robot.subsystems.Climber;
 import org.usfirst.frc.team2473.robot.subsystems.Gear;
 import org.usfirst.frc.team2473.robot.subsystems.Shooter;
@@ -33,11 +37,11 @@ import org.usfirst.frc.team2473.robot.subsystems.Shooter;
  */
 public class Robot extends ThreadingRobot {
 	DeviceReader reader;
+	GearTele tele = new GearTele();
 	
-	
-	public static final Shooter shooter = new Shooter();
-	public static final Climber climber = new Climber();
-	public static final Gear gear = new Gear();
+	public static Shooter shooter = new Shooter();
+	public static Climber climber = new Climber();
+	public static Gear gear = new Gear();
 	Timer robotControlLoop;
 	private boolean timerRunning;
 
@@ -54,6 +58,9 @@ public class Robot extends ThreadingRobot {
 		addDevices();
 		reader = new DeviceReader();
 		reader.start();
+		System.out.println("PRINTING ADDED TRACKER KEYS");
+		for(DeviceTracker tracker : Trackers.getInstance().getTrackers()) System.out.println(tracker.getKey());
+		ControlsReader.getInstance().init();
 	}
 
 	/**
@@ -85,6 +92,9 @@ public class Robot extends ThreadingRobot {
 	@Override
 	public void autonomousInit() {
 		timerRunning = true;
+		
+		autonomousCommand = new ShooterAuto();
+		autonomousCommand.start();
 	}
 
 	/**
@@ -97,24 +107,6 @@ public class Robot extends ThreadingRobot {
 
 	@Override
 	public void teleopInit() {
-		try {
-			Controls.getInstance().addButtonCommand(ControlsMap.Joy_ZERO_Climber_Val, ButtonAction.HELD, new ClimberTeleOp());
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			Controls.getInstance().addButtonCommand(ControlsMap.Joy_ZERO_Gear_Val, ButtonAction.PRESSED, new GearTele());
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		timerRunning = false;
 	}
 
@@ -132,7 +124,7 @@ public class Robot extends ThreadingRobot {
 			}, 0, 20);
 			timerRunning = true; //ultimately set the running timer to true
 		}
-		
+		addButtonCommands();
 		ControlsReader.getInstance().updateAll();
 	}
 
@@ -156,23 +148,31 @@ public class Robot extends ThreadingRobot {
 //	}
 	
 	public void addDevices() {
-		Devices.getInstance().addTalon(RobotMap.shooterTalonOne);
-		Devices.getInstance().addTalon(RobotMap.shooterTalonTwo);
-		Devices.getInstance().addTalon(RobotMap.gearPickupMotor);
-		Devices.getInstance().addTalon(RobotMap.climberTalonOne);
-		Devices.getInstance().addTalon(RobotMap.climberTalonTwo);
+
 	}
 	
 	public void addTrackers() {
-		Trackers.getInstance().addTracker(new EncoderTracker(RobotMap.Shooter_Enc, RobotMap.shooterTalonOne));
-		Trackers.getInstance().addTracker(new EncoderTracker(RobotMap.Shooter_Enc, RobotMap.shooterTalonTwo));
-		Trackers.getInstance().addTracker(new EncoderTracker(RobotMap.Gear_Pickup_Enc, RobotMap.gearPickupMotor));
-		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.climberTalonOneCurrent, RobotMap.climberTalonOne, Target.CURRENT));
-		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.climberTalonTwoCurrent, RobotMap.climberTalonTwo, Target.CURRENT));
-		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.shooterTalonOneCurrent, RobotMap.shooterTalonOne, Target.CURRENT));
-		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.shooterTalonOneCurrent, RobotMap.shooterTalonOne, Target.CURRENT));
-		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.gearPickupTalonCurrent, RobotMap.gearPickupMotor, Target.CURRENT));
-		Trackers.getInstance().addTracker(new ButtonTracker(ControlsMap.Joy_ZERO_Climber_Val, ControlsMap.Joy_ZERO, ControlsMap.Joy_ZERO_Climber));
-		Trackers.getInstance().addTracker(new ButtonTracker(ControlsMap.Joy_ZERO_Gear_Val, ControlsMap.Joy_ZERO, ControlsMap.Joy_ZERO_Gear));
+		Trackers.getInstance().addTracker(new EncoderTracker(RobotMap.Shooter_Enc, RobotMap.SHOOTER_TALON_ONE));
+		Trackers.getInstance().addTracker(new EncoderTracker(RobotMap.Shooter_Enc, RobotMap.SHOOTER_TALON_TWO));
+		Trackers.getInstance().addTracker(new EncoderTracker(RobotMap.Gear_Pickup_Enc, RobotMap.GEAR_PICKUP_MOTOR));
+		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.GEAR_PICKUP_POWER, RobotMap.GEAR_PICKUP_MOTOR, Target.POWER));
+		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.climberTalonOneCurrent, RobotMap.CLIMBER_TALON_ONE, Target.CURRENT));
+		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.climberTalonTwoCurrent, RobotMap.CLIMBER_TALON_TWO, Target.CURRENT));
+		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.shooterTalonOneCurrent, RobotMap.SHOOTER_TALON_ONE, Target.CURRENT));
+		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.shooterTalonTwoCurrent, RobotMap.SHOOTER_TALON_TWO, Target.CURRENT));
+		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.shooterTalonOnePower, RobotMap.SHOOTER_TALON_ONE, Target.POWER));
+		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.shooterTalonTwoPower, RobotMap.SHOOTER_TALON_TWO, Target.POWER));
+
+		
+		
+		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.gearPickupTalonCurrent, RobotMap.GEAR_PICKUP_MOTOR, Target.CURRENT));
+		Trackers.getInstance().addTracker(new ButtonTracker(ControlsMap.Joy_ZERO_Climber_EncVal, ControlsMap.Joy_ZERO, ControlsMap.Joy_ZERO_Climber_Button));
+		Trackers.getInstance().addTracker(new ButtonTracker(ControlsMap.Joy_ZERO_Gear_Motor_EncVal, ControlsMap.Joy_ZERO, ControlsMap.Joy_ZERO_Gear_Motor_Button));
+		Trackers.getInstance().addTracker(new DigitalTracker(RobotMap.CLIMBER_LIMIT_SWITCH, RobotMap.Climber_Limit_Switch));
+	}
+	
+	public void addButtonCommands() {
+		Controls.getInstance().getButton(ControlsMap.Joy_ZERO_Gear_Motor_EncVal).whenPressed(new GearTele());
+		Controls.getInstance().getButton(ControlsMap.Joy_ZERO_Climber_EncVal).whenPressed(new ClimberTeleOp());
 	}
 }
