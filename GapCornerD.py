@@ -1,10 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import math
-from sweeppy import Sweep
+#from sweeppy import Sweep
 import itertools
 
-USING_LIDAR = True;
+USING_LIDAR = False;
 
 #Smooth on XY Graph
 XYSMOOTH = 0
@@ -75,7 +75,7 @@ if(USING_LIDAR):
 
         sweep.stop_scanning()
         print("data collecting done")
-else:
+else: 
     goodInd = []
     fx = open("angle.txt","r")
     counter = 0
