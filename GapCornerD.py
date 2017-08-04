@@ -7,7 +7,7 @@ import itertools
 USING_LIDAR = False;
 
 #Smooth on XY Graph
-XYSMOOTH = 0
+XYSMOOTH = 1
 #Smooth on Derivative
 DSMOOTH = 1
 
@@ -150,8 +150,6 @@ for i in range(1, len(originalAngle)):
             #print("cut ")
             #print(i)
 
-print(angleWall)
-
 # CONVERT TRIMMED LIDAR DATA TO X/Y AND GRAPH
 
 #xd = []
@@ -179,6 +177,44 @@ plt.axhline(0)
 plt.axvline(0)
 plt.show()
 
+# CORNER DETECTION
+
+smooth = XYSMOOTH
+l = len(distanceWall)
+
+smoothWallX = []
+smoothWallY = []
+smoothBoilerX = []
+smoothBoilerY = []
+
+for i in range(smooth, l-smooth):
+        sumX = 0
+        sumY = 0
+        for x in range(i-smooth,i+smooth+1):
+                sumX+=wallX[x]
+                sumY+=wallY[x]
+        smoothWallX.append(sumX/(2*smooth+1))
+        smoothWallY.append(sumY/(2*smooth+1))
+
+l = len(distanceBoiler)
+
+for i in range(smooth, l-smooth):
+        sumX = 0
+        sumY = 0
+        for x in range(i-smooth,i+smooth+1):
+                sumX+=boilerX[x]
+                sumY+=boilerY[x]
+        smoothWallX.append(sumX/(2*smooth+1))
+        smoothWallY.append(sumY/(2*smooth+1))
+
+if GRAPHXY:
+    plt.title("Smooth X/Y")
+    plt.scatter(smoothWallX, smoothWallY)
+    plt.scatter(smoothBoilerX,smoothBoilerY)
+    plt.axhline(0)
+    plt.axvline(0)
+    plt.show()
+
 wallSlope = 0
 boilerSlope = 0
 
@@ -190,71 +226,47 @@ for i in range(len(boilerX)):
         boilerSlope += boilerY[i]/boilerX[i]
 boilerSlope /= len(boilerX)
 
-# CORNER DETECTION
-
-smooth = XYSMOOTH
-l = len(distance)
-
-smoothx = []
-smoothy = []
-
-for i in range(smooth, l-smooth):
-        sumX = 0
-        sumY = 0
-        for x in range(i-smooth,i+smooth+1):
-                sumX+=xd[x]
-                sumY+=yd[x]
-        smoothx.append(sumX/(2*smooth+1))
-        smoothy.append(sumY/(2*smooth+1))
-
-l = len(smoothx)
-
-if GRAPHXY:
-    plt.title("Smooth X/Y")
-    plt.scatter(smoothx, smoothy)
-    plt.axhline(0)
-    plt.axvline(0)
-    plt.show()
-
 print(wallSlope)
 print(boilerSlope)
 
 wallBoilerAngle = (math.atan(wallSlope) - math.atan(boilerSlope))
 print(wallBoilerAngle)
 
-cartD = []
-d = 0;
-dist = []
+wallCartD = []
+wallD = 0;
+wallDist = []
+
+l = len(distanceWall)
 
 for i in range(0,l-1):
-        cX = smoothx[i+1]-smoothx[i]
-        cY = smoothy[i+1]-smoothy[i]
+        cX = smoothWallX[i+1]-smoothWallX[i]
+        cY = smoothWallY[i+1]-smoothWallY[i]
         s=cY/cX
         aTan = np.arctan(s)*180.0/np.pi
         if i>0:
-                last = cartD[len(cartD)-1]
+                last = wallCartD[len(wallCartD)-1]
                 curDif = abs(aTan-last)
                 altDif = abs(aTan+180-last)
                 if(altDif<curDif):aTan += 180
-        cartD.append(aTan)
-        d += np.sqrt(cX*cX+cY*cY)
-        dist.append(d)
+        wallCartD.append(aTan)
+        wallD += np.sqrt(cX*cX+cY*cY)
+        wallDist.append(wallD)
 
 
-def inVal(i):
+def inVal(i,cartD,dist):
         return 0.5*(cartD[i]+cartD[i+1])*(dist[i+1]-dist[i])
 
 smooth = DSMOOTH
 
-length = len(dist)
+length = len(wallDist)
 
-sD = []
+wallSD = []
 
-sumd = 0
+wallSumD = 0
 
 
 for i in range(0,smooth-1):
-                sumd+=inVal(i)
+                wallSumD+=inVal(i)
 
 
 
@@ -262,26 +274,86 @@ if(not DSMOOTH == 0):
         for i in range(0,length):
                 start = 0;
                 if(i>smooth):
-                        sumd-=inVal(i-smooth-1)
+                        wallSumD-=inVal(i-smooth-1,wallCartD,wallDist)
                         start = i-smooth
                 end = length-1
                 if(i<(length-smooth)):
-                        sumd+=inVal(i+smooth-1)
+                        wallSumD+=inVal(i+smooth-1,wallCartD,wallDist)
                         end = i+smooth
-                startX = dist[0]
-                if(start>0):startX=dist[start]
-                endX = dist[length-1]
+                startX = wallDist[0]
+                if(start>0):startX=wallDist[start]
+                endX = wallDist[length-1]
                 if end<length:
-                        endX = dist[end]
+                        endX = wallDist[end]
                 totD = endX-startX
-                sD.append(sumd/totD)
+                wallSD.append(wallSumD/totD)
 
 if(DSMOOTH == 0):
-        sD = cartD
+        wallSD = wallCartD
 
 if GRAPHD:
-        plt.plot(dist, cartD, 'r-', label='raw')
-        plt.plot(dist, sD, 'b-', label='smooth')
+        plt.plot(wallDist, wallCartD, 'r-', label='raw')
+        plt.plot(wallDist, wallSD, 'b-', label='smooth')
+        plt.title("Wall D")
+        plt.show()
+
+boilerCartD = []
+boilerD = 0;
+boilerDist = []
+l = len(distanceBoiler)
+for i in range(0,l-1):
+        cX = smoothBoilerX[i+1]-smoothBoilerX[i]
+        cY = smoothBoilerY[i+1]-smoothBoilerY[i]
+        s=cY/cX
+        aTan = np.arctan(s)*180.0/np.pi
+        if i>0: 
+                last = boilerCartD[len(boilerCartD)-1]
+                curDif = abs(aTan-last)
+                altDif = abs(aTan+180-last)
+                if(altDif<curDif):aTan += 180
+        boilerCartD.append(aTan)
+        boilerD += np.sqrt(cX*cX+cY*cY)
+        boilerDist.append(boilerD)
+
+smooth = DSMOOTH
+
+length = len(boilerDist)
+
+boilerSD = []
+
+boilerSumD = 0
+
+
+for i in range(0,smooth-1):
+                boilerSumD+=inVal(i)
+
+
+
+if(not DSMOOTH == 0):
+        for i in range(0,length):
+                start = 0;
+                if(i>smooth):
+                        boilerSumD-=inVal(i-smooth-1,boilerCartD,boilerDist)
+                        start = i-smooth
+                end = length-1
+                if(i<(length-smooth)):
+                        boilerSumD+=inVal(i+smooth-1,boilerCartD,boilerDist)
+                        end = i+smooth
+                startX = boilerDist[0]
+                if(start>0):startX=boilerDist[start]
+                endX = boilerDist[length-1]
+                if end<length:
+                        endX = boilerDist[end]
+                totD = endX-startX
+                boilerSD.append(boilerSumD/totD)
+
+if(DSMOOTH == 0):
+        boilerSD = boilerCartD
+
+if GRAPHD:
+        plt.plot(boilerDist, boilerCartD, 'r-', label='raw')
+        plt.plot(boilerDist, boilerSD, 'b-', label='smooth')
+        plt.title("Boiler D")
         plt.show()
 
 slopeTotals = []
