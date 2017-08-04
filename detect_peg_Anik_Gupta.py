@@ -108,8 +108,11 @@ def find_marker(image):
 			if(abs(y2-y1) < abs(y1+h1-(y2+h2))):
 				h2 = h1-2*abs(y2-y1)
 			else:
-				h2 = h1-2*abs(y1+h1-(y2+h2))
-				y2 = y1+abs(y1+h1-(y2+h2))
+				print y2
+				diff = abs(y1+h1-(y2+h2))
+				h2 = h1-2*diff
+				y2 = y1+diff
+				print y2
 
 
 				# Draw rectangle
@@ -144,7 +147,7 @@ def find_marker(image):
 
 
 # Camera
-capture = cv2.VideoCapture(1)
+capture = cv2.VideoCapture(0)
 
 
 _, image = capture.read()
@@ -154,6 +157,8 @@ ANGLE_CONST = (SCREEN_WIDTH / 2.0) / math.tan(FIELD_OF_VIEW_RAD / 2.0);
 
 while True:
 	_, image = capture.read()
+	#image = cv2.imread("/Users/anik/Google Drive/CHS/Robotics/CV/BuildSeasonSummer/test.png", 1)
+	print image.shape
 	find_marker(image)
 	cv2.waitKey(1)
 
