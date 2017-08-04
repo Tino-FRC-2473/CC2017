@@ -107,11 +107,11 @@ def find_marker(image):
 			if(abs(y2-y1) < abs(y1+h1-(y2+h2))):
 				h2 = h1-2*abs(y2-y1)
 			else:
-				print y2
+				#print y2
 				diff = abs(y1+h1-(y2+h2))
 				h2 = h1-2*diff
 				y2 = y1+diff
-				print y2
+				#print y2
 
 
 				# Draw rectangle
