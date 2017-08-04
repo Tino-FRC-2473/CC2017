@@ -70,7 +70,6 @@ def find_marker(image):
 	upper_bound = np.array([10, 255, 255])
 	lower_bound2 = np.array([160, 95 , 120])
 	upper_bound2 = np.array([180, 255, 255])
-
 	mask_low = cv2.inRange(hsv, lower_bound, upper_bound)
 	mask_high = cv2.inRange(hsv, lower_bound, upper_bound)
 	mask = mask_low + mask_high'''
