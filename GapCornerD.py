@@ -128,6 +128,7 @@ distanceBoiler = []
 betweenDistances = []
 
 
+
 for i in range(1, len(originalAngle)):
         # thisDist = polarDist(originalDistance[i], originalAngle[i], originalDistance[i-1], originalAngle[i-1])
         #if(within(originalAngle[i]%360, (EXPECTED_THETA-THETA_MARGIN)%360, (EXPECTED_THETA+THETA_MARGIN)%360+65)
@@ -137,9 +138,10 @@ for i in range(1, len(originalAngle)):
         #        angle.append(originalAngle[i])
         #        distance.append(originalDistance[i])
         if (within(originalAngle[i]%360,(EXPECTED_THETA-THETA_MARGIN)%360,(EXPECTED_THETA-2)%360)):
+
                 angleBoiler.append(originalAngle[i])
                 distanceBoiler.append(originalDistance[i])
-        elif (within(originalAngle[i]%360,(EXPECTED_THETA+0.5)%360,360) or within(originalAngle[i],(EXPECTED_THETA-360), 0)):
+        elif (within(originalAngle[i]%360,(EXPECTED_THETA+1)%360,275)):
                 angleWall.append(originalAngle[i])
                 distanceWall.append(originalDistance[i])
         
@@ -188,9 +190,6 @@ for i in range(len(boilerX)):
         boilerSlope += boilerY[i]/boilerX[i]
 boilerSlope /= len(boilerX)
 
-print(wallSlope)
-print(boilerSlope)
-
 # CORNER DETECTION
 
 smooth = XYSMOOTH
@@ -216,6 +215,12 @@ if GRAPHXY:
     plt.axhline(0)
     plt.axvline(0)
     plt.show()
+
+print(wallSlope)
+print(boilerSlope)
+
+wallBoilerAngle = (math.atan(wallSlope) - math.atan(boilerSlope))
+print(wallBoilerAngle)
 
 cartD = []
 d = 0;
