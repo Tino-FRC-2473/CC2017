@@ -127,10 +127,9 @@ angleBoiler = []
 distanceBoiler = []
 betweenDistances = []
 
+
 for i in range(1, len(originalAngle)):
         # thisDist = polarDist(originalDistance[i], originalAngle[i], originalDistance[i-1], originalAngle[i-1])
-        if (originalAngle[i] < 0):
-                continue
         #if(within(originalAngle[i]%360, (EXPECTED_THETA-THETA_MARGIN)%360, (EXPECTED_THETA+THETA_MARGIN)%360+65)
                 #and (len(betweenDistances) < 30 or thisDist > 10*sum(betweenDistances)/float(len(betweenDistances)) )
         #):
@@ -181,13 +180,13 @@ plt.show()
 wallSlope = 0
 boilerSlope = 0
 
-for i in range(wallX):
+for i in range(len(wallX)):
         wallSlope += wallY[i]/wallX[i]
-wallSlope /= range(wallX)
+wallSlope /= len(wallX)
 
-for i in range(boilerX):
+for i in range(len(boilerX)):
         boilerSlope += boilerY[i]/boilerX[i]
-boilerSlope /= range(boilerX)
+boilerSlope /= len(boilerX)
 
 print(wallSlope)
 print(boilerSlope)
