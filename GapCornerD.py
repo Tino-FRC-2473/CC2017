@@ -34,20 +34,20 @@ LIDAR_X = 4*CM_PER_IN; # IN CM, CENTER OF ROBOT TO CENTER OF LIDAR ON Y LINE
 LIDAR_POSITION = 0
 IDEAL_Y = ROBOT_IDEAL_Y - LIDAR_POSITION; # CM Y DISTANCE FROM THE CORNER THAT THE LIDAR SHOULD BE ALIGNED TO
 
-EXPECTED_THETA = (360 - math.degrees(math.atan2(IDEAL_Y, LIDAR_DISTANCE)) + 15)%360
-THETA_MARGIN = 15
+EXPECTED_THETA = (360 - math.degrees(math.atan2(IDEAL_Y, LIDAR_DISTANCE))-7)%360
+THETA_MARGIN = 7
 print("THETA", EXPECTED_THETA-THETA_MARGIN, EXPECTED_THETA+THETA_MARGIN)
 
 #Angle of corner we want to detect(for boiler corner set to 45)
 CORNERDETECT = 45
 #Buffer we allow for corner so if cornerdetect=45 cornerbuffer=5 we look for 40-50 deg
-CORNERBUFFER = 8
+CORNERBUFFER = 5
 
 def within(a, startAngle, endAngle):
         if(startAngle<endAngle):
                 return a>startAngle and a<endAngle
         if(startAngle>endAngle):
-                return a>startAngle or a<endAngle
+                return a<startAngle or a>endAngle
 
 # GET RAW LIDAR ANGLES AND DISTANCES
 
@@ -121,44 +121,76 @@ plt.show()
 
 angle = []
 distance = []
-# angleWall = []
-# distanceWall = []
-# angleBoiler = []
-# distanceBoiler = []
+angleWall = []
+distanceWall = []
+angleBoiler = []
+distanceBoiler = []
 betweenDistances = []
 
 for i in range(1, len(originalAngle)):
         # thisDist = polarDist(originalDistance[i], originalAngle[i], originalDistance[i-1], originalAngle[i-1])
-
-        if(within(originalAngle[i]%360, (EXPECTED_THETA-THETA_MARGIN)%360, (EXPECTED_THETA+THETA_MARGIN)%360+65)
+        if (originalAngle[i] < 0):
+                continue
+        #if(within(originalAngle[i]%360, (EXPECTED_THETA-THETA_MARGIN)%360, (EXPECTED_THETA+THETA_MARGIN)%360+65)
                 #and (len(betweenDistances) < 30 or thisDist > 10*sum(betweenDistances)/float(len(betweenDistances)) )
-        ):
+        #):
                 #betweenDistances.append(thisDist)
-                angle.append(originalAngle[i])
-                distance.append(originalDistance[i])
+        #        angle.append(originalAngle[i])
+        #        distance.append(originalDistance[i])
+        if (within(originalAngle[i]%360,(EXPECTED_THETA-THETA_MARGIN)%360,(EXPECTED_THETA-2)%360)):
+                angleBoiler.append(originalAngle[i])
+                distanceBoiler.append(originalDistance[i])
+        elif (within(originalAngle[i]%360,(EXPECTED_THETA+0.5)%360,360) or within(originalAngle[i],(EXPECTED_THETA-360), 0)):
+                angleWall.append(originalAngle[i])
+                distanceWall.append(originalDistance[i])
+        
 
         #elif(within(originalAngle[i], (EXPECTED_THETA-THETA_MARGIN)%360, (EXPECTED_THETA+THETA_MARGIN)%360)):
             #print("cut ")
             #print(i)
 
-
+print(angleWall)
 
 # CONVERT TRIMMED LIDAR DATA TO X/Y AND GRAPH
 
-xd = []
-yd = []
+#xd = []
+#yd = []
+wallX = []
+wallY = []
+boilerX = []
+boilerY = []
 
-for i in range(len(distance)):
-        xd.append(distance[i]*np.cos(angle[i]*np.pi/180.0))
-        yd.append(distance[i]*np.sin(angle[i]*np.pi/180.0))
+#for i in range(len(distance)):
+        #xd.append(distance[i]*np.cos(angle[i]*np.pi/180.0))
+        #yd.append(distance[i]*np.sin(angle[i]*np.pi/180.0))
+for i in range(len(distanceWall)):
+        wallX.append(distanceWall[i]*np.cos(angleWall[i]*np.pi/180.0))
+        wallY.append(distanceWall[i]*np.sin(angleWall[i]*np.pi/180.0))
+
+for i in range(len(distanceBoiler)):
+        boilerX.append(distanceBoiler[i]*np.cos(angleBoiler[i]*np.pi/180.0))
+        boilerY.append(distanceBoiler[i]*np.sin(angleBoiler[i]*np.pi/180.0))
 
 plt.title("Cut X/Y")
-plt.scatter(xd, yd)
+plt.scatter(wallX, wallY)
+plt.scatter(boilerX, boilerY)
 plt.axhline(0)
 plt.axvline(0)
 plt.show()
 
+wallSlope = 0
+boilerSlope = 0
 
+for i in range(wallX):
+        wallSlope += wallY[i]/wallX[i]
+wallSlope /= range(wallX)
+
+for i in range(boilerX):
+        boilerSlope += boilerY[i]/boilerX[i]
+boilerSlope /= range(boilerX)
+
+print(wallSlope)
+print(boilerSlope)
 
 # CORNER DETECTION
 
