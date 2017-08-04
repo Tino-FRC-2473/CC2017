@@ -25,16 +25,20 @@ public class MotorDiagnoser extends Diagnoser{
 	private int deviceID; //device id
 	private double range;
 	private Type Type; 
-	private String limitswitchkey;
 	
 	//torque calculations
 	private double rpm;
-	private double torque;
+	private double deltaRPM;
+	private double current;
+	private double deltaCURRENT;
 	
 	//speed multiplier
 	private double SpeedMultiplier;
 	
 	private Command command;
+	
+	private int direction;
+	
 	
 	//time
 	//private double time;
@@ -72,7 +76,7 @@ public class MotorDiagnoser extends Diagnoser{
 		this.Type = type;
 		//Diagnostics.addToQueue(this);
 	}
-	public MotorDiagnoser(int deviceID, Type type, String limitswitchkey){
+	public MotorDiagnoser(int deviceID, Type type, int direction){
 		this.deviceID = deviceID;
 		for(DeviceTracker tracker : Trackers.getInstance().getTrackers())
 			if(tracker.getClass().getName().equals("TalonTracker") && tracker.getPort()==deviceID) {
@@ -97,7 +101,15 @@ public class MotorDiagnoser extends Diagnoser{
 		this.keyc = keyc;
 		this.keyp = keyp;
 		this.Type = type;
-		this.limitswitchkey = limitswitchkey;
+		this.direction = direction;
+		Devices.getInstance().getTalon(deviceID).enableLimitSwitch(true, true);
+		if(direction < 0){
+			Devices.getInstance().getTalon(deviceID).ConfigFwdLimitSwitchNormallyOpen(false);
+			Devices.getInstance().getTalon(deviceID).ConfigRevLimitSwitchNormallyOpen(true);
+		}else{
+			Devices.getInstance().getTalon(deviceID).ConfigFwdLimitSwitchNormallyOpen(true);
+			Devices.getInstance().getTalon(deviceID).ConfigRevLimitSwitchNormallyOpen(false);
+		}
 		//Diagnostics.addToQueue(this);
 	}
 	
@@ -113,70 +125,50 @@ public class MotorDiagnoser extends Diagnoser{
 	
 	@Override
 	public void RunSimultaneousTest() {
-		double current = (Database.getInstance().getNumeric(keyc));
+		current = Database.getInstance().getNumeric(keyc);
 		if(range != 0){
 			double pastrpm;
+			double pastcurrent;
 			if(DiagnosticThread.getInstance().getTime()%1000 == 0){
 				switch(Type){
 				case M775:
 					pastrpm = rpm;
-					rpm = (((Database.getInstance().getNumeric(keys)*600))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
-					torque = (rpm - pastrpm);
+					pastcurrent = current;
+					rpm = (((Database.getInstance().getNumeric(keys)*600))/DiagnosticMap.ENCODER_PER_ROTATION775);
+					deltaRPM = (rpm - pastrpm);
+					deltaCURRENT = (current - pastcurrent);
 					break;
 				case M550:
 					pastrpm = rpm;
-					rpm = (((Database.getInstance().getNumeric(keys)*600))/DiagnosticMap.ENCODER_PER_ROTATION550)*(2*Math.PI);
-					torque = (rpm - pastrpm);
+					pastcurrent = current;
+					rpm = (((Database.getInstance().getNumeric(keys)*600))/DiagnosticMap.ENCODER_PER_ROTATION550);
+					deltaRPM = (rpm - pastrpm);
+					deltaCURRENT = (current - pastcurrent);
 					break;
 				case AM3102:
 					pastrpm = rpm;
-					rpm = (((Database.getInstance().getNumeric(keys)*600))/DiagnosticMap.ENCODER_PER_ROTATION3102)*(2*Math.PI);
-					torque = (rpm - pastrpm);
+					pastcurrent = current;
+					rpm = (((Database.getInstance().getNumeric(keys)*600))/DiagnosticMap.ENCODER_PER_ROTATION3102);
+					deltaRPM = (rpm - pastrpm);
+					deltaCURRENT = (current - pastcurrent);
 					break;
 				case CIM:
 					pastrpm = rpm;
-					rpm = (((Database.getInstance().getNumeric(keys)*600))/DiagnosticMap.ENCODER_PER_ROTATIONCIM)*(2*Math.PI);
-					torque = (rpm - pastrpm);
+					pastcurrent = current;
+					rpm = (((Database.getInstance().getNumeric(keys)*600))/DiagnosticMap.ENCODER_PER_ROTATIONCIM);
+					deltaRPM = (rpm - pastrpm);
+					deltaCURRENT = (current - pastcurrent);
 				default:
 					break;
 				}
 			}
 		}
 		if(range != 0){
-			switch(Type){
-			case M775:
-				if((torque >= DiagnosticMap.MAX_TORQUE775) || (current >= DiagnosticMap.MAX_CURRENT775)){
-					System.out.println("Motor: " + deviceID + " -Lowering max speed");
-					this.SpeedMultiplier -= 0.1;
-				}else{
-					this.SpeedMultiplier = 1.0;
-				}
-				break;
-			case M550:
-				if((torque >= DiagnosticMap.MAX_TORQUE550) || (current >= DiagnosticMap.MAX_CURRENT550)){
-					System.out.println("Motor: " + deviceID + " -Lowering max speed");
-					this.SpeedMultiplier -= 0.1;
-				}else{
-					this.SpeedMultiplier = 1.0;
-				}
-				break;
-			case AM3102:
-				if((torque >= DiagnosticMap.MAX_TORQUE3102) || (current >= DiagnosticMap.MAX_CURRENT3102)){
-					System.out.println("Motor: " + deviceID + " -Lowering max speed");
-					this.SpeedMultiplier -= 0.1;
-				}else{
-					this.SpeedMultiplier = 1.0;
-				}
-				break;
-			case CIM:
-				if((torque >= DiagnosticMap.MAX_TORQUECIM) || (current >= DiagnosticMap.MAX_CURRENTCIM)){
-					System.out.println("Motor: " + deviceID + " -Lowering max speed");
-					this.SpeedMultiplier -= 0.1;
-				}else{
-					this.SpeedMultiplier = 1.0;
-				}
-			default:
-				break;
+			if((deltaRPM < 0) || deltaCURRENT > 0){
+				System.out.println("Motor: " + deviceID + " -Lowering max speed");
+				this.SpeedMultiplier -= 0.1;
+			}else{
+				this.SpeedMultiplier = 1.0;
 			}
 		}else{
 			switch(Type){
@@ -219,7 +211,7 @@ public class MotorDiagnoser extends Diagnoser{
 
 	@Override
 	public Command RunOneTimeTest() {
-		return new MotorDiagnoserCommand(deviceID,keye,keyp,range,limitswitchkey);
+		return new MotorDiagnoserCommand(deviceID,keye,keyp,range,direction);
 	}
 	
 	private void reset(){

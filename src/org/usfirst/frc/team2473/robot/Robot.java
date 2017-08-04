@@ -10,11 +10,13 @@ import org.usfirst.frc.team2473.framework.diagnostic.DiagnosticThread;
 import org.usfirst.frc.team2473.framework.diagnostic.Diagnostics;
 import org.usfirst.frc.team2473.framework.diagnostic.Diagnostics.TestType;
 import org.usfirst.frc.team2473.framework.diagnostic.commands.DiagnosticCommands;
+import org.usfirst.frc.team2473.framework.diagnostic.diagnosers.DigitalInputDiagnoser;
 import org.usfirst.frc.team2473.framework.diagnostic.diagnosers.MotorDiagnoser;
 import org.usfirst.frc.team2473.framework.diagnostic.diagnosers.MotorDiagnoser.Type;
 import org.usfirst.frc.team2473.framework.readers.ControlsReader;
 import org.usfirst.frc.team2473.framework.readers.DeviceReader;
 import org.usfirst.frc.team2473.framework.trackers.DeviceTracker;
+import org.usfirst.frc.team2473.framework.trackers.DigitalTracker;
 import org.usfirst.frc.team2473.framework.trackers.EncoderTracker;
 import org.usfirst.frc.team2473.framework.trackers.TalonTracker;
 import org.usfirst.frc.team2473.framework.trackers.TalonTracker.Target;
@@ -186,6 +188,7 @@ public class Robot extends IterativeRobot {
 		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.MOTOR_POWER_KEY, RobotMap.MOTOR, Target.POWER));
 		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.MOTOR_SPEED_KEY, RobotMap.MOTOR, Target.SPEED));
 		Trackers.getInstance().addTracker(new EncoderTracker(RobotMap.MOTOR_ENCODER_KEY, RobotMap.MOTOR));
+		Trackers.getInstance().addTracker(new DigitalTracker("aids", 1));
 	}
 
 	/**
@@ -197,6 +200,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void addTests() {
-		Diagnostics.getInstance().addToQueue("MOTORBOI", new MotorDiagnoser(RobotMap.MOTOR, DiagnosticMap.MOTOR_RANGE, Type.M550));
+		//Diagnostics.getInstance().addToQueue("MOTORBOI", new MotorDiagnoser(RobotMap.MOTOR, Type.M550, "aids",-1));
+		Diagnostics.getInstance().addToQueue("SWITCHBOI" , new DigitalInputDiagnoser("aids",org.usfirst.frc.team2473.framework.diagnostic.diagnosers.DigitalInputDiagnoser.Type.LIMIT_SWITCH));
 	}
 }

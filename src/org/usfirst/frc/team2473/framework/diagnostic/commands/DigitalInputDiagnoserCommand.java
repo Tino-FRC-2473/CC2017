@@ -6,6 +6,8 @@ import org.usfirst.frc.team2473.framework.diagnostic.diagnosers.DigitalInputDiag
 import org.usfirst.frc.team2473.framework.diagnostic.diagnosers.DigitalInputDiagnoser.Type;
 import org.usfirst.frc.team2473.robot.subsystems.BS;
 
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -17,49 +19,38 @@ public class DigitalInputDiagnoserCommand extends Command {
 	private Subsystem bs = new BS();
 	private boolean done = false;
 	private org.usfirst.frc.team2473.framework.diagnostic.diagnosers.DigitalInputDiagnoser.Type type;
-	private int trackedDeviceID;
 	private String digitalinputkey;
-	private String trackedDeviceEncoder;
-	private double range;
 
-    public DigitalInputDiagnoserCommand(org.usfirst.frc.team2473.framework.diagnostic.diagnosers.DigitalInputDiagnoser.Type type, int trackedDeviceID, String digitalinputkey, String trackedDeviceEncoder, double range) {
+public DigitalInputDiagnoserCommand(org.usfirst.frc.team2473.framework.diagnostic.diagnosers.DigitalInputDiagnoser.Type type, String digitalinputkey) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(bs);
 		this.digitalinputkey = digitalinputkey;
-		this.range = range;
-		this.trackedDeviceEncoder = trackedDeviceEncoder;
-		this.trackedDeviceID = trackedDeviceID;
 		this.type = type;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	switch(type){
 		case LIMIT_SWITCH:
-			while(Math.abs(Database.getInstance().getNumeric(trackedDeviceEncoder)) < Math.abs(range)){
-				if(range < 0){
-					Devices.getInstance().getTalon(trackedDeviceID).set(-0.2);
-				}else{
-					Devices.getInstance().getTalon(trackedDeviceID).set(0.2);
-				}
+			System.out.println("Press limitswitch: " + digitalinputkey);
+			while(Database.getInstance().getConditional(digitalinputkey)){
+				
 			}
-			if(!Database.getInstance().getConditional(digitalinputkey)){
-				System.out.println("Limit Switch(MOTOR): " + digitalinputkey + " - Disfunctional");
-			}else{
-				System.out.println("Limit Switch(MOTOR): " + digitalinputkey + " - Functional");
-			}
+			System.out.println("The limitswitch responded accordingly.");
 			done = true;
 			break;
 		case BREAKBEAM:
+			System.out.println("Wave your hand infront of breakbeam: " + digitalinputkey);
 			while(!Database.getInstance().getConditional(digitalinputkey)){
-				System.out.println("Wave your hand infront of breakbeam: " + digitalinputkey);
+				
 			}
-			System.out.println("Breakbeam: " + digitalinputkey + " - Functional");
+			System.out.println("The breakbeam responded accordingly.");
 			done = true;
 			break;
 		case ROTARY_SWITCH:

@@ -21,9 +21,9 @@ public class MotorDiagnoserCommand extends Command {
 	private int deviceID;
 	private String keye;
 	private String keyp;
-	private String limitswitchkey;
 	private double range;
-    public MotorDiagnoserCommand(int deviceID, String keye, String keyp, double range, String limitswitchkey) {
+	private int direction;
+    public MotorDiagnoserCommand(int deviceID, String keye, String keyp, double range, int direction) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(bs);
@@ -31,7 +31,7 @@ public class MotorDiagnoserCommand extends Command {
     	this.keye = keye;
     	this.keyp = keyp;
     	this.range = range;
-    	this.limitswitchkey = limitswitchkey;
+    	this.direction = direction;
     }
 
     // Called just before this Command runs the first time
@@ -64,11 +64,20 @@ public class MotorDiagnoserCommand extends Command {
 			Trackers.getInstance().resetEncoders();
 			done = true;
     	}else{
-    		while(!Database.getInstance().getConditional(limitswitchkey)){
-    			if(Database.getInstance().getNumeric(keyp) != 0.3){
-    				Devices.getInstance().getTalon(deviceID).set(0.3);
-    			}
-    		}
+    		
+	    	if(direction > 0){
+	    		while(!Devices.getInstance().getTalon(deviceID).isFwdLimitSwitchClosed()){
+		    		if(Database.getInstance().getNumeric(keyp) != 0.3){
+		    			Devices.getInstance().getTalon(deviceID).set(0.3);
+		    		}
+	    		}
+	    	}else{
+	    		while(!Devices.getInstance().getTalon(deviceID).isRevLimitSwitchClosed()){
+	    			if(Database.getInstance().getNumeric(keyp) != -0.3){
+		    			Devices.getInstance().getTalon(deviceID).set(-0.3);
+		    		}
+	    		}
+	    	}
     		Devices.getInstance().getTalon(deviceID).set(0.0);
     		System.out.println("Motor:" + deviceID + " hit its max range and is functional.");
     		done = true;

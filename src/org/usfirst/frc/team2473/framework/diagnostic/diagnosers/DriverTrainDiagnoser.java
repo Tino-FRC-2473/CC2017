@@ -48,6 +48,13 @@ public class DriverTrainDiagnoser extends Diagnoser {
 	private double rpml = 0.0;
 	private double torquer = 0.0;
 	private double torquel = 0.0;
+	private double deltaENCODERL;
+	private double deltaENCODERR;
+	private double deltaANGLE;
+	private double encl;
+	private double encr;
+	private double angle;
+	
 	
 	//encoder goal for onetime test
 	private double encoders = 1600;
@@ -141,6 +148,11 @@ public class DriverTrainDiagnoser extends Diagnoser {
 		double pastrpmr;
 		double pastrpml;
 		
+		double pastencr;
+		double pastencl;
+		
+		double pastangle;
+		
 		double currentfr = Database.getInstance().getNumeric(keyfrc);
 		double currentfl = Database.getInstance().getNumeric(keyflc);
 		double currentbr = Database.getInstance().getNumeric(keybrc);
@@ -149,10 +161,19 @@ public class DriverTrainDiagnoser extends Diagnoser {
 		if(DiagnosticThread.getInstance().getTime()%1000 == 0){
 			pastrpmr = rpmr;
 			pastrpml = rpml;
+			pastencr = encr;
+			pastencl = encl;
+			pastangle = angle;
 			rpmr = (((Database.getInstance().getNumeric(keyrs)*600)*(DiagnosticMap.DRIVETRAIN_GEAR_RATIO))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
 			rpml = (((Database.getInstance().getNumeric(keyls)*600)*(DiagnosticMap.DRIVETRAIN_GEAR_RATIO))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
+			encl = Database.getInstance().getNumeric(keyle);
+			encr = Database.getInstance().getNumeric(keyre);
+			angle = Database.getInstance().getNumeric(gyroangle);
 			torquer = (rpmr - pastrpmr);
 			torquel = (rpml - pastrpml);
+			deltaENCODERR = encr - pastencr;
+			deltaENCODERL = encl - pastencl;
+			deltaANGLE = angle - pastangle;
 		}	
 		if(torquer >= DiagnosticMap.MAX_TORQUE775 || torquel >= DiagnosticMap.MAX_TORQUE775 || 
 		   currentfr >= DiagnosticMap.MAX_CURRENT775 || currentfl >= DiagnosticMap.MAX_CURRENT775 ||
@@ -162,12 +183,18 @@ public class DriverTrainDiagnoser extends Diagnoser {
 		}else{
 			this.SpeedMultiplier = 1.0;
 		}
-		
-		if(Database.getInstance().getNumeric(keyle) != 0 && Math.abs(Database.getInstance().getNumeric(keyre)/Database.getInstance().getNumeric(keyle)) < 1 && (Database.getInstance().getNumeric(gyroangle) < 180 && Database.getInstance().getNumeric(gyroangle) > 0)){
-			System.out.println("Drive Train Gyro: not calibrated");
-		}
-		if(Database.getInstance().getNumeric(keyre) != 0 && Math.abs(Database.getInstance().getNumeric(keyle)/Database.getInstance().getNumeric(keyre)) < 1 && (Database.getInstance().getNumeric(gyroangle) <= 359 && Database.getInstance().getNumeric(gyroangle) > 180)){
-			System.out.println("Drive Train Gyro: not calibrated");
+		if((deltaENCODERR < 0 && deltaENCODERL > 0) || (deltaENCODERR < deltaENCODERL)){
+			if(deltaANGLE > 0){
+				System.out.println("Drivetrain gyro: Disfunctional");
+			}
+		}else if((deltaENCODERR > 0 && deltaENCODERL < 0) || (deltaENCODERR > deltaENCODERL)){
+			if(deltaANGLE < 0){
+				System.out.println("Drivetrain gyro: Disfunctional");
+			}
+		}else if(deltaENCODERR == deltaENCODERL){
+			if(!(deltaANGLE <= 2 && deltaANGLE >= -2)){
+				System.out.println("Drivetrain gyro: Disfunctional");
+			}
 		}
 	}
 	

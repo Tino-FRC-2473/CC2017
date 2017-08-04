@@ -13,24 +13,13 @@ import org.usfirst.frc.team2473.framework.diagnostic.commands.*;
 
 public class DigitalInputDiagnoser extends Diagnoser {
 	private String digitalinputkey;
-	private int trackedDeviceID;
-	private String trackedDeviceEncoder;
-	private double range;
 	private Type type;
 	
 	private Command command;
 	
-	public DigitalInputDiagnoser(String digitalinputkey, double range, int trackedDeviceID, Type type){
+	public DigitalInputDiagnoser(String digitalinputkey, Type type){
 		this.digitalinputkey = digitalinputkey;
-		this.range = range;
 		this.type = type;
-		this.trackedDeviceID = trackedDeviceID;
-		if((type != null) && type == type.LIMIT_SWITCH){
-			for(DeviceTracker tracker : Trackers.getInstance().getTrackers())
-				if(tracker.getClass().getName().indexOf("EncoderTracker") != -1 && tracker.getPort() == trackedDeviceID) {
-					trackedDeviceEncoder = ((EncoderTracker) tracker).getKey();
-				}
-		}
 	}
 	
 	public enum Type{
@@ -43,7 +32,7 @@ public class DigitalInputDiagnoser extends Diagnoser {
 	@Override
 	public Command RunOneTimeTest() {
 		// TODO Auto-generated method stub
-		return new DigitalInputDiagnoserCommand(type,trackedDeviceID,digitalinputkey,trackedDeviceEncoder,range);
+		return new DigitalInputDiagnoserCommand(type, digitalinputkey);
 	}
 
 	@Override

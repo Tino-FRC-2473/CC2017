@@ -29,8 +29,6 @@ public class DiagnosticCommands extends CommandGroup {
     @Override
     protected void execute() {
     	// TODO Auto-generated method stub
-    	System.out.println("diagnostic commands are being started");
-    	super.execute();
-    	
+    	super.execute();    	
     }
 }
