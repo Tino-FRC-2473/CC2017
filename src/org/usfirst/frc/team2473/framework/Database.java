@@ -58,6 +58,16 @@ public class Database {
 		numerical_values.put(key, new ThreadSafeDouble());
 	}
 	
+	public String getNums()
+	{
+		StringBuilder sb = new StringBuilder();
+		for(String s : numerical_values.keySet())
+		{
+			sb.append(s +":" + numerical_values.get(s).getValue());
+		}
+		return sb.toString();
+	}
+	
 	public double getNumeric(String key) {
 		return numerical_values.get(key).getValue();
 	}

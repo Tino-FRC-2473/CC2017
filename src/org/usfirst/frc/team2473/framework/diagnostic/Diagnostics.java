@@ -45,6 +45,7 @@ public class Diagnostics {
 			}
 		}
 		if(type.equals(TestType.SIMULTANEOUS)){
+			System.out.println("thread started");
 			DiagnosticThread thread = new DiagnosticThread();
 			thread.start();
 		}

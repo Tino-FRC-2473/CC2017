@@ -163,7 +163,7 @@ public class MotorDiagnoser extends Diagnoser{
 				}
 			}
 		}
-		if(range != 0){
+		if(range == 0){
 			if((deltaRPM < 0) || deltaCURRENT > 0){
 				System.out.println("Motor: " + deviceID + " -Lowering max speed");
 				this.SpeedMultiplier -= 0.1;

@@ -78,12 +78,11 @@ public class DriverTrainDiagnoser extends Diagnoser {
 	
 	private Command command;
 	
-	public DriverTrainDiagnoser(int keyfr, int keyfl, int keybl, int keybr, int gyro){
+	public DriverTrainDiagnoser(int keyfr, int keyfl, int keybl, int keybr, String gyroangle){
 		this.fr = keyfr;
 		this.fl = keyfl;
 		this.bl = keybl;
 		this.br = keybr;
-		this.gyro = gyro;
 		for(DeviceTracker tracker : Trackers.getInstance().getTrackers())
 			if(tracker.getClass().getName().indexOf("TalonTracker") != -1 && tracker.getPort() == fr) {
 				switch(((TalonTracker) tracker).getTarget()) {
@@ -139,9 +138,8 @@ public class DriverTrainDiagnoser extends Diagnoser {
 				default:
 					break;
 				}
-			} else if(tracker.getClass().getName().indexOf("GyroTracker") != -1 && tracker.getPort() == gyro){
-				gyroangle = tracker.getKey();
 			}
+			this.gyroangle = gyroangle;
 	}
 
 	@Override

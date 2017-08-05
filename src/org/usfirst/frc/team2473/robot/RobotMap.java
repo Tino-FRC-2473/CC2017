@@ -27,4 +27,9 @@ public class RobotMap {
 	public static final String PEG_ANGLE = "peg angle";
 	public static final String FUNCTION_TRIGGER = "function trigger";
 	public static final String STOP_TRIGGER = "stop trigger";
+	
+	public static final int FRONT_RIGHT = 4;
+	public static final int FRONT_LEFT = 2;
+	public static final int BACK_RIGHT = 5;
+	public static final int BACK_LEFT = 3;
 }
