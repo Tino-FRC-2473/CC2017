@@ -5,6 +5,7 @@ import math
 import itertools
 
 USING_LIDAR = False;
+DEBUG = True;
 
 #Smooth on XY Graph
 XYSMOOTH = 0
@@ -106,11 +107,12 @@ for i in range(len(originalDistance)):
         xd.append(originalDistance[i]*np.cos(originalAngle[i]*np.pi/180.0))
         yd.append(originalDistance[i]*np.sin(originalAngle[i]*np.pi/180.0))
 
-plt.title("Raw X/Y")
-plt.scatter(xd, yd)
-plt.axhline(0)
-plt.axvline(0)
-plt.show()
+if(DEBUG):
+    plt.title("Raw X/Y")
+    plt.scatter(xd, yd)
+    plt.axhline(0)
+    plt.axvline(0)
+    plt.show()
 
 
 
@@ -150,7 +152,7 @@ for i in range(1, len(originalAngle)):
             #print("cut ")
             #print(i)
 
-print(angleWall)
+#print(angleWall)
 
 # CONVERT TRIMMED LIDAR DATA TO X/Y AND GRAPH
 
@@ -172,187 +174,30 @@ for i in range(len(distanceBoiler)):
         boilerX.append(distanceBoiler[i]*np.cos(angleBoiler[i]*np.pi/180.0))
         boilerY.append(distanceBoiler[i]*np.sin(angleBoiler[i]*np.pi/180.0))
 
-plt.title("Cut X/Y")
-plt.scatter(wallX, wallY)
-plt.scatter(boilerX, boilerY)
-plt.axhline(0)
-plt.axvline(0)
-plt.show()
-
-wallSlope = 0
-boilerSlope = 0
-
-for i in range(len(wallX)):
-        wallSlope += wallY[i]/wallX[i]
-wallSlope /= len(wallX)
-
-for i in range(len(boilerX)):
-        boilerSlope += boilerY[i]/boilerX[i]
-boilerSlope /= len(boilerX)
-
-# CORNER DETECTION
-
-smooth = XYSMOOTH
-l = len(distance)
-
-smoothx = []
-smoothy = []
-
-for i in range(smooth, l-smooth):
-        sumX = 0
-        sumY = 0
-        for x in range(i-smooth,i+smooth+1):
-                sumX+=xd[x]
-                sumY+=yd[x]
-        smoothx.append(sumX/(2*smooth+1))
-        smoothy.append(sumY/(2*smooth+1))
-
-l = len(smoothx)
-
-if GRAPHXY:
-    plt.title("Smooth X/Y")
-    plt.scatter(smoothx, smoothy)
+if(DEBUG):
+    plt.title("Cut X/Y")
+    plt.scatter(wallX, wallY)
+    plt.scatter(boilerX, boilerY)
     plt.axhline(0)
     plt.axvline(0)
     plt.show()
 
-print(wallSlope)
-print(boilerSlope)
+wallSlope, wallIntercept = np.polyfit(wallX, wallY, 1)
+boilerSlope, boilerIntercept = np.polyfit(boilerX, boilerY, 1)
+print("wall slope", wallSlope, "boiler slope", boilerSlope)
+print("wall intercept", wallIntercept, "boiler intercept", boilerIntercept)
 
-wallBoilerAngle = (math.atan(wallSlope) - math.atan(boilerSlope))
-print(wallBoilerAngle)
+x = (boilerIntercept - wallIntercept)/(wallSlope-boilerSlope)
+y = wallSlope*x + wallIntercept
 
-cartD = []
-d = 0;
-dist = []
-
-for i in range(0,l-1):
-        cX = smoothx[i+1]-smoothx[i]
-        cY = smoothy[i+1]-smoothy[i]
-        s=cY/cX
-        aTan = np.arctan(s)*180.0/np.pi
-        if i>0:
-                last = cartD[len(cartD)-1]
-                curDif = abs(aTan-last)
-                altDif = abs(aTan+180-last)
-                if(altDif<curDif):aTan += 180
-        cartD.append(aTan)
-        d += np.sqrt(cX*cX+cY*cY)
-        dist.append(d)
-
-
-def inVal(i):
-        return 0.5*(cartD[i]+cartD[i+1])*(dist[i+1]-dist[i])
-
-smooth = DSMOOTH
-
-length = len(dist)
-
-sD = []
-
-sumd = 0
-
-
-for i in range(0,smooth-1):
-                sumd+=inVal(i)
-
-
-
-if(not DSMOOTH == 0):
-        for i in range(0,length):
-                start = 0;
-                if(i>smooth):
-                        sumd-=inVal(i-smooth-1)
-                        start = i-smooth
-                end = length-1
-                if(i<(length-smooth)):
-                        sumd+=inVal(i+smooth-1)
-                        end = i+smooth
-                startX = dist[0]
-                if(start>0):startX=dist[start]
-                endX = dist[length-1]
-                if end<length:
-                        endX = dist[end]
-                totD = endX-startX
-                sD.append(sumd/totD)
-
-if(DSMOOTH == 0):
-        sD = cartD
-
-if GRAPHD:
-        plt.plot(dist, cartD, 'r-', label='raw')
-        plt.plot(dist, sD, 'b-', label='smooth')
-        plt.show()
-
-slopeTotals = []
-sign = (sD[1]-sD[0])>0
-xSlope = []
-mx = 0
-
-thisSlopes = [sD[1]-sD[0]]
-maxThisSlope = 0
-maxCorner = 0
-
-for i in range(1,length-1):
-        thisSlope = sD[i+1]-sD[i]
-        thisSign = thisSlope>0
-        if(sign==thisSign):
-                thisSlopes.append(thisSlope)
-                if(abs(thisSlope)>maxThisSlope):
-                        maxThisSlope = abs(thisSlope)
-                        maxCorner = i+1
-        else:
-                slopeTotals.append(sum(thisSlopes))
-                aL = abs(sum(thisSlopes))
-                if(aL>mx):
-                        mx = aL
-                sign = thisSign
-                xSlope.append(maxCorner)
-                thisSlopes = [thisSlope]
-                maxThisSlope = abs(thisSlope)
-                maxCorner = i+1
-
-slopeTotals.append(sum(thisSlopes))
-aL = abs(sum(thisSlopes))
-if(aL>mx):
-        mx = aL
-xSlope.append(maxCorner)
-
-cornerX = []
-cornerY = []
-
-maxIdx = 0
-for i in range(0,len(slopeTotals)):
-        if(abs(slopeTotals[i]) > slopeTotals[maxIdx]):
-                maxIdx = i
-
-         #if(abs(slopeTotals[i]-CORNERDETECT)<CORNERBUFFER):
-         #        cornerX.append(smoothx[xSlope[i]])
-         #        cornerY.append(smoothy[xSlope[i]])
-
-cornerX.append(smoothx[xSlope[maxIdx]])
-cornerY.append(smoothy[xSlope[maxIdx]])
-
-
-if CORNERST:
-    print("X:", cornerX)
-    print("Y:", cornerY)
+if(DEBUG):
+    print(x, y)
     plt.title("With Corner")
+    plt.scatter(wallX, wallY)
+    plt.scatter(boilerX, boilerY)
+    plt.scatter(x, y, color="red")
     plt.axhline(0)
     plt.axvline(0)
-    plt.scatter(smoothx, smoothy)
-    cornerRangeX = []
-    cornerRangeY = []
-    #for i in range(len(smoothx)):
-    #        if (smoothx[i] <= cornerX[0]+25 and smoothx[i] >= cornerX[0]-25 and smoothy[i] <= cornerY[0] + 25 and smoothy >= cornerY[0] - 25):
-    #                cornerRangeX.append(smoothx[i])
-    #                cornerRangeY.append(smoothy[i])
-    #plt.scatter(cornerRangeX, cornerRangeY)                
-    plt.show()
-    #plt.scatter(cornerX, cornerY)
-
-if GRAPHST:
-    plt.plot(xSlope, slopeTotals, 'r-', label='raw')
     plt.show()
 
 
