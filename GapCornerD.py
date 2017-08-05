@@ -8,7 +8,7 @@ USING_LIDAR = False;
 DEBUG = True;
 
 #Smooth on XY Graph
-XYSMOOTH = 0
+XYSMOOTH = 1
 #Smooth on Derivative
 DSMOOTH = 1
 
@@ -152,7 +152,6 @@ for i in range(1, len(originalAngle)):
             #print("cut ")
             #print(i)
 
-#print(angleWall)
 
 # CONVERT TRIMMED LIDAR DATA TO X/Y AND GRAPH
 
@@ -178,6 +177,44 @@ if(DEBUG):
     plt.title("Cut X/Y")
     plt.scatter(wallX, wallY)
     plt.scatter(boilerX, boilerY)
+    plt.axhline(0)
+    plt.axvline(0)
+    plt.show()
+
+# CORNER DETECTION
+
+smooth = XYSMOOTH
+l = len(distanceWall)
+
+smoothWallX = []
+smoothWallY = []
+smoothBoilerX = []
+smoothBoilerY = []
+
+for i in range(smooth, l-smooth):
+        sumX = 0
+        sumY = 0
+        for x in range(i-smooth,i+smooth+1):
+                sumX+=wallX[x]
+                sumY+=wallY[x]
+        smoothWallX.append(sumX/(2*smooth+1))
+        smoothWallY.append(sumY/(2*smooth+1))
+
+l = len(distanceBoiler)
+
+for i in range(smooth, l-smooth):
+        sumX = 0
+        sumY = 0
+        for x in range(i-smooth,i+smooth+1):
+                sumX+=boilerX[x]
+                sumY+=boilerY[x]
+        smoothWallX.append(sumX/(2*smooth+1))
+        smoothWallY.append(sumY/(2*smooth+1))
+
+if GRAPHXY:
+    plt.title("Smooth X/Y")
+    plt.scatter(smoothWallX, smoothWallY)
+    plt.scatter(smoothBoilerX,smoothBoilerY)
     plt.axhline(0)
     plt.axvline(0)
     plt.show()
