@@ -137,11 +137,11 @@ for i in range(1, len(originalAngle)):
                 #betweenDistances.append(thisDist)
         #        angle.append(originalAngle[i])
         #        distance.append(originalDistance[i])
-        if (within(originalAngle[i]%360,(EXPECTED_THETA-THETA_MARGIN)%360,(EXPECTED_THETA-2)%360)):
+        if (within(originalAngle[i]%360, (EXPECTED_THETA-THETA_MARGIN)%360, (EXPECTED_THETA-2)%360)):
 
                 angleBoiler.append(originalAngle[i])
                 distanceBoiler.append(originalDistance[i])
-        elif (within(originalAngle[i]%360,(EXPECTED_THETA+1)%360,275)):
+        elif (within(originalAngle[i]%360, (EXPECTED_THETA+1)%360, 275)):
                 angleWall.append(originalAngle[i])
                 distanceWall.append(originalDistance[i])
         
