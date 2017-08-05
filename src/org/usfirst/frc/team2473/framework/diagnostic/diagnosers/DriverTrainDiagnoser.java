@@ -46,14 +46,22 @@ public class DriverTrainDiagnoser extends Diagnoser {
 	//torque calculations
 	private double rpmr = 0.0;
 	private double rpml = 0.0;
-	private double torquer = 0.0;
-	private double torquel = 0.0;
+	private double deltarpmr = 0.0;
+	private double deltarpml = 0.0;
 	private double deltaENCODERL;
 	private double deltaENCODERR;
 	private double deltaANGLE;
 	private double encl;
 	private double encr;
 	private double angle;
+	private double currentfr;
+	private double currentfl;
+	private double currentbr;
+	private double currentbl;
+	private double deltacurrentfr;
+	private double deltacurrentfl;
+	private double deltacurrentbr;
+	private double deltacurrentbl;
 	
 	
 	//encoder goal for onetime test
@@ -153,32 +161,47 @@ public class DriverTrainDiagnoser extends Diagnoser {
 		
 		double pastangle;
 		
-		double currentfr = Database.getInstance().getNumeric(keyfrc);
-		double currentfl = Database.getInstance().getNumeric(keyflc);
-		double currentbr = Database.getInstance().getNumeric(keybrc);
-		double currentbl = Database.getInstance().getNumeric(keyblc);
-		
+		double pastcurrentfr;
+		double pastcurrentfl;
+		double pastcurrentbr;
+		double pastcurrentbl;
 		if(DiagnosticThread.getInstance().getTime()%1000 == 0){
 			pastrpmr = rpmr;
 			pastrpml = rpml;
 			pastencr = encr;
 			pastencl = encl;
 			pastangle = angle;
-			rpmr = (((Database.getInstance().getNumeric(keyrs)*600)*(DiagnosticMap.DRIVETRAIN_GEAR_RATIO))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
-			rpml = (((Database.getInstance().getNumeric(keyls)*600)*(DiagnosticMap.DRIVETRAIN_GEAR_RATIO))/DiagnosticMap.ENCODER_PER_ROTATION775)*(2*Math.PI);
+			pastcurrentfr = currentfr;
+			pastcurrentfl = currentfl;
+			pastcurrentbr = currentbr;
+			pastcurrentbl = currentbl;
+			rpmr = (((Database.getInstance().getNumeric(keyrs)*600)*(DiagnosticMap.DRIVETRAIN_GEAR_RATIO))/DiagnosticMap.ENCODER_PER_ROTATION775);
+			rpml = (((Database.getInstance().getNumeric(keyls)*600)*(DiagnosticMap.DRIVETRAIN_GEAR_RATIO))/DiagnosticMap.ENCODER_PER_ROTATION775);
 			encl = Database.getInstance().getNumeric(keyle);
 			encr = Database.getInstance().getNumeric(keyre);
+			currentfr = Database.getInstance().getNumeric(keyfrc);
+			currentfl = Database.getInstance().getNumeric(keyflc);
+			currentbr = Database.getInstance().getNumeric(keybrc);
+			currentbl = Database.getInstance().getNumeric(keyblc);
 			angle = Database.getInstance().getNumeric(gyroangle);
-			torquer = (rpmr - pastrpmr);
-			torquel = (rpml - pastrpml);
+			deltarpmr = (rpmr - pastrpmr);
+			deltarpml = (rpml - pastrpml);
 			deltaENCODERR = encr - pastencr;
 			deltaENCODERL = encl - pastencl;
 			deltaANGLE = angle - pastangle;
+			deltacurrentfr = currentfr - pastcurrentfr;
+			deltacurrentfl = currentfl - pastcurrentfl;
+			deltacurrentbr = currentbr - pastcurrentbr;
+			deltacurrentbl = currentbl - pastcurrentbl;
 		}	
-		if(torquer >= DiagnosticMap.MAX_TORQUE775 || torquel >= DiagnosticMap.MAX_TORQUE775 || 
-		   currentfr >= DiagnosticMap.MAX_CURRENT775 || currentfl >= DiagnosticMap.MAX_CURRENT775 ||
-		   currentbr >= DiagnosticMap.MAX_CURRENT775 || currentbl >= DiagnosticMap.MAX_CURRENT775){
-			System.out.println("Drive Train in CRITICAL condition, lowering max speed");
+		if(deltarpmr < 0 && deltacurrentfr > 0 && deltacurrentbr > 0){
+			System.out.println("High torque detected, lowering speed.");
+			this.SpeedMultiplier -= 0.1;
+		}else{
+			this.SpeedMultiplier = 1.0;
+		}
+		if(deltarpml < 0 && deltacurrentfl > 0 && deltacurrentbl > 0){
+			System.out.println("High torque detected, lowering speed.");
 			this.SpeedMultiplier -= 0.1;
 		}else{
 			this.SpeedMultiplier = 1.0;
