@@ -21,8 +21,8 @@ pinX = 0;
 pinY = 0;
 pinDistToCenter = 0;
 
-rectOnBottom = False;
-
+TOP = False
+BOTTOM = True
 # angle;
 
 def calcDist(length): #the length of the rectangle
@@ -51,6 +51,7 @@ def calcLengthSideCase(y1, h1, y3, h2):
         if( ((y1 + h1) - (y3 + h2)) < (y3 - y1) ):
             deltaH = (y1 + h1) - (y3 + h2)
             rectOnBottom = True
+            print "rect on bottom became true at one point"
         else:
             deltaH = y3 - y1
             rectOnBottom = False
@@ -69,6 +70,7 @@ def calcLengthSideCase(y1, h1, y3, h2):
         if( ((y3 + h2) - (y1 + h1)) < (y1 - y3) ):
             deltaH = (y3 + h2) - (y1 + h1)
             rectOnBottom = True
+            print "rect on bottom became true at one point"
         else:
             deltaH = y1 - y3
             rectOnBottom = False
@@ -83,6 +85,38 @@ def calcLengthSideCase(y1, h1, y3, h2):
         #    print "fail"
 
     return length
+
+def getRectPos(y1, h1, y3, h2):
+    rectOnBottom = False
+    if(y1 < y3):
+        
+        if( ((y1 + h1) - (y3 + h2)) < (y3 - y1) ):
+            #deltaH = (y1 + h1) - (y3 + h2)
+            rectOnBottom = True
+        else:
+            #deltaH = y3 - y1
+            rectOnBottom = False
+
+
+        #lengthRight = h1 - 2 * deltaH
+        #print "deltaH: " + str(deltaH) + ", h1: " + str(h1)
+        #length = (h1 + lengthRight) / 2.0
+        #if(length == (h1 - deltaH)):
+        #print "length: " + str(length)
+        #else:
+        #    print "fail"
+    #if sec rect is higher
+    else:
+        #deltaH = y1 - y3
+        if( ((y3 + h2) - (y1 + h1)) < (y1 - y3) ):
+            #deltaH = (y3 + h2) - (y1 + h1)
+            rectOnBottom = True
+        else:
+            #deltaH = y1 - y3
+            rectOnBottom = False
+
+    return rectOnBottom
+
 
 def calcAngleDeg():
     return calcAngleRad() * 180.0 / math.pi
@@ -126,8 +160,8 @@ def crossPinPos(x1, y1, w1, h1, x3, y3, w3, h3):
 
 
 
-#camera = cv2.VideoCapture(0)
 camera = cv2.VideoCapture(0)
+# camera = cv2.VideoCapture(1)
 _, frame = camera.read()
 SCREEN_HEIGHT, SCREEN_WIDTH = frame.shape[:2]
 ANGLE_CONST = (SCREEN_WIDTH / 2.0) / math.tan(FIELD_OF_VIEW_RAD / 2.0)
@@ -151,15 +185,15 @@ while True:
     #high_white = np.array([123 + 10, 22.95 + 20, 181.05 + 30]);
     #mask = cv2.inRange(hsv, low_white, high_white);
 
-    #green thresholds
-    #180, 17, 100
-    #180, 1, 100
-    #low_green = np.array([90, 2.55, 255])
-    #high_green = np.array([90, 63.75, 255])
+    # #green thresholds
+    # #180, 17, 100
+    # #180, 1, 100
+    # #low_green = np.array([90, 2.55, 255])
+    # #high_green = np.array([90, 63.75, 255])
     # low_green = np.array([50, 100.0, 80.0]) 
     # high_green = np.array([92, 255, 244.6])
 
-    # #make mask
+    # # #make mask
     # mask = cv2.inRange(hsv, low_green, high_green)
 
     #show mask
@@ -204,28 +238,29 @@ while True:
             #calculate the modified coordinates
             if(my < sy): #is my is higher up than sy (probably 100% of the time)
                 #change the modsh
-
                 modsh = int(calcLengthSideCase(my, mh, sy, sh) * 2 - mh)
             else:
                 #change the modmh
                 modmh = int(calcLengthSideCase(my, mh, sy, sh) * 2 - sh)
 
+            rectPos = getRectPos(my, mh, sy, sh)
 
 
             if(modsh <= 0 or modmh <= 0):
                 cv2.putText(frame, "modmh: " + str(modmh) + ", modsh: " + str(modsh), (50, 200), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
-            elif(not rectOnBottom):
+            elif(rectPos == TOP):
                 cv2.rectangle(frame,(modsx,modsy),(modsx+modsw,modsy+modsh),(255,0,255),thickness=3)
                 cv2.rectangle(frame,(modmx,modmy),(modmx+modmw,modmy+modmh),(255,0,255),thickness=3)
                 cv2.putText(frame, "DIST test: " + str(calcDistSideCase(my, mh, sy, sh)), (50, 150), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
+                print "top"
             else:
                 modsy = sy + sh - modsh
                 modmy = my + mh - modmh
-
                 cv2.rectangle(frame,(modsx,modsy),(modsx+modsw,modsy+modsh),(255,0,255),thickness=3)
                 cv2.rectangle(frame,(modmx,modmy),(modmx+modmw,modmy+modmh),(255,0,255),thickness=3)
                 cv2.putText(frame, "DIST test: " + str(calcDistSideCase(my, mh, sy, sh)), (50, 150), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
-                cv2.putText(frame, "modmh: " + str(modmh) + ", modsh: " + str(modsh), (50, 200), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
+                #cv2.putText(frame, "modmh: " + str(modmh) + ", modsh: " + str(modsh), (50, 200), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
+                print "bottom"
 
 
             #draws the new rectangles, purple
@@ -264,7 +299,7 @@ while True:
 
     cv2.imshow("Frame", frame)
 
-    cv2.waitKey(1000)
+    cv2.waitKey(3000)
 
 camera.release()
 cv2.destroyAllWindows()
