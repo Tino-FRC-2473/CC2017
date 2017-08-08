@@ -171,30 +171,30 @@ while True:
 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-    zero_red = np.array([0, 100, 100]);
-    low_red = np.array([10, 255, 255]);
-    high_red = np.array([160, 100, 100]);
-    pi_red = np.array([180, 255, 255]);
+    # zero_red = np.array([0, 100, 100]);
+    # low_red = np.array([10, 255, 255]);
+    # high_red = np.array([160, 100, 100]);
+    # pi_red = np.array([180, 255, 255]);
 
-    #make mask
-    maskLow = cv2.inRange(hsv, zero_red, low_red)
-    maskHigh = cv2.inRange(hsv, high_red, pi_red)
-    mask = maskLow + maskHigh
+    # #make mask
+    # maskLow = cv2.inRange(hsv, zero_red, low_red)
+    # maskHigh = cv2.inRange(hsv, high_red, pi_red)
+    # mask = maskLow + maskHigh
 
     #low_white = np.array([118 - 10,22.95 - 20,181.05 - 30]);
     #high_white = np.array([123 + 10, 22.95 + 20, 181.05 + 30]);
     #mask = cv2.inRange(hsv, low_white, high_white);
 
-    # #green thresholds
-    # #180, 17, 100
-    # #180, 1, 100
-    # #low_green = np.array([90, 2.55, 255])
-    # #high_green = np.array([90, 63.75, 255])
-    # low_green = np.array([50, 100.0, 80.0]) 
-    # high_green = np.array([92, 255, 244.6])
+    #green thresholds
+    #180, 17, 100
+    #180, 1, 100
+    #low_green = np.array([90, 2.55, 255])
+    #high_green = np.array([90, 63.75, 255])
+    low_green = np.array([50, 80.0, 50.0]) 
+    high_green = np.array([92, 255, 244.6])
 
-    # # #make mask
-    # mask = cv2.inRange(hsv, low_green, high_green)
+    # #make mask
+    mask = cv2.inRange(hsv, low_green, high_green)
 
     #show mask
 
@@ -278,28 +278,28 @@ while True:
                 #top left corner to bottom right corner
                 cv2.line(frame, (sx, sy), (mx+mw, my+mh), (0, 255, 255), thickness=5)
                 #top right corner to bottm left corner
-                cv2.line(frame, (mx+mw, my), (sx, sy+sh), (0, 255, 255), thickness=5)
+                cv2.line(frame, (mx+mw, my), (sx, sy+sh), (0, 255, 255), thickness=5)"""
 
 
             pinX, pinY = pinPosition(mx, my, mx+mw, my+mh, sx, sy, sx+sw, sy+sh)
             cv2.circle(frame, (pinX, pinY), 1, (255, 0, 0), thickness=5)
 
             diagPinX, diagPinY = crossPinPos(mx, my, mw, mh, sx, sy, sw, sh)
-            cv2.circle(frame, (diagPinX, diagPinY), 1, (0, 0, 0), thickness=5)"""
+            cv2.circle(frame, (diagPinX, diagPinY), 1, (0, 0, 0), thickness=5)
 
 
     cv2.putText(frame, "ANGLE: " + str(calcAngleDeg()), (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
     cv2.putText(frame, "DIST: " + str(calcDist((mh + sh) / 2.0)), (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
     #displays the lengths of the original rectangles
     cv2.putText(frame, "Length (mh): " + str(mh) + ", Length (sh): " + str(sh), (50, 300), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
-
+    print "mh: " + str(mh) + ", sh: " + str(sh)
 
 
     cv2.imshow("Mask", mask)
 
     cv2.imshow("Frame", frame)
 
-    cv2.waitKey(3000)
+    cv2.waitKey(1000)
 
 camera.release()
 cv2.destroyAllWindows()
