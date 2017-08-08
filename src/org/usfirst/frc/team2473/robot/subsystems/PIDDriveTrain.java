@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2473.robot.subsystems;
 
+import org.usfirst.frc.team2473.framework.components.Devices;
 import org.usfirst.frc.team2473.robot.RobotMap;
 
 import com.ctre.CANTalon;
@@ -43,12 +44,11 @@ public class PIDDriveTrain extends PIDSubsystem {
 		setAbsoluteTolerance(K_TOLERANCE_DEGREES); // sets the absolute error that is tolerable in the PID system
 		getPIDController().setContinuous(true); // sets the PID Controller to think of the gyro input as continuous
 
-		// instantiates the CANTalons
-		frontLeft = new CANTalon(RobotMap.FL);
-		frontRight = new CANTalon(RobotMap.FR);
-		backLeft = new CANTalon(RobotMap.BL);
-		backRight = new CANTalon(RobotMap.BR);
-
+		frontLeft = Devices.getInstance().getTalon(RobotMap.FRONT_LEFT);
+		frontRight = Devices.getInstance().getTalon(RobotMap.FRONT_LEFT);
+		backLeft = Devices.getInstance().getTalon(RobotMap.BACK_LEFT);
+		backRight = Devices.getInstance().getTalon(RobotMap.BACK_RIGHT);
+		
 		// Creates a robot driver
 		driver = new RobotDrive(frontLeft, backLeft, frontRight, backRight);
 	}

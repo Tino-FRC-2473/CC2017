@@ -7,8 +7,8 @@ package org.usfirst.frc.team2473.robot;
  * floating around.
  */
 public class RobotMap {
-	public static final int FL = 2;
-	public static final int BL = 3;
-	public static final int FR = 4;
-	public static final int BR = 5;
+	public static final int FRONT_LEFT = 2;
+	public static final int BACK_LEFT = 3;
+	public static final int FRONT_RIGHT = 4;
+	public static final int BACK_RIGHT = 5;
 }
