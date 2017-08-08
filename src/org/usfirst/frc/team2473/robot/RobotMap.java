@@ -9,7 +9,7 @@ package org.usfirst.frc.team2473.robot;
  * */
 public class RobotMap {
 	//device ids
-	public static final int MOTOR = 4;
+	public static final int MOTOR = 6;
 	public static final int SERVO = 0;
 	public static final int GYRO = 0;
 

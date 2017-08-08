@@ -56,7 +56,7 @@ public class MotorDiagnoserCommand extends Command {
 				}
 			}
 			Devices.getInstance().getTalon(deviceID).set(0.0);
-			if(Database.getInstance().getNumeric(keye) >= range + 50 && Database.getInstance().getNumeric(keye) <= range - 50){
+			if(Database.getInstance().getNumeric(keye) >= range + 50 || Database.getInstance().getNumeric(keye) <= range - 50){
 				System.out.println("Motor: " + deviceID + " Disfunctional");
 			}else{
 				System.out.println("Motor: " + deviceID + " Functional");
@@ -64,7 +64,7 @@ public class MotorDiagnoserCommand extends Command {
 			Trackers.getInstance().resetEncoders();
 			done = true;
     	}else{
-    		
+    		//System.out.println("motor running");
 	    	if(direction > 0){
 	    		while(!Devices.getInstance().getTalon(deviceID).isFwdLimitSwitchClosed()){
 		    		if(Database.getInstance().getNumeric(keyp) != 0.3){

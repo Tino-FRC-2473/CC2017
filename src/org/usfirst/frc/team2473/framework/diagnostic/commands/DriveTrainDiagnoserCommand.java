@@ -2,6 +2,7 @@ package org.usfirst.frc.team2473.framework.diagnostic.commands;
 
 import org.usfirst.frc.team2473.framework.Database;
 import org.usfirst.frc.team2473.framework.components.Devices;
+import org.usfirst.frc.team2473.framework.components.Trackers;
 import org.usfirst.frc.team2473.robot.DiagnosticMap;
 import org.usfirst.frc.team2473.robot.subsystems.BS;
 
@@ -47,45 +48,58 @@ public class DriveTrainDiagnoserCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	reset();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	reset();
-		while(Database.getInstance().getNumeric(keyre) <= encoders && Database.getInstance().getNumeric(keyle) <= encoders){
-			if(Database.getInstance().getNumeric(keyfrp) != 0.5){
-				setPowerToALl(0.5);
-			}
+		System.out.println("Turn both the left and the right wheel forward, until one rotation is completed.");
+		while(Math.abs(Database.getInstance().getNumeric(keyre)) <= DiagnosticMap.ENCODER_PER_ROTATION || Math.abs(Database.getInstance().getNumeric(keyle)) <= DiagnosticMap.ENCODER_PER_ROTATION){
+
 		}
-		setPowerToALl(0.0);
-		if((Database.getInstance().getNumeric(keyre) + Database.getInstance().getNumeric(keyle))/2 <= encoders + 50 &&
-				(Database.getInstance().getNumeric(keyre) + Database.getInstance().getNumeric(keyle))/2 >= encoders - 50){
-					System.out.println("Overall Drivetrain Status: Positive");
-		}else{
-			if(encoders - Database.getInstance().getNumeric(keyre) < -50 || encoders - Database.getInstance().getNumeric(keyre) > 50){
-				System.out.println("Right Encoder of Drive Train: Functional");
-			}else{
-				System.out.println("Right Encoder of Drive Train: Disfunctional");
-			}
-			if(encoders - Database.getInstance().getNumeric(keyle) < -50 || encoders - Database.getInstance().getNumeric(keyle) > 50){
-				System.out.println("Left Encoder of Drive Train: Functional");
-			}else{
-				System.out.println("Left Encoder of Drive Train: Disfunctional");
-			}
-		}
-		reset();
-		System.out.println("Turn both the left and the right wheel forward.");
-		while(Database.getInstance().getNumeric(keyre) <= DiagnosticMap.ENCODER_PER_ROTATION775 && Database.getInstance().getNumeric(keyle) <= DiagnosticMap.ENCODER_PER_ROTATION775){
-			System.out.println("Right Encoder Count: " + Database.getInstance().getNumeric(keyre));
-			System.out.println("Right Encoder Count: " + Database.getInstance().getNumeric(keyle));
-		}
+		System.out.println("FINAL Right Encoder Count: " + Database.getInstance().getNumeric(keyre));
+		System.out.println("FINAL Left Encoder Count: " + Database.getInstance().getNumeric(keyle));
 		System.out.println("If both wheels completed one rotation, the encoders are in good condition.");
 		reset();
-		System.out.println("Now, turn the robot  90 degrees");
-		while(Database.getInstance().getNumeric(gyroangle) <= 90){
-			System.out.println("Gyro Angle: " + Database.getInstance().getNumeric(gyroangle));
+		double time = System.currentTimeMillis();
+		while(System.currentTimeMillis() - time <= 5000) {
 		}
-		System.out.println("If this looks like 90 degrees, the gyro is in good condition.");
+		reset();
+		System.out.println("Reset left: " + Database.getInstance().getNumeric(keyle));
+		System.out.println("Reset right: " + Database.getInstance().getNumeric(keyre));
+		while(Math.abs(Database.getInstance().getNumeric(keyre)) <= encoders || Math.abs(Database.getInstance().getNumeric(keyle)) <= encoders){
+			if(Database.getInstance().getNumeric(keyfrp) != 0.1){
+				setPowerToALl(0.1);
+			}
+		}
+		System.out.println("right: " + keyre + " encoder val: " + Database.getInstance().getNumeric(keyre));
+    	System.out.println("left: " + keyle + " encoder val: " + Database.getInstance().getNumeric(keyle));
+		setPowerToALl(0.0);
+		if(Math.abs(Database.getInstance().getNumeric(keyre) + Database.getInstance().getNumeric(keyle))/2 <= encoders + 50 &&
+				Math.abs(Database.getInstance().getNumeric(keyre) + Database.getInstance().getNumeric(keyle))/2 >= encoders - 50){
+					System.out.println("Overall Drivetrain Status: Positive");
+		}else{
+			if(encoders - Math.abs(Database.getInstance().getNumeric(keyre)) < -50 || encoders - Math.abs(Database.getInstance().getNumeric(keyre)) > 50){
+				System.out.println("Right Encoder of Drive Train: Functional");
+			}else{
+				System.out.println("Right Encoder of Drive Train: Dysfunctional");
+			}
+			if(encoders - Math.abs(Database.getInstance().getNumeric(keyle)) < -50 || encoders - Math.abs(Database.getInstance().getNumeric(keyle)) > 50){
+				System.out.println("Left Encoder of Drive Train: Functional");
+			}else{
+				System.out.println("Left Encoder of Drive Train: Dysfunctional");
+			}
+		}
+		reset();
+		if(gyroangle != null){
+			System.out.println("Now, turn the robot  90 degrees");
+			while(Database.getInstance().getNumeric(gyroangle) <= 90){
+				
+			}
+			System.out.println("Gyro Angle: " + Database.getInstance().getNumeric(gyroangle));
+			System.out.println("If this looks like 90 degrees or more, the gyro is in good condition.");
+		}
 		done = true;
     }
     
@@ -104,8 +118,10 @@ public class DriveTrainDiagnoserCommand extends Command {
 		Devices.getInstance().getTalon(fl).changeControlMode(TalonControlMode.PercentVbus);
 		Devices.getInstance().getTalon(bl).changeControlMode(TalonControlMode.PercentVbus);
 		Devices.getInstance().getTalon(br).changeControlMode(TalonControlMode.PercentVbus);
-		
-		Devices.getInstance().getGyro(gyro).reset();
+
+		if(gyroangle != null){
+			Trackers.getInstance().resetGyro();
+		}
 	}
     
     private void setPowerToALl(double pow){

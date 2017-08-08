@@ -6,6 +6,7 @@ import java.util.TimerTask;
 
 import org.usfirst.frc.team2473.framework.components.Devices;
 import org.usfirst.frc.team2473.framework.components.Trackers;
+import org.usfirst.frc.team2473.framework.Database;
 import org.usfirst.frc.team2473.framework.Networking;
 import org.usfirst.frc.team2473.framework.diagnostic.DiagnosticThread;
 import org.usfirst.frc.team2473.framework.diagnostic.Diagnostics;
@@ -45,13 +46,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 public class Robot extends IterativeRobot {
 
 	private boolean networkingRunning = false; //set to true if networking is running
-	private boolean deviceReadingRunning = false; //set to true if using framework for threading
+	private boolean deviceReadingRunning = true; //set to true if using framework for threading
 	private boolean timerRunning; //this timer is set to true for autonomous and false for tele-op
 	private DeviceReader reader; //this is the device reader thread, which reads device values and looks up memes
 	private Timer robotControlLoop = new Timer(); //timer allows for even periodic execution of teleOpPeriodic
 	private Networking network; //this is the networking thread
 	private SendableChooser<String> chooser;
-	private boolean diagnosticsRunning = false;
+	private boolean diagnosticsRunning = true;
 	public static PIDriveTrain piDriveTrain;
 	public static DriveStraight driveCommand;
 	/*no special constructor is required for this class. you will never need to make an object of this class*/
@@ -78,7 +79,7 @@ public class Robot extends IterativeRobot {
 			System.out.println("device thread started");
 			addTrackers(); //add the trackers before anything else
 			addDevices(); //add the devices if not covered by trackers
-			reader = new DeviceReader(); //create device reader thread
+			reader = new DeviceReader(2); //create device reader thread
 			reader.start(); //start the thread once the robot is started			
 		}
 		if(diagnosticsRunning){
@@ -123,7 +124,8 @@ public class Robot extends IterativeRobot {
 	 * */
 	@Override
 	public void autonomousInit() {
-		
+		System.out.println("diag started");
+		if(diagnosticsRunning) Diagnostics.getInstance().startTests(TestType.ONETIME);
 	}	
 
 	/**
@@ -132,7 +134,7 @@ public class Robot extends IterativeRobot {
 	 * */
 	@Override
 	public void autonomousPeriodic() {
-		Scheduler.getInstance().run(); //run the scheduler over the periodic function
+		Scheduler.getInstance().run(); //run the scheduler over the periodic function	
 	}
 
 	/**
@@ -150,10 +152,10 @@ public class Robot extends IterativeRobot {
 //			reader.start(); //start the thread once the robot is started			
 //		}
 		System.out.println("teleop started");
-		if(diagnosticsRunning) Diagnostics.getInstance().startTests(TestType.SIMULTANEOUS);
+		//if(diagnosticsRunning) Diagnostics.getInstance().startTests(TestType.SIMULTANEOUS);
 		timerRunning = false; //the competition timer is not running now that tele-op mode has started
-		if (driveCommand != null)
-			driveCommand.start();
+//		if (driveCommand != null)
+//			driveCommand.start();
 	}
 
 	/**
@@ -210,17 +212,34 @@ public class Robot extends IterativeRobot {
 		Devices.getInstance().addTalon(RobotMap.FRONT_RIGHT);
 		Devices.getInstance().addTalon(RobotMap.BACK_LEFT);
 		Devices.getInstance().addTalon(RobotMap.BACK_RIGHT);
+		Devices.getInstance().addTalon(RobotMap.MOTOR);
 	}
 	public void addTrackers() {
 		//call Trackers.getInstance().addTracker(new DeviceTracker(String key, int port, Type dataType);
-//		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.MOTOR_CURRENT_KEY, RobotMap.MOTOR, Target.CURRENT));
-//		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.MOTOR_POWER_KEY, RobotMap.MOTOR, Target.POWER));
-//		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.MOTOR_SPEED_KEY, RobotMap.MOTOR, Target.SPEED));
-//		Trackers.getInstance().addTracker(new EncoderTracker(RobotMap.MOTOR_ENCODER_KEY, RobotMap.MOTOR));
+		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.MOTOR_CURRENT_KEY, RobotMap.MOTOR, Target.CURRENT));
+		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.MOTOR_POWER_KEY, RobotMap.MOTOR, Target.POWER));
+		Trackers.getInstance().addTracker(new TalonTracker(RobotMap.MOTOR_SPEED_KEY, RobotMap.MOTOR, Target.SPEED));
+		Trackers.getInstance().addTracker(new EncoderTracker(RobotMap.MOTOR_ENCODER_KEY, RobotMap.MOTOR));
+		Trackers.getInstance().addTracker(new TalonTracker("frc",RobotMap.FRONT_RIGHT,Target.CURRENT));
+		Trackers.getInstance().addTracker(new TalonTracker("flc",RobotMap.FRONT_LEFT,Target.CURRENT));
+		Trackers.getInstance().addTracker(new TalonTracker("brc",RobotMap.BACK_RIGHT,Target.CURRENT));
+		Trackers.getInstance().addTracker(new TalonTracker("blc",RobotMap.BACK_LEFT,Target.CURRENT));
+		Trackers.getInstance().addTracker(new EncoderTracker("encuno", RobotMap.FRONT_RIGHT));
+		Trackers.getInstance().addTracker(new TalonTracker("frs",RobotMap.FRONT_RIGHT,Target.SPEED));
+		Trackers.getInstance().addTracker(new TalonTracker("fls",RobotMap.FRONT_LEFT,Target.SPEED));
+		Trackers.getInstance().addTracker(new TalonTracker("brs",RobotMap.BACK_RIGHT,Target.SPEED));
+		Trackers.getInstance().addTracker(new TalonTracker("bls",RobotMap.BACK_LEFT,Target.SPEED));
+		Trackers.getInstance().addTracker(new EncoderTracker("encdos", RobotMap.FRONT_LEFT));
+		Trackers.getInstance().addTracker(new TalonTracker("frp",RobotMap.FRONT_RIGHT,Target.POWER));
+		Trackers.getInstance().addTracker(new TalonTracker("flp",RobotMap.FRONT_LEFT,Target.POWER));
+		Trackers.getInstance().addTracker(new TalonTracker("brp",RobotMap.BACK_RIGHT,Target.POWER));
+		Trackers.getInstance().addTracker(new TalonTracker("blp",RobotMap.BACK_LEFT,Target.POWER));
+		Trackers.getInstance().addTracker(new EncoderTracker("encthres", RobotMap.BACK_RIGHT));
+		Trackers.getInstance().addTracker(new EncoderTracker("encquatro", RobotMap.BACK_LEFT));
 //		Trackers.getInstance().addTracker(new DigitalTracker("aids", 1));
-		Trackers.getInstance().addTracker(new JoystickTracker(ControlsMap.STEERING_WHEEL_X,ControlsMap.STEERING_WHEEL,org.usfirst.frc.team2473.framework.trackers.JoystickTracker.Type.X));
-		Trackers.getInstance().addTracker(new JoystickTracker(ControlsMap.THROTTLE_Z,ControlsMap.THROTTLE,org.usfirst.frc.team2473.framework.trackers.JoystickTracker.Type.Z));
-		Trackers.getInstance().addTracker(new GyroTracker("GYROGUY", SPI.Port.kMXP.value));
+//		Trackers.getInstance().addTracker(new JoystickTracker(ControlsMap.STEERING_WHEEL_X,ControlsMap.STEERING_WHEEL,org.usfirst.frc.team2473.framework.trackers.JoystickTracker.Type.X));
+//		Trackers.getInstance().addTracker(new JoystickTracker(ControlsMap.THROTTLE_Z,ControlsMap.THROTTLE,org.usfirst.frc.team2473.framework.trackers.JoystickTracker.Type.Z));
+//		Trackers.getInstance().addTracker(new GyroTracker("GYROGUY", SPI.Port.kMXP.value));
 	}
 
 	/**
@@ -228,8 +247,12 @@ public class Robot extends IterativeRobot {
 	 * @see org.usfirst.frc.team2473.framework.components.Devices
 	 * */
 	public void addTests() {
-		//Diagnostics.getInstance().addToQueue("MOTORBOI", new MotorDiagnoser(RobotMap.MOTOR, Type.M550, "aids",-1));
+		//System.out.println("diadnoser added");
+//		MotorDiagnoser bill = new MotorDiagnoser(RobotMap.MOTOR, Type.M775, 1);
+//		Diagnostics.getInstance().addToQueue("MOTORBOI", bill);
 		//Diagnostics.getInstance().addToQueue("SWITCHBOI" , new DigitalInputDiagnoser("aids",org.usfirst.frc.team2473.framework.diagnostic.diagnosers.DigitalInputDiagnoser.Type.LIMIT_SWITCH));
-		Diagnostics.getInstance().addToQueue("drivetrainguy", new DriverTrainDiagnoser(RobotMap.FRONT_RIGHT, RobotMap.FRONT_LEFT, RobotMap.BACK_LEFT, RobotMap.BACK_RIGHT, "GYROGUY"));
+		//Diagnostics.getInstance().addToQueue("drivetrainguy", new DriverTrainDiagnoser(RobotMap.FRONT_RIGHT, RobotMap.FRONT_LEFT, RobotMap.BACK_LEFT, RobotMap.BACK_RIGHT, "GYROGUY"));
+		Diagnostics.getInstance().addToQueue("drivetrain", new DriverTrainDiagnoser(RobotMap.FRONT_RIGHT,RobotMap.FRONT_LEFT,RobotMap.BACK_LEFT,RobotMap.BACK_RIGHT, null));
+		
 	}
 }

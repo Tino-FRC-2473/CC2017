@@ -50,10 +50,12 @@ public class MotorDiagnoser extends Diagnoser{
 	
 	public MotorDiagnoser(int deviceID, Double range, Type type){
 		this.deviceID = deviceID;
+		System.out.println("key added");
 		for(DeviceTracker tracker : Trackers.getInstance().getTrackers())
 			if(tracker.getClass().getName().indexOf("TalonTracker") != -1 && tracker.getPort()==deviceID) {
 				switch(((TalonTracker) tracker).getTarget()) {
 				case POWER:
+					
 					keyp = tracker.getKey();
 					break;
 				case CURRENT:
@@ -78,11 +80,14 @@ public class MotorDiagnoser extends Diagnoser{
 	}
 	public MotorDiagnoser(int deviceID, Type type, int direction){
 		this.deviceID = deviceID;
+		System.out.println("key added");
 		for(DeviceTracker tracker : Trackers.getInstance().getTrackers())
-			if(tracker.getClass().getName().equals("TalonTracker") && tracker.getPort()==deviceID) {
+			if(tracker.getClass().getName().indexOf("TalonTracker") != -1 && tracker.getPort()==deviceID) {
 				switch(((TalonTracker) tracker).getTarget()) {
 				case POWER:
+					System.out.println("power key added1");
 					keyp = tracker.getKey();
+					System.out.println("power key added2");
 					break;
 				case CURRENT:
 					keyc = tracker.getKey();
@@ -103,13 +108,8 @@ public class MotorDiagnoser extends Diagnoser{
 		this.Type = type;
 		this.direction = direction;
 		Devices.getInstance().getTalon(deviceID).enableLimitSwitch(true, true);
-		if(direction < 0){
-			Devices.getInstance().getTalon(deviceID).ConfigFwdLimitSwitchNormallyOpen(false);
-			Devices.getInstance().getTalon(deviceID).ConfigRevLimitSwitchNormallyOpen(true);
-		}else{
-			Devices.getInstance().getTalon(deviceID).ConfigFwdLimitSwitchNormallyOpen(true);
-			Devices.getInstance().getTalon(deviceID).ConfigRevLimitSwitchNormallyOpen(false);
-		}
+		Devices.getInstance().getTalon(deviceID).ConfigFwdLimitSwitchNormallyOpen(false);
+		Devices.getInstance().getTalon(deviceID).ConfigRevLimitSwitchNormallyOpen(false);
 		//Diagnostics.addToQueue(this);
 	}
 	
@@ -130,40 +130,14 @@ public class MotorDiagnoser extends Diagnoser{
 			double pastrpm;
 			double pastcurrent;
 			if(DiagnosticThread.getInstance().getTime()%1000 == 0){
-				switch(Type){
-				case M775:
-					pastrpm = rpm;
-					pastcurrent = current;
-					rpm = (((Database.getInstance().getNumeric(keys)*600))/DiagnosticMap.ENCODER_PER_ROTATION775);
-					deltaRPM = (rpm - pastrpm);
-					deltaCURRENT = (current - pastcurrent);
-					break;
-				case M550:
-					pastrpm = rpm;
-					pastcurrent = current;
-					rpm = (((Database.getInstance().getNumeric(keys)*600))/DiagnosticMap.ENCODER_PER_ROTATION550);
-					deltaRPM = (rpm - pastrpm);
-					deltaCURRENT = (current - pastcurrent);
-					break;
-				case AM3102:
-					pastrpm = rpm;
-					pastcurrent = current;
-					rpm = (((Database.getInstance().getNumeric(keys)*600))/DiagnosticMap.ENCODER_PER_ROTATION3102);
-					deltaRPM = (rpm - pastrpm);
-					deltaCURRENT = (current - pastcurrent);
-					break;
-				case CIM:
-					pastrpm = rpm;
-					pastcurrent = current;
-					rpm = (((Database.getInstance().getNumeric(keys)*600))/DiagnosticMap.ENCODER_PER_ROTATIONCIM);
-					deltaRPM = (rpm - pastrpm);
-					deltaCURRENT = (current - pastcurrent);
-				default:
-					break;
-				}
+				pastrpm = rpm;
+				pastcurrent = current;
+				rpm = (((Database.getInstance().getNumeric(keys)*600))/DiagnosticMap.ENCODER_PER_ROTATION);
+				deltaRPM = (rpm - pastrpm);
+				deltaCURRENT = (current - pastcurrent);
 			}
 		}
-		if(range == 0){
+		if(range != 0){
 			if((deltaRPM < 0) || deltaCURRENT > 0){
 				System.out.println("Motor: " + deviceID + " -Lowering max speed");
 				this.SpeedMultiplier -= 0.1;

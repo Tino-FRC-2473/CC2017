@@ -65,7 +65,7 @@ public class DriverTrainDiagnoser extends Diagnoser {
 	
 	
 	//encoder goal for onetime test
-	private double encoders = 1600;
+	private double encoders = 6000;
 	
 	//motor constants
 	//private final double MAX_TORQUE = 0.03;
@@ -98,7 +98,7 @@ public class DriverTrainDiagnoser extends Diagnoser {
 				default:
 					break;
 				}
-			} else if(tracker.getClass().getName().equals("EncoderTracker")) {
+			} else if(tracker.getClass().getName().indexOf("EncoderTracker") != -1  && tracker.getPort() == fr) {
 				keyre = ((EncoderTracker) tracker).getKey();
 			}else if(tracker.getClass().getName().indexOf("TalonTracker") != -1 && tracker.getPort() == fl) {
 				switch(((TalonTracker) tracker).getTarget()) {
@@ -114,7 +114,7 @@ public class DriverTrainDiagnoser extends Diagnoser {
 				default:
 					break;
 				}
-			} else if(tracker.getClass().getName().equals("EncoderTracker")) {
+			} else if(tracker.getClass().getName().indexOf("EncoderTracker") != -1 && tracker.getPort() == fl) {
 				keyle = ((EncoderTracker) tracker).getKey();
 			}else if(tracker.getClass().getName().indexOf("TalonTracker") != -1 && tracker.getPort() == br) {
 				switch(((TalonTracker) tracker).getTarget()) {
@@ -173,8 +173,8 @@ public class DriverTrainDiagnoser extends Diagnoser {
 			pastcurrentfl = currentfl;
 			pastcurrentbr = currentbr;
 			pastcurrentbl = currentbl;
-			rpmr = (((Database.getInstance().getNumeric(keyrs)*600)*(DiagnosticMap.DRIVETRAIN_GEAR_RATIO))/DiagnosticMap.ENCODER_PER_ROTATION775);
-			rpml = (((Database.getInstance().getNumeric(keyls)*600)*(DiagnosticMap.DRIVETRAIN_GEAR_RATIO))/DiagnosticMap.ENCODER_PER_ROTATION775);
+			rpmr = (((Database.getInstance().getNumeric(keyrs)*600)*(DiagnosticMap.DRIVETRAIN_GEAR_RATIO))/DiagnosticMap.ENCODER_PER_ROTATION);
+			rpml = (((Database.getInstance().getNumeric(keyls)*600)*(DiagnosticMap.DRIVETRAIN_GEAR_RATIO))/DiagnosticMap.ENCODER_PER_ROTATION);
 			encl = Database.getInstance().getNumeric(keyle);
 			encr = Database.getInstance().getNumeric(keyre);
 			currentfr = Database.getInstance().getNumeric(keyfrc);
@@ -204,17 +204,19 @@ public class DriverTrainDiagnoser extends Diagnoser {
 		}else{
 			this.SpeedMultiplier = 1.0;
 		}
-		if((deltaENCODERR < 0 && deltaENCODERL > 0) || (deltaENCODERR < deltaENCODERL)){
-			if(deltaANGLE > 0){
-				System.out.println("Drivetrain gyro: Disfunctional");
-			}
-		}else if((deltaENCODERR > 0 && deltaENCODERL < 0) || (deltaENCODERR > deltaENCODERL)){
-			if(deltaANGLE < 0){
-				System.out.println("Drivetrain gyro: Disfunctional");
-			}
-		}else if(deltaENCODERR == deltaENCODERL){
-			if(!(deltaANGLE <= 2 && deltaANGLE >= -2)){
-				System.out.println("Drivetrain gyro: Disfunctional");
+		if(gyroangle != null){
+			if((deltaENCODERR < 0 && deltaENCODERL > 0) || (deltaENCODERR < deltaENCODERL)){
+				if(deltaANGLE > 0){
+					System.out.println("Drivetrain gyro: Disfunctional");
+				}
+			}else if((deltaENCODERR > 0 && deltaENCODERL < 0) || (deltaENCODERR > deltaENCODERL)){
+				if(deltaANGLE < 0){
+					System.out.println("Drivetrain gyro: Disfunctional");
+				}
+			}else if(deltaENCODERR == deltaENCODERL){
+				if(!(deltaANGLE <= 2 && deltaANGLE >= -2)){
+					System.out.println("Drivetrain gyro: Disfunctional");
+				}
 			}
 		}
 	}
