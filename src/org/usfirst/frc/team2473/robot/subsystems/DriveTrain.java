@@ -8,7 +8,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
-
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveTrain extends Subsystem {
@@ -34,11 +34,6 @@ public class DriveTrain extends Subsystem {
 		}
 
 		drive = new RobotDrive(frontLeftTalon, backLeftTalon, frontRightTalon, backRightTalon);
-	}
-
-	@Override
-	protected void initDefaultCommand() {
-
 	}
 
 	public void setPower(double pow) {
@@ -73,11 +68,17 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	public void resetGyro() {
-		gyro.reset();
+		gyro.zeroYaw();
 	}
 
 	public void drive(double d, double rotateToAngleRate) {
 		drive.arcadeDrive(-d, rotateToAngleRate);
+	}
+
+	@Override
+	protected void initDefaultCommand() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 
