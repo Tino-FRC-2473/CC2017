@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2473.framework.diagnostic.commands;
 
+
 import org.usfirst.frc.team2473.framework.Database;
 import org.usfirst.frc.team2473.framework.components.Devices;
 import org.usfirst.frc.team2473.framework.components.Trackers;
@@ -8,6 +9,7 @@ import org.usfirst.frc.team2473.robot.subsystems.BS;
 
 import com.ctre.CANTalon.TalonControlMode;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -29,6 +31,8 @@ public class DriveTrainDiagnoserCommand extends Command {
 	private int br;
 	private int bl;
 	private int gyro;
+	
+	private int testnum;
 
     public DriveTrainDiagnoserCommand(int fr, int fl, int br, int bl, int gyro, String keyre, String keyle, String keyfrp, double encoders, String gyroangle) {
         // Use requires() here to declare subsystem dependencies
@@ -55,38 +59,51 @@ public class DriveTrainDiagnoserCommand extends Command {
     protected void execute() {
     	reset();
 		System.out.println("Turn both the left and the right wheel forward, until one rotation is completed.");
-		while(Math.abs(Database.getInstance().getNumeric(keyre)) <= DiagnosticMap.ENCODER_PER_ROTATION || Math.abs(Database.getInstance().getNumeric(keyle)) <= DiagnosticMap.ENCODER_PER_ROTATION){
+		while(Math.abs(Database.getInstance().getNumeric(keyre)) <= DiagnosticMap.DRIVE_TRAIN_ENCODER_PER_ROTATION || Math.abs(Database.getInstance().getNumeric(keyle)) <= DiagnosticMap.DRIVE_TRAIN_ENCODER_PER_ROTATION){
 
 		}
-		System.out.println("FINAL Right Encoder Count: " + Database.getInstance().getNumeric(keyre));
-		System.out.println("FINAL Left Encoder Count: " + Database.getInstance().getNumeric(keyle));
+		System.out.println("FINAL Right Encoder Count: " + Database.getInstance().getNumeric(keyre) + "(should be around " + DiagnosticMap.DRIVE_TRAIN_ENCODER_PER_ROTATION + ")");
+		System.out.println("FINAL Left Encoder Count: " + Database.getInstance().getNumeric(keyle) + "(should be around " + DiagnosticMap.DRIVE_TRAIN_ENCODER_PER_ROTATION + ")");
 		System.out.println("If both wheels completed one rotation, the encoders are in good condition.");
+		if((Math.abs(Database.getInstance().getNumeric(keyre)) <= DiagnosticMap.DRIVE_TRAIN_ENCODER_PER_ROTATION + 100 
+		   && Math.abs(Database.getInstance().getNumeric(keyre)) >= DiagnosticMap.DRIVE_TRAIN_ENCODER_PER_ROTATION - 100) 
+		   && (Math.abs(Database.getInstance().getNumeric(keyle)) <= DiagnosticMap.DRIVE_TRAIN_ENCODER_PER_ROTATION + 100 
+		   && Math.abs(Database.getInstance().getNumeric(keyle)) >= DiagnosticMap.DRIVE_TRAIN_ENCODER_PER_ROTATION - 100)){
+			testnum++;
+		}
 		reset();
 		double time = System.currentTimeMillis();
 		while(System.currentTimeMillis() - time <= 5000) {
 		}
+//		while(true){
+//			if(Timer.Interface.hasPeriodPassed(5.0)){
+//				
+//			}
+//		}
 		reset();
-		System.out.println("Reset left: " + Database.getInstance().getNumeric(keyle));
-		System.out.println("Reset right: " + Database.getInstance().getNumeric(keyre));
+		System.out.println("Enc left start: " + Database.getInstance().getNumeric(keyle));
+		System.out.println("Enc right start: " + Database.getInstance().getNumeric(keyre));
 		while(Math.abs(Database.getInstance().getNumeric(keyre)) <= encoders || Math.abs(Database.getInstance().getNumeric(keyle)) <= encoders){
 			if(Database.getInstance().getNumeric(keyfrp) != 0.1){
 				setPowerToALl(0.1);
 			}
 		}
-		System.out.println("right: " + keyre + " encoder val: " + Database.getInstance().getNumeric(keyre));
-    	System.out.println("left: " + keyle + " encoder val: " + Database.getInstance().getNumeric(keyle));
 		setPowerToALl(0.0);
+		System.out.println("Right Enc FINAL" + Database.getInstance().getNumeric(keyre));
+    	System.out.println("Left Enc FINAL" + Database.getInstance().getNumeric(keyle));
 		if(Math.abs(Database.getInstance().getNumeric(keyre) + Database.getInstance().getNumeric(keyle))/2 <= encoders + 50 &&
 				Math.abs(Database.getInstance().getNumeric(keyre) + Database.getInstance().getNumeric(keyle))/2 >= encoders - 50){
 					System.out.println("Overall Drivetrain Status: Positive");
 		}else{
 			if(encoders - Math.abs(Database.getInstance().getNumeric(keyre)) < -50 || encoders - Math.abs(Database.getInstance().getNumeric(keyre)) > 50){
 				System.out.println("Right Encoder of Drive Train: Functional");
+				testnum++;
 			}else{
 				System.out.println("Right Encoder of Drive Train: Dysfunctional");
 			}
 			if(encoders - Math.abs(Database.getInstance().getNumeric(keyle)) < -50 || encoders - Math.abs(Database.getInstance().getNumeric(keyle)) > 50){
 				System.out.println("Left Encoder of Drive Train: Functional");
+				testnum++;
 			}else{
 				System.out.println("Left Encoder of Drive Train: Dysfunctional");
 			}
@@ -99,6 +116,9 @@ public class DriveTrainDiagnoserCommand extends Command {
 			}
 			System.out.println("Gyro Angle: " + Database.getInstance().getNumeric(gyroangle));
 			System.out.println("If this looks like 90 degrees or more, the gyro is in good condition.");
+			if(Database.getInstance().getNumeric(gyroangle) >= 90){
+				testnum++;
+			}
 		}
 		done = true;
     }
@@ -138,6 +158,12 @@ public class DriveTrainDiagnoserCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	System.out.println("One time diagnostic test for drive train completed.");
+    	if(gyroangle != null){
+    		System.out.println(testnum + "/4 tests passed.");
+    	}else{
+    		System.out.println(testnum + "/3 tests passed.");
+    	}
     }
 
     // Called when another command which requires one or more of the same

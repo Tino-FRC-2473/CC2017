@@ -19,7 +19,11 @@ public class DiagnosticMap {
 	public static final double DRIVETRAIN_GEAR_RATIO = 14;
 	public static final double DISTANCE_PER_PULSE_DIGITALENC = 5; 
 	
-	public static final double ENCODER_PER_ROTATION = 7600;
+	public static final double ENCODER_PER_ROTATION = 1024;
+	public static final double DRIVE_TRAIN_ENCODER_PER_ROTATION = 7600;
 	//ranges
 	public static final double MOTOR_RANGE = 7000;
+	
+	
+	//updates needed: torque values need tweeking and different encoder counts per rotation should be added.
 }

@@ -23,6 +23,7 @@ public class MotorDiagnoserCommand extends Command {
 	private String keyp;
 	private double range;
 	private int direction;
+	private int testnum;
     public MotorDiagnoserCommand(int deviceID, String keye, String keyp, double range, int direction) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -42,24 +43,25 @@ public class MotorDiagnoserCommand extends Command {
     protected void execute() {
     	if(range != 0){
     		Trackers.getInstance().resetEncoders();
-    		System.out.println(Math.abs(Database.getInstance().getNumeric(keye)));
+    		System.out.println("encoder start(motor : " + deviceID + "): " + Math.abs(Database.getInstance().getNumeric(keye)));
 			while(Math.abs(Database.getInstance().getNumeric(keye)) <= Math.abs(range)){
-				System.out.println("encoder: " + Database.getInstance().getNumeric(keye));
 				if(range < 0){
-					if(Database.getInstance().getNumeric(keyp) != -0.3){
-						Devices.getInstance().getTalon(deviceID).set(-0.3);
+					if(Database.getInstance().getNumeric(keyp) != -0.1){
+						Devices.getInstance().getTalon(deviceID).set(-0.1);
 					}
 				}else{
-					if(Database.getInstance().getNumeric(keyp) != 0.3){
-						Devices.getInstance().getTalon(deviceID).set(0.3);
+					if(Database.getInstance().getNumeric(keyp) != 0.1){
+						Devices.getInstance().getTalon(deviceID).set(0.1);
 					}
 				}
 			}
 			Devices.getInstance().getTalon(deviceID).set(0.0);
-			if(Database.getInstance().getNumeric(keye) >= range + 50 || Database.getInstance().getNumeric(keye) <= range - 50){
-				System.out.println("Motor: " + deviceID + " Disfunctional");
+			System.out.println("encoder end(motor : " + deviceID + "): " + Database.getInstance().getNumeric(keye));
+			if(Math.abs(Database.getInstance().getNumeric(keye)) >= Math.abs(range) + 50 || Math.abs(Database.getInstance().getNumeric(keye)) <= Math.abs(range) - 50){
+				System.out.println("Motor: " + deviceID + " Dysfunctional");
 			}else{
 				System.out.println("Motor: " + deviceID + " Functional");
+				testnum++;
 			}
 			Trackers.getInstance().resetEncoders();
 			done = true;
@@ -67,19 +69,20 @@ public class MotorDiagnoserCommand extends Command {
     		//System.out.println("motor running");
 	    	if(direction > 0){
 	    		while(!Devices.getInstance().getTalon(deviceID).isFwdLimitSwitchClosed()){
-		    		if(Database.getInstance().getNumeric(keyp) != 0.3){
-		    			Devices.getInstance().getTalon(deviceID).set(0.3);
+		    		if(Database.getInstance().getNumeric(keyp) != 0.1){
+		    			Devices.getInstance().getTalon(deviceID).set(0.1);
 		    		}
 	    		}
 	    	}else{
 	    		while(!Devices.getInstance().getTalon(deviceID).isRevLimitSwitchClosed()){
-	    			if(Database.getInstance().getNumeric(keyp) != -0.3){
-		    			Devices.getInstance().getTalon(deviceID).set(-0.3);
+	    			if(Database.getInstance().getNumeric(keyp) != -0.1){
+		    			Devices.getInstance().getTalon(deviceID).set(-0.1);
 		    		}
 	    		}
 	    	}
     		Devices.getInstance().getTalon(deviceID).set(0.0);
-    		System.out.println("Motor:" + deviceID + " hit its max range and is functional.");
+    		System.out.println("Motor:" + deviceID + " triggered its limit switch and is functional.");
+    		testnum++;
     		done = true;
     	}
     }
@@ -91,7 +94,8 @@ public class MotorDiagnoserCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	System.out.println("Motor diagnostic test functional...");
+    	System.out.println("One time diagnostic test completed for motor: " + deviceID + " completed.");
+    	System.out.println(testnum + "/1 tests passed.");
     }
 
     // Called when another command which requires one or more of the same

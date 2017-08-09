@@ -173,8 +173,8 @@ public class DriverTrainDiagnoser extends Diagnoser {
 			pastcurrentfl = currentfl;
 			pastcurrentbr = currentbr;
 			pastcurrentbl = currentbl;
-			rpmr = (((Database.getInstance().getNumeric(keyrs)*600)*(DiagnosticMap.DRIVETRAIN_GEAR_RATIO))/DiagnosticMap.ENCODER_PER_ROTATION);
-			rpml = (((Database.getInstance().getNumeric(keyls)*600)*(DiagnosticMap.DRIVETRAIN_GEAR_RATIO))/DiagnosticMap.ENCODER_PER_ROTATION);
+			rpmr = (((Database.getInstance().getNumeric(keyrs)*600)*(DiagnosticMap.DRIVETRAIN_GEAR_RATIO))/DiagnosticMap.DRIVE_TRAIN_ENCODER_PER_ROTATION);
+			rpml = (((Database.getInstance().getNumeric(keyls)*600)*(DiagnosticMap.DRIVETRAIN_GEAR_RATIO))/DiagnosticMap.DRIVE_TRAIN_ENCODER_PER_ROTATION);
 			encl = Database.getInstance().getNumeric(keyle);
 			encr = Database.getInstance().getNumeric(keyre);
 			currentfr = Database.getInstance().getNumeric(keyfrc);
@@ -207,15 +207,15 @@ public class DriverTrainDiagnoser extends Diagnoser {
 		if(gyroangle != null){
 			if((deltaENCODERR < 0 && deltaENCODERL > 0) || (deltaENCODERR < deltaENCODERL)){
 				if(deltaANGLE > 0){
-					System.out.println("Drivetrain gyro: Disfunctional");
+					System.out.println("Drivetrain gyro: Dysfunctional");
 				}
 			}else if((deltaENCODERR > 0 && deltaENCODERL < 0) || (deltaENCODERR > deltaENCODERL)){
 				if(deltaANGLE < 0){
-					System.out.println("Drivetrain gyro: Disfunctional");
+					System.out.println("Drivetrain gyro: Dysfunctional");
 				}
 			}else if(deltaENCODERR == deltaENCODERL){
 				if(!(deltaANGLE <= 2 && deltaANGLE >= -2)){
-					System.out.println("Drivetrain gyro: Disfunctional");
+					System.out.println("Drivetrain gyro: Dysfunctional");
 				}
 			}
 		}
@@ -244,7 +244,9 @@ public class DriverTrainDiagnoser extends Diagnoser {
 		Devices.getInstance().getTalon(bl).changeControlMode(TalonControlMode.PercentVbus);
 		Devices.getInstance().getTalon(br).changeControlMode(TalonControlMode.PercentVbus);
 		
-		Devices.getInstance().getGyro(gyro).reset();
+		if(gyroangle != null){
+			Trackers.getInstance().resetGyro();
+		}
 	}
 	
 	@Override

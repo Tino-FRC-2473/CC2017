@@ -25,6 +25,7 @@ public class MotorDiagnoser extends Diagnoser{
 	private int deviceID; //device id
 	private double range;
 	private Type Type; 
+	private EncType enctype;
 	
 	//torque calculations
 	private double rpm;
@@ -48,7 +49,7 @@ public class MotorDiagnoser extends Diagnoser{
 //	private final double EcnoderTicksPerRotation = 6000.0;
 //	private final double GearRatio = 14;
 	
-	public MotorDiagnoser(int deviceID, Double range, Type type){
+	public MotorDiagnoser(int deviceID, Double range, Type type, EncType enctype){
 		this.deviceID = deviceID;
 		System.out.println("key added");
 		for(DeviceTracker tracker : Trackers.getInstance().getTrackers())
@@ -65,7 +66,7 @@ public class MotorDiagnoser extends Diagnoser{
 					keys = tracker.getKey();
 					break;
 				default:
-						break;
+					break;
 				}
 			} else if(tracker.getClass().getName().indexOf("EncoderTracker") != -1) {
 				keye = ((EncoderTracker) tracker).getKey();
@@ -76,6 +77,7 @@ public class MotorDiagnoser extends Diagnoser{
 		this.keyp = keyp;
 		this.range = range;
 		this.Type = type;
+		this.enctype = enctype;
 		//Diagnostics.addToQueue(this);
 	}
 	public MotorDiagnoser(int deviceID, Type type, int direction){
@@ -123,18 +125,28 @@ public class MotorDiagnoser extends Diagnoser{
 		CIM
 	}
 	
+	public enum EncType{
+		STANDARD
+	}
+	
 	@Override
 	public void RunSimultaneousTest() {
-		current = Database.getInstance().getNumeric(keyc);
 		if(range != 0){
 			double pastrpm;
 			double pastcurrent;
-			if(DiagnosticThread.getInstance().getTime()%1000 == 0){
-				pastrpm = rpm;
-				pastcurrent = current;
-				rpm = (((Database.getInstance().getNumeric(keys)*600))/DiagnosticMap.ENCODER_PER_ROTATION);
-				deltaRPM = (rpm - pastrpm);
-				deltaCURRENT = (current - pastcurrent);
+			switch(enctype){
+				case STANDARD:
+					if(DiagnosticThread.getInstance().getTime()%1000 == 0){
+						pastrpm = rpm;
+						pastcurrent = current;
+						rpm = (((Database.getInstance().getNumeric(keys)*600))/DiagnosticMap.ENCODER_PER_ROTATION);
+						current = Database.getInstance().getNumeric(keyc);
+						deltaRPM = (rpm - pastrpm);
+						deltaCURRENT = (current - pastcurrent);
+					}
+					break;
+				default:
+					break;
 			}
 		}
 		if(range != 0){
