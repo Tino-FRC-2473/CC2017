@@ -22,6 +22,7 @@ public class MotorDiagnoser extends Diagnoser{
 	private String keyc; //current
 	private String keye; //encoder
 	private String keyp; //power
+	private String keyv; //voltage
 	private int deviceID; //device id
 	private double range;
 	private Type Type; 
@@ -39,6 +40,8 @@ public class MotorDiagnoser extends Diagnoser{
 	private Command command;
 	
 	private int direction;
+	
+	private double e;
 	
 	
 	//time
@@ -97,8 +100,11 @@ public class MotorDiagnoser extends Diagnoser{
 				case SPEED:
 					keys = tracker.getKey();
 					break;
+				case VOLTAGE:
+					keyv = tracker.getKey();
+					break;
 				default:
-						break;
+					break;
 				}
 			} else if(tracker.getClass().getName().equals("EncoderTracker")) {
 				keye = ((EncoderTracker) tracker).getKey();
@@ -119,8 +125,6 @@ public class MotorDiagnoser extends Diagnoser{
 		M775,
 		
 		M550,
-		
-		AM3102,
 		
 		CIM
 	}
@@ -150,11 +154,34 @@ public class MotorDiagnoser extends Diagnoser{
 			}
 		}
 		if(range != 0){
-			if((deltaRPM < 0) || deltaCURRENT > 0){
-				System.out.println("Motor: " + deviceID + " -Lowering max speed");
-				this.SpeedMultiplier -= 0.1;
-			}else{
-				this.SpeedMultiplier = 1.0;
+			switch(Type){
+				case M775:
+					if((deltaRPM < 0) || deltaCURRENT > 0){
+						if((Database.getInstance().getNumeric(keyv) * Database.getInstance().getNumeric(keyc) * e)/(rpm*Math.PI*2) >= (DiagnosticMap.MAX_TORQUE775*0.75)){
+							System.out.println("Motor: " + deviceID + " -Lowering max speed");
+							this.SpeedMultiplier -= 0.1;
+						}
+					}else{
+						this.SpeedMultiplier = 1.0;
+					}
+				case M550:
+					if((deltaRPM < 0) || deltaCURRENT > 0){
+						if((Database.getInstance().getNumeric(keyv) * Database.getInstance().getNumeric(keyc) * e)/(rpm*Math.PI*2) >= (DiagnosticMap.MAX_TORQUE550*0.75)){
+							System.out.println("Motor: " + deviceID + " -Lowering max speed");
+							this.SpeedMultiplier -= 0.1;
+						}
+					}else{
+						this.SpeedMultiplier = 1.0;
+					}
+				case CIM:
+					if((deltaRPM < 0) || deltaCURRENT > 0){
+						if((Database.getInstance().getNumeric(keyv) * Database.getInstance().getNumeric(keyc) * e)/(rpm*Math.PI*2) >= (DiagnosticMap.MAX_TORQUECIM*0.75)){
+							System.out.println("Motor: " + deviceID + " -Lowering max speed");
+							this.SpeedMultiplier -= 0.1;
+						}
+					}else{
+						this.SpeedMultiplier = 1.0;
+					}
 			}
 		}else{
 			switch(Type){
@@ -168,14 +195,6 @@ public class MotorDiagnoser extends Diagnoser{
 				break;
 			case M550:
 				if((current >= DiagnosticMap.MAX_CURRENT550)){
-					System.out.println("Motor: " + deviceID + " -Lowering max speed");
-					this.SpeedMultiplier -= 0.1;
-				}else{
-					this.SpeedMultiplier = 1.0;
-				}
-				break;
-			case AM3102:
-				if((current >= DiagnosticMap.MAX_CURRENT3102)){
 					System.out.println("Motor: " + deviceID + " -Lowering max speed");
 					this.SpeedMultiplier -= 0.1;
 				}else{

@@ -32,6 +32,8 @@ public class DriverTrainDiagnoser extends Diagnoser {
 	//private String keybre;
 	private String keyfrp; //power
 	private String keyflp;
+	private String keyfrv; //voltage
+	private String keyflv;
 	private String keyblp;
 	private String keybrp;
 	private String keyrs; //speed
@@ -40,6 +42,8 @@ public class DriverTrainDiagnoser extends Diagnoser {
 	private String keyflc;
 	private String keyblc;
 	private String keybrc;
+	
+	private double e;
 	
 	//private Joystick stick; unused code for now
 	
@@ -95,6 +99,8 @@ public class DriverTrainDiagnoser extends Diagnoser {
 				case SPEED:
 					keyrs = tracker.getKey();
 					break;
+				case VOLTAGE:
+					keyfrv = tracker.getKey();
 				default:
 					break;
 				}
@@ -111,6 +117,8 @@ public class DriverTrainDiagnoser extends Diagnoser {
 				case SPEED:
 					keyls = tracker.getKey();
 					break;
+				case VOLTAGE:
+					keyflv = tracker.getKey();
 				default:
 					break;
 				}
@@ -193,14 +201,18 @@ public class DriverTrainDiagnoser extends Diagnoser {
 			deltacurrentbl = currentbl - pastcurrentbl;
 		}	
 		if(deltarpmr < 0 && deltacurrentfr > 0 && deltacurrentbr > 0){
-			System.out.println("High torque detected, lowering speed.");
-			this.SpeedMultiplier -= 0.1;
+			if((Database.getInstance().getNumeric(keyfrv) * Database.getInstance().getNumeric(keyfrc) * e)/(rpmr*Math.PI*2) >= (DiagnosticMap.MAX_TORQUE775*0.75)){
+				System.out.println("High torque detected, lowering speed.");
+				this.SpeedMultiplier -= 0.1;
+			}
 		}else{
 			this.SpeedMultiplier = 1.0;
 		}
 		if(deltarpml < 0 && deltacurrentfl > 0 && deltacurrentbl > 0){
-			System.out.println("High torque detected, lowering speed.");
-			this.SpeedMultiplier -= 0.1;
+			if((Database.getInstance().getNumeric(keyflv) * Database.getInstance().getNumeric(keyflc) * e)/(rpmr*Math.PI*2) >= (DiagnosticMap.MAX_TORQUE775*0.75)){
+				System.out.println("High torque detected, lowering speed.");
+				this.SpeedMultiplier -= 0.1;
+			}
 		}else{
 			this.SpeedMultiplier = 1.0;
 		}

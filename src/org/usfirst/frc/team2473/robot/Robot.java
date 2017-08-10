@@ -15,6 +15,7 @@ import org.usfirst.frc.team2473.framework.diagnostic.commands.DiagnosticCommands
 import org.usfirst.frc.team2473.framework.diagnostic.diagnosers.DigitalInputDiagnoser;
 import org.usfirst.frc.team2473.framework.diagnostic.diagnosers.DriverTrainDiagnoser;
 import org.usfirst.frc.team2473.framework.diagnostic.diagnosers.MotorDiagnoser;
+import org.usfirst.frc.team2473.framework.diagnostic.diagnosers.MotorDiagnoser.EncType;
 import org.usfirst.frc.team2473.framework.diagnostic.diagnosers.MotorDiagnoser.Type;
 import org.usfirst.frc.team2473.framework.readers.ControlsReader;
 import org.usfirst.frc.team2473.framework.readers.DeviceReader;
@@ -29,7 +30,7 @@ import org.usfirst.frc.team2473.robot.commands.DriveStraight;
 import org.usfirst.frc.team2473.robot.commands.OneTime;
 import org.usfirst.frc.team2473.robot.commands.Simultaneous;
 import org.usfirst.frc.team2473.robot.subsystems.PIDriveTrain;
-
+import org.usfirst.frc.team2473.framework.diagnostic.diagnosers.*;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Command;
@@ -236,6 +237,11 @@ public class Robot extends IterativeRobot {
 		Trackers.getInstance().addTracker(new TalonTracker("blp",RobotMap.BACK_LEFT,Target.POWER));
 		Trackers.getInstance().addTracker(new EncoderTracker("encthres", RobotMap.BACK_RIGHT));
 		Trackers.getInstance().addTracker(new EncoderTracker("encquatro", RobotMap.BACK_LEFT));
+		Trackers.getInstance().addTracker(new DigitalTracker("limitswitch", 0));
+		Trackers.getInstance().addTracker(new TalonTracker("climberc",7,Target.CURRENT));
+		Trackers.getInstance().addTracker(new TalonTracker("climberp",7,Target.POWER));
+		Trackers.getInstance().addTracker(new TalonTracker("climbers",7,Target.SPEED));
+		Trackers.getInstance().addTracker(new EncoderTracker("climbere", 7));
 //		Trackers.getInstance().addTracker(new DigitalTracker("aids", 1));
 //		Trackers.getInstance().addTracker(new JoystickTracker(ControlsMap.STEERING_WHEEL_X,ControlsMap.STEERING_WHEEL,org.usfirst.frc.team2473.framework.trackers.JoystickTracker.Type.X));
 //		Trackers.getInstance().addTracker(new JoystickTracker(ControlsMap.THROTTLE_Z,ControlsMap.THROTTLE,org.usfirst.frc.team2473.framework.trackers.JoystickTracker.Type.Z));
@@ -252,7 +258,8 @@ public class Robot extends IterativeRobot {
 //		Diagnostics.getInstance().addToQueue("MOTORBOI", bill);
 		//Diagnostics.getInstance().addToQueue("SWITCHBOI" , new DigitalInputDiagnoser("aids",org.usfirst.frc.team2473.framework.diagnostic.diagnosers.DigitalInputDiagnoser.Type.LIMIT_SWITCH));
 		//Diagnostics.getInstance().addToQueue("drivetrainguy", new DriverTrainDiagnoser(RobotMap.FRONT_RIGHT, RobotMap.FRONT_LEFT, RobotMap.BACK_LEFT, RobotMap.BACK_RIGHT, "GYROGUY"));
-		Diagnostics.getInstance().addToQueue("drivetrain", new DriverTrainDiagnoser(RobotMap.FRONT_RIGHT,RobotMap.FRONT_LEFT,RobotMap.BACK_LEFT,RobotMap.BACK_RIGHT, null));
-		
+		//Diagnostics.getInstance().addToQueue("drivetrain", new DriverTrainDiagnoser(RobotMap.FRONT_RIGHT,RobotMap.FRONT_LEFT,RobotMap.BACK_LEFT,RobotMap.BACK_RIGHT, null));
+		Diagnostics.getInstance().addToQueue("motorboi", new MotorDiagnoser(7,8000.0,MotorDiagnoser.Type.M775,EncType.STANDARD));
+		Diagnostics.getInstance().addToQueue("limitswitch", new DigitalInputDiagnoser("limitswitch",DigitalInputDiagnoser.Type.LIMIT_SWITCH));
 	}
 }

@@ -46,12 +46,12 @@ public class MotorDiagnoserCommand extends Command {
     		System.out.println("encoder start(motor : " + deviceID + "): " + Math.abs(Database.getInstance().getNumeric(keye)));
 			while(Math.abs(Database.getInstance().getNumeric(keye)) <= Math.abs(range)){
 				if(range < 0){
-					if(Database.getInstance().getNumeric(keyp) != -0.1){
-						Devices.getInstance().getTalon(deviceID).set(-0.1);
+					if(Database.getInstance().getNumeric(keyp) != -0.2){
+						Devices.getInstance().getTalon(deviceID).set(-0.2);
 					}
 				}else{
-					if(Database.getInstance().getNumeric(keyp) != 0.1){
-						Devices.getInstance().getTalon(deviceID).set(0.1);
+					if(Database.getInstance().getNumeric(keyp) != 0.2){
+						Devices.getInstance().getTalon(deviceID).set(0.2);
 					}
 				}
 			}
@@ -69,14 +69,14 @@ public class MotorDiagnoserCommand extends Command {
     		//System.out.println("motor running");
 	    	if(direction > 0){
 	    		while(!Devices.getInstance().getTalon(deviceID).isFwdLimitSwitchClosed()){
-		    		if(Database.getInstance().getNumeric(keyp) != 0.1){
-		    			Devices.getInstance().getTalon(deviceID).set(0.1);
+		    		if(Database.getInstance().getNumeric(keyp) != 0.2){
+		    			Devices.getInstance().getTalon(deviceID).set(0.2);
 		    		}
 	    		}
 	    	}else{
 	    		while(!Devices.getInstance().getTalon(deviceID).isRevLimitSwitchClosed()){
-	    			if(Database.getInstance().getNumeric(keyp) != -0.1){
-		    			Devices.getInstance().getTalon(deviceID).set(-0.1);
+	    			if(Database.getInstance().getNumeric(keyp) != -0.2){
+		    			Devices.getInstance().getTalon(deviceID).set(-0.2);
 		    		}
 	    		}
 	    	}
