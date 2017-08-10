@@ -29,7 +29,8 @@ public class Trackers {
 	
 	public void resetEncoders() {
 		for(DeviceTracker tracker : trackers)
-			if(tracker.getClass().getName().equals("EncoderTracker")) ((EncoderTracker) tracker).resetEncoder();
+			if(tracker.getClass().getName().indexOf("EncoderTracker") != -1) ((EncoderTracker) tracker).resetEncoder();
+			
 	}
 	
 	public void resetGyro() {

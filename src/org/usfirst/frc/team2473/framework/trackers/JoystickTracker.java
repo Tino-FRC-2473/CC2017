@@ -4,11 +4,11 @@ import org.usfirst.frc.team2473.framework.components.Controls;
 
 public class JoystickTracker extends DeviceTracker {
 
-	public enum Type {
+	public enum JoystickType {
 		X, Y, Z, THROTTLE, TWIST
 	}
 	
-	public JoystickTracker(String key,int port, Type type) {
+	public JoystickTracker(String key,int port, JoystickType type) {
 		super(key, DeviceTracker.Type.NUMERIC, port);
 		switch(type) {
 			case X:

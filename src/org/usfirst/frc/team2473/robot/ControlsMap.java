@@ -1,17 +1,12 @@
 package org.usfirst.frc.team2473.robot;
 
-/**
- * Class stores constants for devices installed on the drive station and respective access keys. These constants can be value limits, joystick numbers, button numbers, and more.
- * @author Deep Sethi
- * @author Harmony He
- * @version 1.0
- * */
 public class ControlsMap {
-	//joystick constants
+
+	public ControlsMap() {
+		// TODO Auto-generated constructor stub
+	}
 	
-	//joystick keys
+	public static final int THROTTLE = 0;
 	
-	//button constants
-	
-	//button keys
+	public static final String THROTTLE_KEY = "throttle";
 }
