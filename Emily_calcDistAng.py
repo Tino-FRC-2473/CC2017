@@ -4,7 +4,8 @@ import cv2
 import numpy as np
 
 #For distance
-DIST_CONSTANT = 1; #assigned a random number
+distance = -1
+DIST_CONSTANT = 3234.375; #
 #rectSize = 10; # set the rext size
 
 #For angle
@@ -16,6 +17,7 @@ SCREEN_WIDTH = 0;
 ANGLE_CONST = 0;
 
 #calc angle
+angle = -1
 SCREEN_HEIGHT = 0;
 pinX = 0;
 pinY = 0;
@@ -24,6 +26,7 @@ pinDistToCenter = 0;
 TOP = False
 BOTTOM = True
 # angle;
+
 
 def calcDist(length): #the length of the rectangle
     #the distance and size is inversely proportional
@@ -43,7 +46,7 @@ def calcLengthSideCase(y1, h1, y3, h2):
     deltaH = 0;
     length = 0;
 
-    print "y1: " + str(y1) + ", y3:" + str(y3)
+    #print "y1: " + str(y1) + ", y3:" + str(y3)
 
     #if first rect is higher than second rect
     if(y1 < y3):
@@ -83,6 +86,8 @@ def calcLengthSideCase(y1, h1, y3, h2):
         print "length: " + str(length)
         #else:
         #    print "fail"
+
+    print "deltaH: " + str(deltaH)
 
     return length
 
@@ -208,6 +213,8 @@ while True:
     secmax_area = 0
     sx,sy,sw,sh = 0, 0, 0, 0
 
+    modmx, modmy, modmw, modmh = mx, my, mw, mh
+    modsx, modsy, modsw, modsh = sx, sy, sw, sh
 
     for cnt in contour:
         x,y,w,h = cv2.boundingRect(cnt)
@@ -227,6 +234,8 @@ while True:
 
 
 
+    sideCase = False
+
     #draw rectangles on two biggest green part found, draws green rectangles
     if(max_area > 0):
         cv2.rectangle(frame,(mx,my),(mx+mw,my+mh),(0,255,0),thickness=5)
@@ -239,29 +248,42 @@ while True:
             if(my < sy): #is my is higher up than sy (probably 100% of the time)
                 #change the modsh
                 modsh = int(calcLengthSideCase(my, mh, sy, sh) * 2 - mh)
+
+                if(sh / float(modsh) < .9):
+                    sideCase = True
+                
             else:
                 #change the modmh
                 modmh = int(calcLengthSideCase(my, mh, sy, sh) * 2 - sh)
 
-            rectPos = getRectPos(my, mh, sy, sh)
+                if(mh / float(modmh) < .9):
+                    sideCase = True
 
+            rectPos = getRectPos(my, mh, sy, sh)
+            #print "rectPos: " + rectPos
 
             if(modsh <= 0 or modmh <= 0):
-                cv2.putText(frame, "modmh: " + str(modmh) + ", modsh: " + str(modsh), (50, 200), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
-            elif(rectPos == TOP):
-                cv2.rectangle(frame,(modsx,modsy),(modsx+modsw,modsy+modsh),(255,0,255),thickness=3)
-                cv2.rectangle(frame,(modmx,modmy),(modmx+modmw,modmy+modmh),(255,0,255),thickness=3)
-                cv2.putText(frame, "DIST test: " + str(calcDistSideCase(my, mh, sy, sh)), (50, 150), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
-                print "top"
+                print "modsh or modmh 0"
+            #elif(sideCase):
             else:
-                modsy = sy + sh - modsh
-                modmy = my + mh - modmh
-                cv2.rectangle(frame,(modsx,modsy),(modsx+modsw,modsy+modsh),(255,0,255),thickness=3)
-                cv2.rectangle(frame,(modmx,modmy),(modmx+modmw,modmy+modmh),(255,0,255),thickness=3)
-                cv2.putText(frame, "DIST test: " + str(calcDistSideCase(my, mh, sy, sh)), (50, 150), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
-                #cv2.putText(frame, "modmh: " + str(modmh) + ", modsh: " + str(modsh), (50, 200), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
-                print "bottom"
+                cv2.putText(frame, "modmh: " + str(modmh) + ", modsh: " + str(modsh), (50, 200), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
+                if(rectPos == TOP):
+                    cv2.rectangle(frame,(modsx,modsy),(modsx+modsw,modsy+modsh),(255,0,255),thickness=3)
+                    cv2.rectangle(frame,(modmx,modmy),(modmx+modmw,modmy+modmh),(255,0,255),thickness=3)
+                    print "top"
 
+
+                else:
+                    modsy = sy + sh - modsh
+                    modmy = my + mh - modmh
+                    cv2.rectangle(frame,(modsx,modsy),(modsx+modsw,modsy+modsh),(255,0,255),thickness=3)
+                    cv2.rectangle(frame,(modmx,modmy),(modmx+modmw,modmy+modmh),(255,0,255),thickness=3)
+                    #cv2.putText(frame, "modmh: " + str(modmh) + ", modsh: " + str(modsh), (50, 200), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
+                    print "bottom"
+
+                #distance = calcDistSideCase(my, mh, sy, sh)
+
+            cv2.putText(frame, "DIST test: " + str(calcDistSideCase(my, mh, sy, sh)), (50, 150), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
 
             #draws the new rectangles, purple
 
@@ -287,12 +309,24 @@ while True:
             diagPinX, diagPinY = crossPinPos(mx, my, mw, mh, sx, sy, sw, sh)
             cv2.circle(frame, (diagPinX, diagPinY), 1, (0, 0, 0), thickness=5)
 
+    print "Side case:" + str(sideCase)
+    if(sideCase):
+        distance = calcDistSideCase(my, mh, sy, sh)
+    else:
+        distance = calcDist((mh + sh) / 2.0)
 
-    cv2.putText(frame, "ANGLE: " + str(calcAngleDeg()), (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
+    angle = calcAngleDeg()
+
+    cv2.putText(frame, "ANG: " + str(calcAngleDeg()), (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
     cv2.putText(frame, "DIST: " + str(calcDist((mh + sh) / 2.0)), (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
+
     #displays the lengths of the original rectangles
     cv2.putText(frame, "Length (mh): " + str(mh) + ", Length (sh): " + str(sh), (50, 300), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
     print "mh: " + str(mh) + ", sh: " + str(sh)
+    print "modmh: " + str(modmh) + ", modsh: " + str(modsh)
+    print "Distance: " + str(distance)
+    print "Angle: " + str(angle)
+    print "--------------------"
 
 
     cv2.imshow("Mask", mask)
