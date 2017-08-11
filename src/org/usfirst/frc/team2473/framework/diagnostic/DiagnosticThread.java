@@ -8,13 +8,14 @@ import org.usfirst.frc.team2473.framework.diagnostic.diagnosers.Diagnoser;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DiagnosticThread extends Thread{
 	private ArrayList<Diagnoser> diagnosers = new ArrayList<Diagnoser>();
 	private HashMap<String, String> errors = new HashMap<String, String>();
-	private HashMap<String, Command> commandsresponsible = new HashMap<String, Command>();
+	private HashMap<String, Subsystem> systems = new HashMap<String, Subsystem>();
 	
-	public double initialTime;
+	public long initialTime;
 	
 	private static DiagnosticThread theInstance;
 	
@@ -25,10 +26,10 @@ public class DiagnosticThread extends Thread{
 	public static DiagnosticThread getInstance() {
 		return theInstance;
 	}
-
-	public void addError(String key, Command command, String error){
+	
+	public void addError(String key, Subsystem sys, String error){
 		errors.put(key, error);
-		commandsresponsible.put(key, command);
+		systems.put(key,sys);
 	}
 	
 	public DiagnosticThread(){
@@ -49,15 +50,27 @@ public class DiagnosticThread extends Thread{
 	}
 	
 	private void errors(){
+		String Key = "";
 		Scanner scanner = new Scanner(System.in);
 		for(String error : errors.values()){
+			for(String key : errors.keySet()){
+				if(errors.get(key) == error){
+					Key = key;
+				}
+			}
 			if(scanner.nextLine().equals(error)){
-				Scheduler.getInstance().disable();
+				for(Subsystem sys : systems.values()){
+					for(String key : systems.keySet()){
+						if((systems.get(key) == sys) && (key == Key)){
+							sys.getCurrentCommand().cancel();
+						}
+					}
+				}
 			}
 		}
 	}
 	
-	public double getTime(){
+	public long getTime(){
 		return System.currentTimeMillis() - initialTime;
 	}
 }
