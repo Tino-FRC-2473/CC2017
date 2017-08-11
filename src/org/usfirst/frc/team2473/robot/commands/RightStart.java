@@ -18,15 +18,17 @@ public class RightStart extends AccelStraight{
 		// Stage 1 ---> Moving forward
 		if(!finished) {
 			super.execute();
+			return;
 		}
 		
 		// Stage 2 --> here we need to turn in place 45 degrees
 		else if(!beganStageTwo) {
-			Robot.driveTrain.drive(0, rotateToAngleRate - 45);
+			rotateToAngleRate -= 45;
+			Robot.driveTrain.drive(0, rotateToAngleRate);
 			beganStageTwo = true;
 			startTurnTime = System.currentTimeMillis();
 		}
-		
+		/*
 		else if(!finishedStageTwo) {
 			if(System.currentTimeMillis() - startTurnTime > 2500) {
 				finishedStageTwo = true;
@@ -36,6 +38,6 @@ public class RightStart extends AccelStraight{
 		else if(finishedStageTwo) {
 			// Here you need to communicate with cv
 			completelyFinished = true;
-		}
+		}*/
 	}
 }

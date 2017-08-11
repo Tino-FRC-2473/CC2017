@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2473.robot.subsystems;
 
+import javax.swing.SortingFocusTraversalPolicy;
+
 import org.usfirst.frc.team2473.robot.RobotMap;
 
 import com.ctre.CANTalon;
@@ -20,6 +22,9 @@ public class DriveTrain extends Subsystem {
 
 	private AHRS gyro;
 	private RobotDrive drive;
+	
+	public int leftEncoderCap = 0;
+	public int rightEncoderCap = 0;
 
 	public DriveTrain() {
 		frontRightTalon = new CANTalon(RobotMap.FRONT_RIGHT);
@@ -46,13 +51,8 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void resetEncoders() {
-		frontRightTalon.changeControlMode(TalonControlMode.Position);
-		frontLeftTalon.changeControlMode(TalonControlMode.Position);
-		frontRightTalon.setPosition(0);
-		frontLeftTalon.setPosition(0);
-
-		frontRightTalon.changeControlMode(TalonControlMode.PercentVbus);
-		frontLeftTalon.changeControlMode(TalonControlMode.PercentVbus);
+		leftEncoderCap = (int) frontLeftTalon.getPosition();
+		rightEncoderCap = (int) frontRightTalon.getPosition();
 	}
 
 	public int getRightEnc() {

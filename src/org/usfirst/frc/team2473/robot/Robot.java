@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2473.robot;
 
 import org.usfirst.frc.team2473.robot.commands.LeftStart;
+import org.usfirst.frc.team2473.robot.commands.RightStart;
 import org.usfirst.frc.team2473.robot.commands.TestCommand;
 import org.usfirst.frc.team2473.robot.subsystems.DriveTrain;
 
@@ -24,7 +25,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static DriveTrain driveTrain;
 
-	LeftStart autonomousCommand;
+	RightStart autonomousCommand;
 	Command testCommand;
 
 	/**
@@ -37,7 +38,7 @@ public class Robot extends IterativeRobot {
 		
 		oi = new OI();
 		driveTrain = new DriveTrain();
-		autonomousCommand = new LeftStart();
+		autonomousCommand = new RightStart();
 		testCommand = new TestCommand();
 		//chooser.addObject("Autonomous Drive Straight", autonomousCommand);
 		// chooser.addObject("My Auto", new MyAutoCommand());
@@ -84,9 +85,10 @@ public class Robot extends IterativeRobot {
 		// schedule the autonomous command (example)
 		//if (autonomousCommand != null)
 			//autonomousCommand.start();
-		autonomousCommand = new LeftStart();
+		autonomousCommand = new RightStart();
 		if(autonomousCommand != null){
 			autonomousCommand.reset();
+			
 			autonomousCommand.start();
 		}
 	}

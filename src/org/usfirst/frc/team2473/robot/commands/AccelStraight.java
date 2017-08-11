@@ -65,8 +65,9 @@ public class AccelStraight extends Command implements PIDOutput{
 		System.out.println("1 ----------- Current power of the robot = " + currentPower);
 
 		// Change below based on testing
-		int averageEncoderVal = ((Robot.driveTrain.getLeftEnc()) + (Robot.driveTrain.getRightEnc())) /2;
+		int averageEncoderVal = ((Robot.driveTrain.getLeftEnc() - Math.abs(Robot.driveTrain.leftEncoderCap)) + (Robot.driveTrain.getRightEnc() - Math.abs(Robot.driveTrain.rightEncoderCap))) /2;
 		if(averageEncoderVal >= totalEncoderDistance){
+			System.out.println(averageEncoderVal + "        " + totalEncoderDistance);
 			finished = true;
 			Robot.driveTrain.drive(0, rotateToAngleRate);
 		}
@@ -110,7 +111,7 @@ public class AccelStraight extends Command implements PIDOutput{
 
 		public final double START_POWER = 0.4;
 		public final double END_POWER = 0.4;
-		public final double MAX_POWER = 0.8;
+		public final double MAX_POWER = 0.6;
 		
 		public final int ACCELERATION_INTERVAL;
 		public final int TOTAL_ENCODER_DISTANCE;
