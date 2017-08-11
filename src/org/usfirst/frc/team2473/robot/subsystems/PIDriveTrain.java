@@ -43,8 +43,11 @@ public class PIDriveTrain extends PIDSubsystem {
 		getPIDController().setContinuous(true);
 		setSetpoint(gyro.getYaw());
 
-		drive = new RobotDrive(Devices.getInstance().getTalon(RobotMap.FRONT_LEFT),Devices.getInstance().getTalon(RobotMap.BACK_LEFT), Devices.getInstance().getTalon(RobotMap.FRONT_RIGHT), Devices.getInstance().getTalon(RobotMap.BACK_RIGHT));
-		
+		drive = new RobotDrive(Devices.getInstance().getTalon(RobotMap.FRONT_LEFT),
+				Devices.getInstance().getTalon(RobotMap.BACK_LEFT),
+				Devices.getInstance().getTalon(RobotMap.FRONT_RIGHT),
+				Devices.getInstance().getTalon(RobotMap.BACK_RIGHT));
+
 		drive.setMaxOutput(.70);
 		drive.setInvertedMotor(MotorType.kFrontLeft, true);
 		drive.setInvertedMotor(MotorType.kRearLeft, true);
@@ -75,14 +78,14 @@ public class PIDriveTrain extends PIDSubsystem {
 	public double getAngleRate() {
 		return rotateToAngleRate;
 	}
-	
-	public void resetEncoders(){
-    	
-    	Devices.getInstance().getTalon(RobotMap.FRONT_RIGHT).changeControlMode(TalonControlMode.Position);
-    	Devices.getInstance().getTalon(RobotMap.FRONT_LEFT).changeControlMode(TalonControlMode.Position);
-    	Devices.getInstance().getTalon(RobotMap.FRONT_RIGHT).setEncPosition(0);
-    	Devices.getInstance().getTalon(RobotMap.FRONT_LEFT).setEncPosition(0);
-    	Devices.getInstance().getTalon(RobotMap.FRONT_RIGHT).changeControlMode(TalonControlMode.PercentVbus);
-    	Devices.getInstance().getTalon(RobotMap.FRONT_LEFT).changeControlMode(TalonControlMode.PercentVbus);
-    }
+
+	public void resetEncoders() {
+
+		Devices.getInstance().getTalon(RobotMap.FRONT_RIGHT).changeControlMode(TalonControlMode.Position);
+		Devices.getInstance().getTalon(RobotMap.FRONT_LEFT).changeControlMode(TalonControlMode.Position);
+		Devices.getInstance().getTalon(RobotMap.FRONT_RIGHT).setEncPosition(0);
+		Devices.getInstance().getTalon(RobotMap.FRONT_LEFT).setEncPosition(0);
+		Devices.getInstance().getTalon(RobotMap.FRONT_RIGHT).changeControlMode(TalonControlMode.PercentVbus);
+		Devices.getInstance().getTalon(RobotMap.FRONT_LEFT).changeControlMode(TalonControlMode.PercentVbus);
+	}
 }
