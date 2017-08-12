@@ -46,7 +46,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
  */
 public class Robot extends IterativeRobot {
 
-	private boolean networkingRunning = false; //set to true if networking is running
+	public static boolean networkingRunning = false; //set to true if networking is running
 	private boolean deviceReadingRunning = true; //set to true if using framework for threading
 	private boolean timerRunning; //this timer is set to true for autonomous and false for tele-op
 	private DeviceReader reader; //this is the device reader thread, which reads device values and looks up memes
@@ -259,7 +259,7 @@ public class Robot extends IterativeRobot {
 		//Diagnostics.getInstance().addToQueue("SWITCHBOI" , new DigitalInputDiagnoser("aids",org.usfirst.frc.team2473.framework.diagnostic.diagnosers.DigitalInputDiagnoser.Type.LIMIT_SWITCH));
 		//Diagnostics.getInstance().addToQueue("drivetrainguy", new DriverTrainDiagnoser(RobotMap.FRONT_RIGHT, RobotMap.FRONT_LEFT, RobotMap.BACK_LEFT, RobotMap.BACK_RIGHT, "GYROGUY"));
 		//Diagnostics.getInstance().addToQueue("drivetrain", new DriverTrainDiagnoser(RobotMap.FRONT_RIGHT,RobotMap.FRONT_LEFT,RobotMap.BACK_LEFT,RobotMap.BACK_RIGHT, null));
-		Diagnostics.getInstance().addToQueue("motorboi", new MotorDiagnoser(7,8000.0,MotorDiagnoser.Type.M775,EncType.STANDARD));
-		Diagnostics.getInstance().addToQueue("limitswitch", new DigitalInputDiagnoser("limitswitch",DigitalInputDiagnoser.Type.LIMIT_SWITCH));
+		Diagnostics.getInstance().addToQueue("motorboi", new MotorDiagnoser(7,8000.0,MotorDiagnoser.Type.CIM,EncType.STANDARD));
+		//Diagnostics.getInstance().addToQueue("limitswitch", new DigitalInputDiagnoser("limitswitch",DigitalInputDiagnoser.Type.LIMIT_SWITCH));
 	}
 }
