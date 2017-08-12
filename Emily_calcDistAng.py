@@ -2,6 +2,8 @@
 import math
 import cv2
 import numpy as np
+import os
+
 
 #For distance
 distance = -1
@@ -164,7 +166,7 @@ def crossPinPos(x1, y1, w1, h1, x3, y3, w3, h3):
     return (int(x), int(y))
 
 
-
+os.system('sudo sh camerasettings.sh')
 camera = cv2.VideoCapture(0)
 # camera = cv2.VideoCapture(1)
 _, frame = camera.read()
@@ -193,15 +195,16 @@ while True:
     #green thresholds
     #180, 17, 100
     #180, 1, 100
-    #low_green = np.array([90, 2.55, 255])
+    #low_green = np.array([50, 50, 50])
     #high_green = np.array([90, 63.75, 255])
-    low_green = np.array([50, 80.0, 50.0]) 
-    high_green = np.array([92, 255, 244.6])
+    low_green = np.array([80, 100.0, 80.0]) 
+    high_green = np.array([90, 255, 255.0])
 
     # #make mask
     mask = cv2.inRange(hsv, low_green, high_green)
 
     #show mask
+    cv2.imshow("Mask", mask)
 
     #find contours based on mask
     _, contour,_ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -213,14 +216,23 @@ while True:
     secmax_area = 0
     sx,sy,sw,sh = 0, 0, 0, 0
 
+    thirdmax_area = 0
+    tx,ty,tw,th = 0, 0, 0, 0 
+
     modmx, modmy, modmw, modmh = mx, my, mw, mh
     modsx, modsy, modsw, modsh = sx, sy, sw, sh
 
     for cnt in contour:
         x,y,w,h = cv2.boundingRect(cnt)
         if(w * h >= max_area):
+            thirdmax_area = secmax_area
             secmax_area = max_area
             max_area = w * h
+            
+            tx = sx
+            ty = sy
+            tw = sw
+            th = sh
 
             sx = mx
             sy = my
@@ -245,27 +257,65 @@ while True:
             modmx, modmy, modmw, modmh = mx, my, mw, mh
             modsx, modsy, modsw, modsh = sx, sy, sw, sh
             #calculate the modified coordinates
-            if(my < sy): #is my is higher up than sy (probably 100% of the time)
-                #change the modsh
-                modsh = int(calcLengthSideCase(my, mh, sy, sh) * 2 - mh)
+            
+            lengthThres = 0.7
+            if(sh < lengthThres * mh or mh < lengthThres * sh):
 
-                if(sh / float(modsh) < .9):
-                    sideCase = True
-                
-            else:
-                #change the modmh
-                modmh = int(calcLengthSideCase(my, mh, sy, sh) * 2 - sh)
+                #if third rectangle exists
+                if(thirdmax_area > 0):
+                    errorThres = 2
+                    cv2.rectangle(frame,(tx,ty),(tx+tw,ty+th),(255,255,0),thickness=5)
+                    
 
-                if(mh / float(modmh) < .9):
-                    sideCase = True
+                    #check if it is in the secmax rect area (should be 100% of time)
+                    if(tx >= sx-errorThres and tx+tw <= sx+sw+errorThres and
+                        ty >= my-errorThres and ty+th <= my+mh+errorThres):
+                        sideCase = True
+                        
+                        #third rect on top of the max rect
+                        if(ty < sy):
+                            modsy = ty
+                            modsh = sy+sh-ty
+                        #third rect is below the max rect
+                        else:
+                            modsh = ty+th-sy
 
+                    #check if it is in the max rect area
+                    elif(tx >= mx-errorThres and tx+tw <= mx+mw+errorThres and
+                        ty >= sy-errorThres and ty+th <= sy+sh+errorThres):
+                        sideCase = True
+                        
+                        #third rect on top of the max rect
+                        if(ty < my):
+                            modmy = ty
+                            modmh = my+mh-ty
+                        #third rect is below the max rect
+                        else:
+                            modmh = ty+th-my
+
+                #if side case is not true yet
+                """if(not sideCase):
+                    if(my < sy): #is my is higher up than sy (probably 100% of the time)
+                        #change the modsh
+                        modsh = int(calcLengthSideCase(my, mh, sy, sh) * 2 - mh)
+
+                        if(sh / float(modsh) < .8):
+                            sideCase = True
+                        
+                    else:
+                        #change the modmh
+                        modmh = int(calcLengthSideCase(my, mh, sy, sh) * 2 - sh)
+
+                        if(mh / float(modmh) < .8):
+                            sideCase = True
+                """
             rectPos = getRectPos(my, mh, sy, sh)
             #print "rectPos: " + rectPos
 
             if(modsh <= 0 or modmh <= 0):
                 print "modsh or modmh 0"
-            #elif(sideCase):
-            else:
+            elif(sideCase):
+            #else:
                 cv2.putText(frame, "modmh: " + str(modmh) + ", modsh: " + str(modsh), (50, 200), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
                 if(rectPos == TOP):
                     cv2.rectangle(frame,(modsx,modsy),(modsx+modsw,modsy+modsh),(255,0,255),thickness=3)
@@ -329,7 +379,7 @@ while True:
     print "--------------------"
 
 
-    cv2.imshow("Mask", mask)
+    cv2.imshow("Contours", mask)
 
     cv2.imshow("Frame", frame)
 
