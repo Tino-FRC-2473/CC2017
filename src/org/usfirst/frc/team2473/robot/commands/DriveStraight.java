@@ -29,8 +29,9 @@ public class DriveStraight extends Command {
 
 	@Override
 	protected void execute() {
-		turn(squareWithSign(Database.getInstance().getNumeric(ControlsMap.THROTTLE_Z)),
-				Database.getInstance().getNumeric(ControlsMap.STEERING_WHEEL_X));
+		Robot.piDriveTrain.setTargetAngle(Database.getInstance().getNumeric(ControlsMap.STEERING_WHEEL_X)*90);
+		
+		Robot.piDriveTrain.drive(squareWithSign(Database.getInstance().getNumeric(ControlsMap.THROTTLE_Z)),Robot.piDriveTrain.getAngleRate());
 
 	}
 

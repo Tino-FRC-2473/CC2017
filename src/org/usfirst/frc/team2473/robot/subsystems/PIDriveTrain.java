@@ -28,7 +28,7 @@ public class PIDriveTrain extends PIDSubsystem {
 	public PIDriveTrain() {
 		super(KP, KI, KD);
 
-		rotateToAngleRate = 0;
+		rotateToAngleRate = 0; //based on PID
 
 		try {
 			gyro = new AHRS(SPI.Port.kMXP);
@@ -77,6 +77,10 @@ public class PIDriveTrain extends PIDSubsystem {
 
 	public double getAngleRate() {
 		return rotateToAngleRate;
+	}
+
+	public void setTargetAngle(double angle) {
+		setSetpoint(angle);
 	}
 
 	public void resetEncoders() {
