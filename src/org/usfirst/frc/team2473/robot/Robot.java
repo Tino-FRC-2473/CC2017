@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.usfirst.frc.team2473.framework.Networking;
 import org.usfirst.frc.team2473.framework.components.Devices;
 import org.usfirst.frc.team2473.framework.components.Trackers;
 import org.usfirst.frc.team2473.framework.readers.ControlsReader;
@@ -31,8 +32,12 @@ import org.usfirst.frc.team2473.robot.subsystems.PIDDriveTrain;
 public class Robot extends IterativeRobot {
 	public static final PIDDriveTrain driveTrain = new PIDDriveTrain();
 	public static final DriveStraight driveStraight = new DriveStraight();
+	public static boolean networkingRunning = false;
+	
 	boolean timerRunning;
 	Timer robotControlLoop;
+	
+	private Networking network;
 	
 	private Command command;
 	
@@ -41,11 +46,25 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void robotInit() {
+		
+		if (this.isEnabled()) {
+			
+		}
+		
 		addTrackers();
 		addDevices();
 		reader = new DeviceReader();
 		reader.start();
 		robotControlLoop = new Timer();
+		
+		if (networkingRunning) {
+			try {
+				network = new Networking();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			network.start();
+		}
 	}
 
 	@Override

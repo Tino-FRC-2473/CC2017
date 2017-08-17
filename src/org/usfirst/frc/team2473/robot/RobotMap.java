@@ -15,4 +15,8 @@ public class RobotMap {
 	public static final String GYRO_YAW = "gyro yaw";
 	public static final String GYRO_RATE = "gyro rate";
 	
+	public static final String PEG_DISTANCE = "peg distance";
+	public static final String PEG_ANGLE = "peg angle";
+	public static final String FUNCTION_TRIGGER = "function trigger";
+	public static final String STOP_TRIGGER = "stop trigger";
 }
