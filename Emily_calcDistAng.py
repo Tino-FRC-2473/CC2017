@@ -197,7 +197,7 @@ while True:
     #180, 1, 100
     #low_green = np.array([50, 50, 50])
     #high_green = np.array([90, 63.75, 255])
-    low_green = np.array([80, 100.0, 80.0]) 
+    low_green = np.array([75, 80.0, 80.0]) 
     high_green = np.array([90, 255, 255.0])
 
     # #make mask
@@ -224,10 +224,15 @@ while True:
 
     for cnt in contour:
         x,y,w,h = cv2.boundingRect(cnt)
-        if(w * h >= max_area):
+        #cv2.rectangle(frame,(x,y),(x+w,y+h),(0,150,255),thickness=3)
+
+        area = cv2.contourArea(cnt)
+        #print str(area)
+
+        if(area >= max_area):
             thirdmax_area = secmax_area
             secmax_area = max_area
-            max_area = w * h
+            max_area = area
             
             tx = sx
             ty = sy
@@ -243,6 +248,26 @@ while True:
             my = y
             mw = w
             mh = h
+        elif(area >= secmax_area):
+            thirdmax_area = secmax_area
+            secmax_area = area
+            
+            tx = sx
+            ty = sy
+            tw = sw
+            th = sh
+
+            sx = x
+            sy = y
+            sw = w
+            sh = h
+        elif(area >= thirdmax_area):
+            thirdmax_area = area
+
+            tx = x
+            ty = y
+            tw = w
+            th = h
 
 
 
@@ -250,9 +275,9 @@ while True:
 
     #draw rectangles on two biggest green part found, draws green rectangles
     if(max_area > 0):
-        cv2.rectangle(frame,(mx,my),(mx+mw,my+mh),(0,255,0),thickness=5)
+        cv2.rectangle(frame,(mx,my),(mx+mw,my+mh),(0,255,0),thickness=3)
         if(secmax_area > 0):
-            cv2.rectangle(frame,(sx,sy),(sx+sw,sy+sh),(0,0,255),thickness=5)
+            cv2.rectangle(frame,(sx,sy),(sx+sw,sy+sh),(0,0,255),thickness=3)
 
             modmx, modmy, modmw, modmh = mx, my, mw, mh
             modsx, modsy, modsw, modsh = sx, sy, sw, sh
@@ -264,12 +289,13 @@ while True:
                 #if third rectangle exists
                 if(thirdmax_area > 0):
                     errorThres = 2
-                    cv2.rectangle(frame,(tx,ty),(tx+tw,ty+th),(255,255,0),thickness=5)
+                    cv2.rectangle(frame,(tx,ty),(tx+tw,ty+th),(255,255,0),thickness=3)
                     
 
                     #check if it is in the secmax rect area (should be 100% of time)
                     if(tx >= sx-errorThres and tx+tw <= sx+sw+errorThres and
-                        ty >= my-errorThres and ty+th <= my+mh+errorThres):
+                        ty >= my-errorThres and ty+th <= my+mh+errorThres and
+                        (ty <= sy+errorThres or ty+th >= sy+sh-errorThres)):
                         sideCase = True
                         
                         #third rect on top of the max rect
@@ -282,7 +308,8 @@ while True:
 
                     #check if it is in the max rect area
                     elif(tx >= mx-errorThres and tx+tw <= mx+mw+errorThres and
-                        ty >= sy-errorThres and ty+th <= sy+sh+errorThres):
+                        ty >= sy-errorThres and ty+th <= sy+sh+errorThres and
+                        (ty <= my+errorThres or ty+th >= my+mh-errorThres)):
                         sideCase = True
                         
                         #third rect on top of the max rect
@@ -292,6 +319,8 @@ while True:
                         #third rect is below the max rect
                         else:
                             modmh = ty+th-my
+                
+                print "smaller than threshold but not third rect"
 
                 #if side case is not true yet
                 """if(not sideCase):
@@ -318,22 +347,22 @@ while True:
             #else:
                 cv2.putText(frame, "modmh: " + str(modmh) + ", modsh: " + str(modsh), (50, 200), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
                 if(rectPos == TOP):
-                    cv2.rectangle(frame,(modsx,modsy),(modsx+modsw,modsy+modsh),(255,0,255),thickness=3)
-                    cv2.rectangle(frame,(modmx,modmy),(modmx+modmw,modmy+modmh),(255,0,255),thickness=3)
+                    cv2.rectangle(frame,(modsx,modsy),(modsx+modsw,modsy+modsh),(255,0,255),thickness=1)
+                    cv2.rectangle(frame,(modmx,modmy),(modmx+modmw,modmy+modmh),(255,0,255),thickness=1)
                     print "top"
 
 
                 else:
                     modsy = sy + sh - modsh
                     modmy = my + mh - modmh
-                    cv2.rectangle(frame,(modsx,modsy),(modsx+modsw,modsy+modsh),(255,0,255),thickness=3)
-                    cv2.rectangle(frame,(modmx,modmy),(modmx+modmw,modmy+modmh),(255,0,255),thickness=3)
+                    cv2.rectangle(frame,(modsx,modsy),(modsx+modsw,modsy+modsh),(255,0,255),thickness=1)
+                    cv2.rectangle(frame,(modmx,modmy),(modmx+modmw,modmy+modmh),(255,0,255),thickness=1)
                     #cv2.putText(frame, "modmh: " + str(modmh) + ", modsh: " + str(modsh), (50, 200), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
                     print "bottom"
 
                 #distance = calcDistSideCase(my, mh, sy, sh)
 
-            cv2.putText(frame, "DIST test: " + str(calcDistSideCase(my, mh, sy, sh)), (50, 150), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
+            cv2.putText(frame, "width: " + str(mw) + ", " + str(sw), (50, 150), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
 
             #draws the new rectangles, purple
 
@@ -361,17 +390,17 @@ while True:
 
     print "Side case:" + str(sideCase)
     if(sideCase):
-        distance = calcDistSideCase(my, mh, sy, sh)
+        distance = calcDist((modmh + modsh)/2.0)
     else:
         distance = calcDist((mh + sh) / 2.0)
 
     angle = calcAngleDeg()
 
     cv2.putText(frame, "ANG: " + str(calcAngleDeg()), (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
-    cv2.putText(frame, "DIST: " + str(calcDist((mh + sh) / 2.0)), (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
+    cv2.putText(frame, "DIST: " + str(distance), (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
 
     #displays the lengths of the original rectangles
-    cv2.putText(frame, "Length (mh): " + str(mh) + ", Length (sh): " + str(sh), (50, 300), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
+    cv2.putText(frame, "L mh: " + str(mh) + ", L sh: " + str(sh), (50, 300), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
     print "mh: " + str(mh) + ", sh: " + str(sh)
     print "modmh: " + str(modmh) + ", modsh: " + str(modsh)
     print "Distance: " + str(distance)
@@ -383,7 +412,7 @@ while True:
 
     cv2.imshow("Frame", frame)
 
-    cv2.waitKey(1000)
+    cv2.waitKey(650)
 
 camera.release()
 cv2.destroyAllWindows()
