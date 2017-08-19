@@ -320,11 +320,20 @@ while True:
                         else:
                             modmh = ty+th-my
                 
-                print "smaller than threshold but not third rect"
 
                 #if side case is not true yet
-                """if(not sideCase):
-                    if(my < sy): #is my is higher up than sy (probably 100% of the time)
+                if(not sideCase):
+                    if(mh > sh): #probs 100% of the time
+                        #change sh
+                        modsh = float(sw) / mw * mh
+                    else:
+                        #change mh
+                        modmh = float(mw) / sw * sh
+                    
+                    print "smaller than threshold but not third rect"
+
+
+                    """if(my < sy): #is my is higher up than sy (probably 100% of the time)
                         #change the modsh
                         modsh = int(calcLengthSideCase(my, mh, sy, sh) * 2 - mh)
 
@@ -336,8 +345,8 @@ while True:
                         modmh = int(calcLengthSideCase(my, mh, sy, sh) * 2 - sh)
 
                         if(mh / float(modmh) < .8):
-                            sideCase = True
-                """
+                            sideCase = True"""
+                
             rectPos = getRectPos(my, mh, sy, sh)
             #print "rectPos: " + rectPos
 
