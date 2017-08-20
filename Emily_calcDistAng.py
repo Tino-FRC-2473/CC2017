@@ -125,16 +125,16 @@ def getRectPos(y1, h1, y3, h2):
     return rectOnBottom
 
 
-def calcAngleDeg():
-    return calcAngleRad() * 180.0 / math.pi
+def calcAngleDeg(pinX):
+    return calcAngleRad(pinX) * 180.0 / math.pi
 
-def calcAngleRad():
-    pinDistToCenter = calcPinDist()
+def calcAngleRad(pinX):
+    pinDistToCenter = calcPinDist(pinX)
     #returns it in radians
     return math.atan(pinDistToCenter / ANGLE_CONST)
 
 #helper method
-def calcPinDist():
+def calcPinDist(pinX):
     #SOMEHOW GET PINX and PINY
     return (pinX - SCREEN_WIDTH / 2);
     #return math.fabs(pinX - SCREEN_WIDTH / 2);
@@ -197,8 +197,8 @@ while True:
     #180, 1, 100
     #low_green = np.array([50, 50, 50])
     #high_green = np.array([90, 63.75, 255])
-    low_green = np.array([75, 80.0, 80.0]) 
-    high_green = np.array([90, 255, 255.0])
+    low_green = np.array([75, 100.0, 100.0]) 
+    high_green = np.array([87, 255, 229.0])
 
     # #make mask
     mask = cv2.inRange(hsv, low_green, high_green)
@@ -283,7 +283,7 @@ while True:
             modsx, modsy, modsw, modsh = sx, sy, sw, sh
             #calculate the modified coordinates
             
-            lengthThres = 0.7
+            lengthThres = 0.8
             if(sh < lengthThres * mh or mh < lengthThres * sh):
 
                 #if third rectangle exists
@@ -325,10 +325,12 @@ while True:
                 if(not sideCase):
                     if(mh > sh): #probs 100% of the time
                         #change sh
-                        modsh = float(sw) / mw * mh
+                        modsh = int(float(sw) / mw * mh)
+                        sideCase = True
                     else:
                         #change mh
-                        modmh = float(mw) / sw * sh
+                        modmh = int(float(mw) / sw * sh)
+                        sideCase = True
                     
                     print "smaller than threshold but not third rect"
 
@@ -354,7 +356,7 @@ while True:
                 print "modsh or modmh 0"
             elif(sideCase):
             #else:
-                cv2.putText(frame, "modmh: " + str(modmh) + ", modsh: " + str(modsh), (50, 200), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
+                cv2.putText(frame, "modmh: " + str(modmh) + ", modsh: " + str(modsh), (0, 200), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
                 if(rectPos == TOP):
                     cv2.rectangle(frame,(modsx,modsy),(modsx+modsw,modsy+modsh),(255,0,255),thickness=1)
                     cv2.rectangle(frame,(modmx,modmy),(modmx+modmw,modmy+modmh),(255,0,255),thickness=1)
@@ -371,7 +373,7 @@ while True:
 
                 #distance = calcDistSideCase(my, mh, sy, sh)
 
-            cv2.putText(frame, "width: " + str(mw) + ", " + str(sw), (50, 150), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
+            cv2.putText(frame, "width: " + str(mw) + ", " + str(sw), (0, 150), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
 
             #draws the new rectangles, purple
 
@@ -403,13 +405,15 @@ while True:
     else:
         distance = calcDist((mh + sh) / 2.0)
 
-    angle = calcAngleDeg()
+    angle = calcAngleDeg(pinX)
 
-    cv2.putText(frame, "ANG: " + str(calcAngleDeg()), (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
-    cv2.putText(frame, "DIST: " + str(distance), (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
+
+    cv2.putText(frame, "ANG: " + str(angle), (0, 50), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
+    cv2.putText(frame, "BANG: " + str(calcAngleDeg(diagPinX)), (0, 250), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
+    cv2.putText(frame, "DIST: " + str(distance), (0, 100), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
 
     #displays the lengths of the original rectangles
-    cv2.putText(frame, "L mh: " + str(mh) + ", L sh: " + str(sh), (50, 300), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
+    cv2.putText(frame, "mh: " + str(mh) + ", sh: " + str(sh), (0, 300), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
     print "mh: " + str(mh) + ", sh: " + str(sh)
     print "modmh: " + str(modmh) + ", modsh: " + str(modsh)
     print "Distance: " + str(distance)
@@ -421,7 +425,7 @@ while True:
 
     cv2.imshow("Frame", frame)
 
-    cv2.waitKey(650)
+    cv2.waitKey(300)
 
 camera.release()
 cv2.destroyAllWindows()
