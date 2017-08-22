@@ -23,6 +23,8 @@ angle = -1
 SCREEN_HEIGHT = 0;
 pinX = 0;
 pinY = 0;
+diagPinX = 0
+diagPinY = 0
 pinDistToCenter = 0;
 
 TOP = False
@@ -197,7 +199,7 @@ while True:
     #180, 1, 100
     #low_green = np.array([50, 50, 50])
     #high_green = np.array([90, 63.75, 255])
-    low_green = np.array([75, 100.0, 100.0]) 
+    low_green = np.array([75, 90.0, 100.0]) 
     high_green = np.array([87, 255, 229.0])
 
     # #make mask
@@ -283,12 +285,12 @@ while True:
             modsx, modsy, modsw, modsh = sx, sy, sw, sh
             #calculate the modified coordinates
             
-            lengthThres = 0.8
+            lengthThres = 0.905
             if(sh < lengthThres * mh or mh < lengthThres * sh):
 
                 #if third rectangle exists
                 if(thirdmax_area > 0):
-                    errorThres = 2
+                    errorThres = 3
                     cv2.rectangle(frame,(tx,ty),(tx+tw,ty+th),(255,255,0),thickness=3)
                     
 
@@ -396,7 +398,7 @@ while True:
             pinX, pinY = pinPosition(mx, my, mx+mw, my+mh, sx, sy, sx+sw, sy+sh)
             cv2.circle(frame, (pinX, pinY), 1, (255, 0, 0), thickness=5)
 
-            diagPinX, diagPinY = crossPinPos(mx, my, mw, mh, sx, sy, sw, sh)
+            diagPinX, diagPinY = crossPinPos(modmx, modmy, modmw, modmh, modsx, modsy, modsw, modsh)
             cv2.circle(frame, (diagPinX, diagPinY), 1, (0, 0, 0), thickness=5)
 
     print "Side case:" + str(sideCase)
