@@ -225,11 +225,12 @@ while True:
     modsx, modsy, modsw, modsh = sx, sy, sw, sh
 
     for cnt in contour:
+        area = cv2.contourArea(cnt)
+        #print str(area)
+
         x,y,w,h = cv2.boundingRect(cnt)
         #cv2.rectangle(frame,(x,y),(x+w,y+h),(0,150,255),thickness=3)
 
-        area = cv2.contourArea(cnt)
-        #print str(area)
 
         if(area >= max_area):
             thirdmax_area = secmax_area
