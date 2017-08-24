@@ -3,9 +3,6 @@ import math
 import cv2
 import numpy as np
 import os
-#import CVClass
-
-#CVClass.final_calcDistAng().runCV()
 
 class PegDetector:
 
@@ -106,26 +103,7 @@ class PegDetector:
         y = (y1 + y2 + y3 + y4) / 4.0;
         return (int(x), int(y))
 
-    #must find and modify height beforehand!!!
-    """def crossPinPos(x1, y1, w1, h1, x3, y3, w3, h3):
-        ############# MAKE SURE THE RECT CASES WORK!!!
-        #Case x1 is on the left side
-        x = 0
-        y = 0
-
-        #uses similar triangles to find the coordinate of the x and y
-        #using the heights to find the proportions
-        proportionConstant = float(h3) + h1
-        #x1 is left of x3
-        if(x1 < x3):
-            x = x1 + h1 * (x3 + w3 - x1) / proportionConstant
-            y = y1 + h1 * (y3 + h3 - y1) / proportionConstant
-        else:
-            x = x3 + h3 * (x1 + w1 - x3) / proportionConstant
-            y = y3 + h3 * (y1 + h1 - y3) / proportionConstant
-
-        return (int(x), int(y))"""
-
+    
     def runCV(self):
         while True:
             _, frame = self.camera.read()
@@ -384,5 +362,6 @@ class PegDetector:
         self.camera.release()
         cv2.destroyAllWindows()
 
+#officially runs the class
 foo = PegDetector()
 foo.runCV()
