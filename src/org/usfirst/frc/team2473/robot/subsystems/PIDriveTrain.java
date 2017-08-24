@@ -1,15 +1,14 @@
 package org.usfirst.frc.team2473.robot.subsystems;
 
-import com.ctre.CANTalon.TalonControlMode;
-
 import org.usfirst.frc.team2473.framework.components.Devices;
 import org.usfirst.frc.team2473.robot.RobotMap;
 
+import com.ctre.CANTalon.TalonControlMode;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 public class PIDriveTrain extends PIDSubsystem {
@@ -84,7 +83,6 @@ public class PIDriveTrain extends PIDSubsystem {
 	}
 
 	public void resetEncoders() {
-
 		Devices.getInstance().getTalon(RobotMap.FRONT_RIGHT).changeControlMode(TalonControlMode.Position);
 		Devices.getInstance().getTalon(RobotMap.FRONT_LEFT).changeControlMode(TalonControlMode.Position);
 		Devices.getInstance().getTalon(RobotMap.FRONT_RIGHT).setEncPosition(0);

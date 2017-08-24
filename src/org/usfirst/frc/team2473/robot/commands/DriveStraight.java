@@ -17,6 +17,9 @@ public class DriveStraight extends Command {
 	// WARNING!!!!!!!!!!!!!!!!!!
 	// Cannot run code without initializing maxWheelX value correctly
 	private double maxWheelX = 1;
+	// determine the values of a and b by testing
+	private final double a = 1; // a is the ratio of the value of power to the actual velocity
+	private final double b = 1; // b should be half the length between the two wheels
 
 	public DriveStraight() {
 		requires(Robot.piDriveTrain);
@@ -31,7 +34,8 @@ public class DriveStraight extends Command {
 	protected void execute() {
 		Robot.piDriveTrain.setTargetAngle(Database.getInstance().getNumeric(ControlsMap.STEERING_WHEEL_X)*90);
 		
-		Robot.piDriveTrain.drive(squareWithSign(Database.getInstance().getNumeric(ControlsMap.THROTTLE_Z)),Robot.piDriveTrain.getAngleRate());
+//		Robot.piDriveTrain.drive(squareWithSign(Database.getInstance().getNumeric(ControlsMap.THROTTLE_Z)),Robot.piDriveTrain.getAngleRate());
+		this.turn(Database.getInstance().getNumeric(ControlsMap.THROTTLE_Z), Robot.piDriveTrain.getAngleRate());
 
 	}
 
@@ -50,17 +54,11 @@ public class DriveStraight extends Command {
 			pow = maxPow * Math.signum(pow);
 		}
 		if (pow > throttleDeadzone) {
-			setLeftPow(pow * (0.4 / (maxWheelX - wheelDeadzone) * (turn - wheelDeadzone) + 0.5));
-			setRightPow(pow * (-0.4 / (maxWheelX - wheelDeadzone) * (turn - wheelDeadzone) + 0.5));
+			setLeftPow(a * pow + b * turn); 
+			setRightPow(a * pow - b * turn); 
 		} else if (pow < -throttleDeadzone) {
-			setLeftPow(pow * (0.4 / (maxWheelX - wheelDeadzone) * (turn + wheelDeadzone) + 0.5));
-			setRightPow(pow * (-0.4 / (maxWheelX - wheelDeadzone) * (turn + wheelDeadzone) + 0.5));
-		} else {
-			System.out.println("right");
-			if (Math.abs(turn) > wheelDeadzone) {
-				setLeftPow(-squareWithSign(turn));
-				setRightPow(squareWithSign(turn));
-			}
+			setLeftPow(-(a * pow + b * turn));
+			setRightPow(-(a * pow - b * turn));
 		}
 	}
 
