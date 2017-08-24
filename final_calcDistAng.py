@@ -52,7 +52,7 @@ class PegDetector:
 
 
 
-    def getRectPos(y1, h1, y3, h2):
+    def getRectPos(self, y1, h1, y3, h2):
         rectOnBottom = False
         if(y1 < y3):
             
@@ -294,7 +294,7 @@ class PegDetector:
 
                 #finds out if the third rectangle or where the peg covers the rectanges
                 #would be on the top or bottom        
-                rectPos = getRectPos(my, mh, sy, sh)
+                rectPos = self.getRectPos(my, mh, sy, sh)
                 print "rectPos: " + rectPos
 
                 #draws magenta rectangles for side case situations 
@@ -394,4 +394,5 @@ class PegDetector:
 #officially runs the class
 #COMMENT OUT THIS LATER
 foo = PegDetector()
-foo.runCV()
+while True:
+    foo.runCV()
