@@ -4,10 +4,10 @@ import cv2
 import numpy as np
 import os
 
+#finds and returns the diastance and angle to the back of the pegboard
 class PegDetector:
 
-    
-
+    #initializes the variables used in this class
     def __init__(self):
         #for distance
         self.distance = -1
@@ -41,10 +41,11 @@ class PegDetector:
         self.ANGLE_CONST = (self.SCREEN_WIDTH / 2.0) / math.tan(self.FIELD_OF_VIEW_RAD / 2.0)
 
 
-    #calculates the distance of the 
+    #calculates the distance to the back of the board with the peg on it
+    #+/- about an inch depending on the case
     def calcDist(self, length): #the length of the rectangle
         #the distance and size is inversely proportional
-        #dist * rectSize = constant
+        #uses formula dist * rectSize = constant
         if(length > 0):
             return self.DIST_CONSTANT / length;
         return -1;
@@ -82,28 +83,33 @@ class PegDetector:
 
         return rectOnBottom"""
 
-
+    #calculates the angle in degrees
+    #we need to turn to be centered with the back of the board
     def calcAngleDeg(self, pinX):
         return self.calcAngleRad(pinX) * 180.0 / math.pi
 
+    #calculates the angle in radians
+    #we need to turn to be centered with the back of the board
     def calcAngleRad(self, pinX):
         pinDistToCenter = self.calcPinDist(pinX)
         #returns it in radians
         return math.atan(pinDistToCenter / self.ANGLE_CONST)
 
-    #helper method
+    #helper method to calculate the horizontal distance
+    #between the center of the screen and the peg in pixels
     def calcPinDist(self, pinX):
         #SOMEHOW GET PINX and PINY
         return (pinX - self.SCREEN_WIDTH / 2);
         #return math.fabs(pinX - SCREEN_WIDTH / 2);
 
+    #calculates the approximate position of the peg on the screen
     #only need top left and bottom right!!
     def pinPosition(x1, y1, x2, y2, x3, y3, x4, y4):
         x = (x1 + x2 + x3 + x4) / 4.0;
         y = (y1 + y2 + y3 + y4) / 4.0;
         return (int(x), int(y))
 
-    
+    #returns the calculated distance and angle
     def runCV(self):
         while True:
             _, frame = self.camera.read()
