@@ -41,7 +41,7 @@ class PegDetector:
         self.ANGLE_CONST = (self.SCREEN_WIDTH / 2.0) / math.tan(self.FIELD_OF_VIEW_RAD / 2.0)
 
 
-
+    #calculates the distance of the 
     def calcDist(self, length): #the length of the rectangle
         #the distance and size is inversely proportional
         #dist * rectSize = constant
@@ -358,6 +358,7 @@ class PegDetector:
             cv2.imshow("Frame", frame)
 
             cv2.waitKey(300)
+            return distance, angle
 
         self.camera.release()
         cv2.destroyAllWindows()
