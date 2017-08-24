@@ -33,7 +33,7 @@ class PegDetector:
         self.BOTTOM = True
         # angle;
 
-        #self.os.system('sudo sh camerasettings.sh')
+        os.system('sudo sh camerasettings.sh')
         self.camera = cv2.VideoCapture(0)
         # camera = cv2.VideoCapture(1)
         _, frame = self.camera.read()
@@ -325,7 +325,7 @@ class PegDetector:
                         cv2.line(frame, (mx+mw, my), (sx, sy+sh), (0, 255, 255), thickness=5)"""
 
 
-                    self.pinX, self.pinY = self.pinPosition(mx, my, mx+mw, my+mh, sx, sy, sx+sw, sy+sh)
+                    self.pinX, self.pinY = pinPosition(mx, my, mx+mw, my+mh, sx, sy, sx+sw, sy+sh)
                     cv2.circle(frame, (self.pinX, self.pinY), 1, (255, 0, 0), thickness=5)
 
                     #diagPinX, diagPinY = crossPinPos(modmx, modmy, modmw, modmh, modsx, modsy, modsw, modsh)
