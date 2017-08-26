@@ -1,13 +1,17 @@
 
 package org.usfirst.frc.team2473.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import org.usfirst.frc.team2473.framework.Database;
 import org.usfirst.frc.team2473.framework.components.Devices;
 import org.usfirst.frc.team2473.robot.ControlsMap;
 import org.usfirst.frc.team2473.robot.Robot;
 import org.usfirst.frc.team2473.robot.RobotMap;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveStraight extends Command {
 
@@ -19,10 +23,24 @@ public class DriveStraight extends Command {
 	private double maxWheelX = 1;
 	// determine the values of a and b by testing
 	private final double a = 1; // a is the ratio of the value of power to the actual velocity
-	private final double b = 1; // b should be half the length between the two wheels
-
+	private final double b = 1; // b should be half the length between the two wheels in meters
+	private final double powToSpeedRatio = 18; // the ratio converting power to actual speed while driving straight
+	private final double powThreshold = 0.7; // the threshold determining the max pow while turning
+	private final double powCapMod = 1; // the modifier for reducing the power while turning
+	
+	private File data;
+	private FileWriter fw;
 	public DriveStraight() {
 		requires(Robot.piDriveTrain);
+		data = new File("data.txt");
+		if (data.exists())
+			System.out.println("Now recording data.");
+		try {
+			fw = new FileWriter(data);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -53,12 +71,55 @@ public class DriveStraight extends Command {
 		if (Math.abs(pow) > maxPow) {
 			pow = maxPow * Math.signum(pow);
 		}
-		if (pow > throttleDeadzone) {
-			setLeftPow(a * pow + b * turn); 
-			setRightPow(a * pow - b * turn); 
-		} else if (pow < -throttleDeadzone) {
-			setLeftPow(-(a * pow + b * turn));
-			setRightPow(-(a * pow - b * turn));
+		
+		if (Math.abs(pow) > throttleDeadzone) {
+//			record(pow, turn, Database.getInstance().getNumeric(key));
+			double approxSpeed = getApproxSpeed(pow, turn); // the approximated speed in meters per second
+			approxSpeed = this.cap(approxSpeed, turn);
+			if (approxSpeed > 0) {
+				setLeftPow(approxSpeed + b * turn); 
+				setRightPow(approxSpeed - b * turn); 
+			} else if (pow < 0) {
+				setLeftPow(-(approxSpeed + b * turn));
+				setRightPow(-(approxSpeed - b * turn));
+			}
+		}
+	}
+	
+	// return the approximated current SPEED under the influence of friction and skidding
+	private double getApproxSpeed(double pow, double turn) {
+		/*
+		 * TODO determine if this is the best fit. All we know now is that the higher the pow and the greater 
+		 * the turn, the lower the actual speed.
+		 */
+		double speed = pow * powToSpeedRatio;
+		return speed - a / turn / speed;
+	}
+	
+	// lower the power if the speed is too high
+	private double cap(double pow, double turn) {
+		/*
+		 * TODO determine if this is the best fit. All we know now is that the higher the pow the greater the
+		 * pow reduction, and the greater the turn the less the pow reduction
+		 */
+		if (pow > powThreshold)
+			return powCapMod * pow / turn;
+		return pow;
+	}
+
+	// the experimental version of turn
+	private void turnExp(double pow, double turn) {
+		
+	}
+	
+	private void record(double pow, double turn, double actualV) {
+		try {
+			fw.write(pow + " ");
+			fw.write(turn + " ");
+			fw.write(actualV + "\n");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
