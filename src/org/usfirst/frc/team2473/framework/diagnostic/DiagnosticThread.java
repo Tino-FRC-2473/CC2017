@@ -19,7 +19,7 @@ public class DiagnosticThread extends Thread {
 	private ArrayList<Diagnoser> diagnosers = new ArrayList<Diagnoser>();
 	private HashMap<String, String> errors = new HashMap<String, String>();
 	private HashMap<String, Subsystem> systems = new HashMap<String, Subsystem>();
-	private ArrayList<EncoderTracker> encodertrackers = new ArrayList<EncoderTracker>();
+//	private ArrayList<EncoderTracker> encodertrackers = new ArrayList<EncoderTracker>();
 
 	public long initialTime;
 
@@ -42,17 +42,20 @@ public class DiagnosticThread extends Thread {
 
 	public DiagnosticThread() {
 		initialTime = System.currentTimeMillis();
-		for (DeviceTracker tracker : Trackers.getInstance().getTrackers()) {
-			if (tracker.getClass().getName().equals("EncoderTracker")
-					&& (tracker.getPort() == RobotMap.FRONT_LEFT || tracker.getPort() == RobotMap.FRONT_RIGHT
-							|| tracker.getPort() == RobotMap.BACK_LEFT || tracker.getPort() == RobotMap.BACK_RIGHT)) {
-				encodertrackers.add((EncoderTracker) tracker);
-			}
-		}
+//		for (DeviceTracker tracker : Trackers.getInstance().getTrackers()) {
+//			if (tracker.getClass().getName().equals("EncoderTracker")
+//					&& (tracker.getPort() == RobotMap.FRONT_LEFT || tracker.getPort() == RobotMap.FRONT_RIGHT
+//							|| tracker.getPort() == RobotMap.BACK_LEFT || tracker.getPort() == RobotMap.BACK_RIGHT)) {
+//				encodertrackers.add((EncoderTracker) tracker);
+//			}
+//		}
 		if (Robot.networkingRunning) {
 			try {
-				ServerSocket ss = new ServerSocket(5800);
+				System.out.println("Beginning");
+				ServerSocket ss = new ServerSocket(50001);
+				System.out.println("End");
 				Socket connection = ss.accept();
+				System.out.println("Connected");
 				outToClient = new DataOutputStream(connection.getOutputStream());
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -66,33 +69,14 @@ public class DiagnosticThread extends Thread {
 
 	public void run() {
 		while (isAlive()) {
-			for (Diagnoser diagnoser : diagnosers) {
-				diagnoser.RunSimultaneousTest();
-			}
 			if (Robot.networkingRunning) {
 				try {
-					outToClient.writeUTF("time: " + getTime());
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				for (EncoderTracker tracker : encodertrackers) {
-					try {
-						if (tracker.getPort() == RobotMap.FRONT_RIGHT) {
-							outToClient.writeUTF("fr: " + Database.getInstance().getNumeric(tracker.getKey()) + ", ");
-						} else if (tracker.getPort() == RobotMap.FRONT_LEFT) {
-							outToClient.writeUTF("fl: " + Database.getInstance().getNumeric(tracker.getKey()) + ", ");
-						} else if (tracker.getPort() == RobotMap.BACK_LEFT) {
-							outToClient.writeUTF("bl: " + Database.getInstance().getNumeric(tracker.getKey()) + ", ");
-						} else if (tracker.getPort() == RobotMap.BACK_RIGHT) {
-							outToClient.writeUTF("br: " + Database.getInstance().getNumeric(tracker.getKey()) + ", ");
-						}
-						outToClient.writeUTF("GYRO: " + Database.getInstance().getNumeric(RobotMap.GYRO_YAW));
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+					outToClient.writeUTF("Gyro: " + Database.getInstance().getNumeric(RobotMap.GYRO_YAW));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
-			errors();
 		}
 	}
 

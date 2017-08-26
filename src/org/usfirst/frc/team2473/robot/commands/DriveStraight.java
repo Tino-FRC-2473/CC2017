@@ -18,21 +18,23 @@ public class DriveStraight extends Command {
 		Robot.driveTrain.setPIDMode(RobotMap.GYRO_YAW);
 		Robot.driveTrain.setTargetAngle(Robot.driveTrain.getGyro().getYaw());
 		Robot.driveTrain.enable();
+		Robot.driveTrain.setPin(true);
 	}
 
 	@Override
 	protected void execute() {
-		if (Math.abs(Database.getInstance().getNumeric(ControlsMap.THROTTLE_KEY)) < 0.2) {
-			Robot.driveTrain.disable();
-			Robot.driveTrain.stop();
-		} else {
-			if (!Robot.driveTrain.getPIDController().isEnabled()) {
-				Robot.driveTrain.enable();
-			}
-			Robot.driveTrain.drive(Database.getInstance().getNumeric(ControlsMap.THROTTLE_KEY),
-					Robot.driveTrain.getAngleRate());
-			System.out.println(Robot.driveTrain.getAngleRate());
-		}
+//		if (Math.abs(Database.getInstance().getNumeric(ControlsMap.THROTTLE_KEY)) < 0.2) {
+//			Robot.driveTrain.disable();
+//			Robot.driveTrain.stop();
+//		} else {
+//			if (!Robot.driveTrain.getPIDController().isEnabled()) {
+//				Robot.driveTrain.enable();
+//			}
+//			Robot.driveTrain.drive(Database.getInstance().getNumeric(ControlsMap.THROTTLE_KEY),
+//					Robot.driveTrain.getAngleRate());
+//			System.out.println(Robot.driveTrain.getAngleRate());
+//		}
+		System.out.println("Yaw: " + Database.getInstance().getNumeric(RobotMap.GYRO_YAW));
 	}
 
 	@Override
@@ -43,11 +45,12 @@ public class DriveStraight extends Command {
 	@Override
 	protected void end() {
 		Robot.driveTrain.disable();
+		Robot.driveTrain.setPin(false);
 	}
 
 	@Override
 	protected void interrupted() {
-		Robot.driveTrain.disable();
+		end();
 	}
 
 }
