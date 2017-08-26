@@ -10,6 +10,7 @@ import org.usfirst.frc.team2473.framework.readers.DeviceReader;
 import org.usfirst.frc.team2473.framework.trackers.JoystickTracker;
 import org.usfirst.frc.team2473.framework.trackers.JoystickTracker.Type;
 import org.usfirst.frc.team2473.robot.commands.DriveStraight;
+import org.usfirst.frc.team2473.robot.commands.MakeshiftTurn;
 import org.usfirst.frc.team2473.robot.subsystems.PIDriveTrain;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -30,7 +31,7 @@ public class Robot extends IterativeRobot {
 	DeviceReader reader;
 	Timer robotControlLoop;
 	private boolean timerRunning = true;
-	public static DriveStraight driveCommand;
+	public static MakeshiftTurn driveCommand;
 	public static PIDriveTrain piDriveTrain;
 	Command autonomousCommand;
 
@@ -43,7 +44,7 @@ public class Robot extends IterativeRobot {
 		
 		piDriveTrain = new PIDriveTrain();
 		robotControlLoop = new Timer();
-		driveCommand = new DriveStraight();
+		driveCommand = new MakeshiftTurn();
 		
 	}
 
