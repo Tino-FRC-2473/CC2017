@@ -1,11 +1,8 @@
 
 package org.usfirst.frc.team2473.robot;
 
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -15,14 +12,10 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.opencv.core.Mat;
 import org.usfirst.frc.team2473.framework.components.Devices;
 import org.usfirst.frc.team2473.framework.components.Trackers;
-import org.usfirst.frc.team2473.framework.diagnostic.DiagnosticThread;
 import org.usfirst.frc.team2473.framework.readers.ControlsReader;
 import org.usfirst.frc.team2473.framework.readers.DeviceReader;
-import org.usfirst.frc.team2473.framework.trackers.JoystickTracker.JoystickType;
-import org.usfirst.frc.team2473.framework.trackers.JoystickTracker;
 import org.usfirst.frc.team2473.framework.trackers.NavXTracker;
 import org.usfirst.frc.team2473.framework.trackers.NavXTracker.NavXTarget;
 import org.usfirst.frc.team2473.robot.commands.DriveStraight;
@@ -55,19 +48,8 @@ public class Robot extends IterativeRobot {
 		reader.start();
 		robotControlLoop = new Timer();
 
-		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
-		camera.setResolution(640, 480);
-		CvSink sink = CameraServer.getInstance().getVideo();
-		CvSource outputStream = CameraServer.getInstance().putVideo("Feed", 640, 480);
-
-		Mat source = new Mat();
-		
-		new Thread(() -> {
-			while (!Thread.interrupted()) {
-				sink.grabFrame(source);
-				outputStream.putFrame(source);
-			}
-		}).start();
+		UsbCamera cam = CameraServer.getInstance().startAutomaticCapture(0);
+		cam.setBrightness(0);
 	}
 
 	@Override
@@ -85,6 +67,7 @@ public class Robot extends IterativeRobot {
 		timerRunning = true;
 	}
 
+	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 	}
