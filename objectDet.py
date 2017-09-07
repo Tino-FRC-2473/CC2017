@@ -4,7 +4,6 @@ import csv
 import math
 
 
-robotDisplacement = [100,-100]
 
 angle = []
 distance = []
@@ -109,7 +108,4 @@ plt.scatter(objectX,objectY,color='r')
 plt.scatter([0],[0],color='g')
 plt.scatter(centX,centY,color='y')
 plt.show()
-
-
-
 
