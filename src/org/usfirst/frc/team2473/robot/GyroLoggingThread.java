@@ -4,12 +4,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import org.usfirst.frc.team2473.framework.Database;
 
@@ -22,6 +16,18 @@ public class GyroLoggingThread extends Thread {
 
 	private GyroLoggingThread() {
 		isEnabled = true;
+
+		if (Robot.networkingRunning) {
+			try {
+				System.out.println(".............................");
+				ServerSocket ss = new ServerSocket(5001);
+				Socket connection = ss.accept();
+				System.out.println("..............................");
+				outToClient = new DataOutputStream(connection.getOutputStream());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public static GyroLoggingThread getInstance() {
@@ -34,10 +40,14 @@ public class GyroLoggingThread extends Thread {
 
 	public void run() {
 		while (isEnabled) {
-			try {
-				Files.write(Paths.get("/U/gyrolog.txt"), Arrays.asList("" + Database.getInstance().getNumeric(RobotMap.GYRO_YAW)), StandardOpenOption.CREATE);
-			} catch (IOException e) {
-				e.printStackTrace();
+			if (Robot.networkingRunning) {
+				try {
+					System.out.println("..........................................");
+					outToClient.writeUTF("Gyro: " + Database.getInstance().getNumeric(RobotMap.GYRO_YAW));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}
