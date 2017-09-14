@@ -1,7 +1,6 @@
 
 package org.usfirst.frc.team2473.robot;
 
-import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -11,9 +10,9 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.usfirst.frc.team2473.framework.Networking;
 import org.usfirst.frc.team2473.framework.components.Devices;
 import org.usfirst.frc.team2473.framework.components.Trackers;
-import org.usfirst.frc.team2473.framework.diagnostic.DiagnosticThread;
 import org.usfirst.frc.team2473.framework.readers.ControlsReader;
 import org.usfirst.frc.team2473.framework.readers.DeviceReader;
 import org.usfirst.frc.team2473.framework.trackers.JoystickTracker.JoystickType;
@@ -33,10 +32,12 @@ import org.usfirst.frc.team2473.robot.subsystems.PIDDriveTrain;
 public class Robot extends IterativeRobot {
 	public static final PIDDriveTrain driveTrain = new PIDDriveTrain();
 	public static final DriveStraight driveStraight = new DriveStraight();
-	public static boolean networkingRunning = true;
+	public static boolean networkingRunning = false;
 	
 	boolean timerRunning;
 	Timer robotControlLoop;
+	
+	private Networking network;
 	
 	private Command command;
 	
@@ -46,15 +47,24 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		
-//		if (this.isEnabled()) {
-//			driveTrain.setPin(true);
-//		}
+		if (this.isEnabled()) {
+			
+		}
 		
 		addTrackers();
 		addDevices();
 		reader = new DeviceReader();
 		reader.start();
 		robotControlLoop = new Timer();
+		
+		if (networkingRunning) {
+			try {
+				network = new Networking();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			network.start();
+		}
 	}
 
 	@Override
@@ -85,7 +95,6 @@ public class Robot extends IterativeRobot {
 			command.start();
 		}
 		timerRunning = false;
-		GyroLoggingThread.getInstance().start();
 	}
 
 	@Override
@@ -117,6 +126,6 @@ public class Robot extends IterativeRobot {
 	public void addTrackers() {
 		Trackers.getInstance().addTracker(new NavXTracker(RobotMap.GYRO_YAW, NavXTarget.YAW));
 		Trackers.getInstance().addTracker(new NavXTracker(RobotMap.GYRO_RATE, NavXTarget.RATE));
-//s		Trackers.getInstance().addTracker(new JoystickTracker(ControlsMap.THROTTLE_KEY, ControlsMap.THROTTLE, JoystickType.Z));
+		Trackers.getInstance().addTracker(new JoystickTracker(ControlsMap.THROTTLE_KEY, ControlsMap.THROTTLE, JoystickType.Z));
 	}
 }

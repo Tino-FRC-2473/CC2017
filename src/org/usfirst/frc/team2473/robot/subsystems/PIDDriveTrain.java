@@ -7,10 +7,7 @@ import org.usfirst.frc.team2473.robot.RobotMap;
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.DigitalOutput;
-import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 public class PIDDriveTrain extends PIDSubsystem {
@@ -23,8 +20,6 @@ public class PIDDriveTrain extends PIDSubsystem {
 	private RobotDrive driver;
 	
 	private String mode;
-	
-	private DigitalOutput pin;
 
 	private double rotateToAngleRate; // the value changed by PID
 
@@ -38,8 +33,6 @@ public class PIDDriveTrain extends PIDSubsystem {
 		rotateToAngleRate = 0;
 		
 		mode = "";
-		
-		pin = new DigitalOutput(9);
 
 		Devices.getInstance().getNavXGyro().zeroYaw();
 
@@ -60,10 +53,6 @@ public class PIDDriveTrain extends PIDSubsystem {
 	public void initDefaultCommand() {
 
 	}
-	
-	/**
-	 * configure signal 3.3 volts
-	 */
 
 	/**
 	 * Returns the input used in the PID calculations
@@ -139,9 +128,5 @@ public class PIDDriveTrain extends PIDSubsystem {
 		else if (mode.equals(RobotMap.GYRO_YAW)) {
 			mode = RobotMap.GYRO_YAW;
 		}
-	}
-	
-	public void setPin(boolean flag) {
-		pin.set(flag);
 	}
 }
