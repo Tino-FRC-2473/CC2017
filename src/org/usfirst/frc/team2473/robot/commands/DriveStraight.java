@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team2473.framework.Database;
 import org.usfirst.frc.team2473.robot.ControlsMap;
 import org.usfirst.frc.team2473.robot.Robot;
-import org.usfirst.frc.team2473.robot.RobotMap;
 
 public class DriveStraight extends Command {
 
@@ -15,8 +14,8 @@ public class DriveStraight extends Command {
 
 	@Override
 	protected void initialize() {
-		Robot.driveTrain.setPIDMode(RobotMap.GYRO_YAW);
-		Robot.driveTrain.setTargetAngle(Robot.driveTrain.getGyro().getYaw());
+//		Robot.driveTrain.setTargetAngle(Robot.driveTrain.getGyro().getYaw());
+		Robot.driveTrain.setTargetAngle(30.0f);
 		Robot.driveTrain.enable();
 	}
 
@@ -29,8 +28,7 @@ public class DriveStraight extends Command {
 			if (!Robot.driveTrain.getPIDController().isEnabled()) {
 				Robot.driveTrain.enable();
 			}
-			Robot.driveTrain.drive(Database.getInstance().getNumeric(ControlsMap.THROTTLE_KEY),
-					Robot.driveTrain.getAngleRate());
+			Robot.driveTrain.drive(Database.getInstance().getNumeric(ControlsMap.THROTTLE_KEY), Robot.driveTrain.getAngleRate());
 			System.out.println(Robot.driveTrain.getAngleRate());
 		}
 	}

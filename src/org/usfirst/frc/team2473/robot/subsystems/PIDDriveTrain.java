@@ -18,8 +18,6 @@ public class PIDDriveTrain extends PIDSubsystem {
 	private static final double KD = 0.048;
 
 	private RobotDrive driver;
-	
-	private String mode;
 
 	private double rotateToAngleRate; // the value changed by PID
 
@@ -31,8 +29,6 @@ public class PIDDriveTrain extends PIDSubsystem {
 		super(KP, KI, KD); // creates a PID controller with the KP, KI, and KD values
 
 		rotateToAngleRate = 0;
-		
-		mode = "";
 
 		Devices.getInstance().getNavXGyro().zeroYaw();
 
@@ -60,12 +56,7 @@ public class PIDDriveTrain extends PIDSubsystem {
 	 * @return the input used in the PID calculations
 	 */
 	protected double returnPIDInput() {
-		if (mode.equals(RobotMap.GYRO_RATE)) {
-			return Database.getInstance().getNumeric(RobotMap.GYRO_RATE);
-		}
-		else {
-			return Database.getInstance().getNumeric(RobotMap.GYRO_YAW);
-		}
+		return Database.getInstance().getNumeric(RobotMap.GYRO_YAW);
 	}
 
 	/**
@@ -119,14 +110,5 @@ public class PIDDriveTrain extends PIDSubsystem {
 	 */
 	public void setTargetAngle(double angle) {
 		setSetpoint(angle);
-	}
-	
-	public void setPIDMode(String mode) {
-		if (mode.equals(RobotMap.GYRO_RATE)) {
-			mode = RobotMap.GYRO_RATE;
-		}
-		else if (mode.equals(RobotMap.GYRO_YAW)) {
-			mode = RobotMap.GYRO_YAW;
-		}
 	}
 }
