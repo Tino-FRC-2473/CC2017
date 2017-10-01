@@ -109,6 +109,50 @@ class PegDetector:
         y = (y1 + y2 + y3 + y4) / 4.0;
         return (int(x), int(y))
 
+    #calculates the angle needed from the robot to be parallel to the peg board
+    #length is the length of the rectangle in pixels
+    #width is the distance between the outer edges of the rectangles in pixels
+    #note: this method only works when there are two rectangles
+    def calcAngParallel(self, length, width, turnRight):
+        #width is on the distance between outer edges of the rectangles
+        lwRatio = 10.25/5
+        
+        #the theoretical width 
+        wt=lwRatio*length 
+
+        #finds the angle the robot should turn in degrees
+        angle=math.acos(width/wt)*180/math.pi 
+        
+        #sets the angle to a negative value 
+        #if the robot has to turn left for it to be parallel
+        if(not turnRight):
+            angle=-angle
+
+        return angle
+
+    #x1 is the x coordinate of the first rectangle
+    #h1 is the height of the first rectangle
+    #similar for x2 and h2
+    #NOTE: this method needs two rectangles to work
+    def isTurnRightParallel(self, x1, h1, x2, h2):
+        #h1 is greater than h2
+        if(h1 > h2):
+            #h1 is on the right of h2
+            return x1 > x2
+        #h2 is greater than h1
+        else:
+            #h2 is on the right of h2
+            return  x2 > x1
+    
+    def width(self, x1, w1, x2, w2):
+        #if x1 is to left of x2
+        if(x1 < x2):
+            return x2 + w2 - x1
+        #x2 is to the left of x1
+        else:
+            return x1 + w1 - x2
+
+
     #returns the calculated distance and angle
     def runCV(self):
         #gets a frame/picture of what the camera is getting
@@ -363,21 +407,27 @@ class PegDetector:
 
         print "Side case:" + str(sideCase)
         
-        #sets the distnace variable which we will return        
+        #sets the distnace variable which we will return and the angle parallel to the board        
         #finds the distance to the back of the peg board using
         #depending on whether it is on the side case or not
         if(sideCase):
             distance = self.calcDist((modmh + modsh)/2.0)
+            angleParallel = self.calcAngParallel((modmh + modsh)/2.0, 
+                    self.width(modmx, modmw,modsx, modsw), 
+                    self.isTurnRightParallel(modmx, modmh,modsx, modsh))
         elif(oneRect):
             distance = self.calcDist(mh)
+            angleParallel = -1
         else:
             distance = self.calcDist((mh + sh) / 2.0)
+            angleParallel = self.calcAngParallel((mh + sh)/2.0, 
+                    self.width(mx, mw, sx, sw), 
+                    self.isTurnRightParallel(mx, mh, sx, sh))
 
         #sets the angle variable which we will return
         #finds the angle the robot needs to turn
         #for the robot to be centered at the peg
         angle = self.calcAngleDeg(self.pinX)
-
 
         #displays data on the screen such as the angle and distance
         cv2.putText(frame, "ANG: " + str(angle), (0, 50), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
