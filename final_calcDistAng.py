@@ -98,11 +98,13 @@ class PegDetector:
     #helper method to calculate the horizontal distance
     #between the center of the screen and the peg in pixels
     def calcPinDist(self, pinX):
+        #if the peg is on the right side of the screen, POSITIVE
+        #peg on left side of screen, NEGATIVE
         return (pinX - self.SCREEN_WIDTH / 2);
         #return math.fabs(pinX - SCREEN_WIDTH / 2);
 
     #calculates the approximate position of the peg on the screen
-    def pinPosition(x1, y1, x2, y2, x3, y3, x4, y4):
+    def pinPosition(self, x1, y1, x2, y2, x3, y3, x4, y4):
         x = (x1 + x2 + x3 + x4) / 4.0;
         y = (y1 + y2 + y3 + y4) / 4.0;
         return (int(x), int(y))
@@ -147,13 +149,13 @@ class PegDetector:
 
         #initializes rectangle variables with a dummy value
         max_area = 0
-        mx,my,mw,mh = 0, 0, 0, 0
+        mx,my,mw,mh = 0, 0, 0, 0 #variables x,y,width,height associated with the biggest rectangle
 
         secmax_area = 0
-        sx,sy,sw,sh = 0, 0, 0, 0
+        sx,sy,sw,sh = 0, 0, 0, 0 #variables x,y,width,height associated with the second biggest rectangle
 
         thirdmax_area = 0
-        tx,ty,tw,th = 0, 0, 0, 0 
+        tx,ty,tw,th = 0, 0, 0, 0 #variables x,y,width,height associated with the third biggest rectangle
 
         #initializes rectangle variables for side cases
         modmx, modmy, modmw, modmh = mx, my, mw, mh
@@ -219,12 +221,14 @@ class PegDetector:
 
 
         sideCase = False
+        oneRect = False
 
         #draw rectangles on two biggest green part found, draws green rectangles
         if(max_area > 0):
             #draws a green rect on the biggest rectangle found
             cv2.rectangle(frame,(mx,my),(mx+mw,my+mh),(0,255,0),thickness=3)
-            if(secmax_area > 0):
+            #sets threshold for second rectangle length
+            if(sh > 0.3 * mh and sw > 0):
                 #draws a red rect on the second biggest rectangle found
                 cv2.rectangle(frame,(sx,sy),(sx+sw,sy+sh),(0,0,255),thickness=3)
 
@@ -291,7 +295,6 @@ class PegDetector:
                         
                         #print "smaller than threshold but not third rect"
 
-
                 #finds out if the third rectangle or where the peg covers the rectanges
                 #would be on the top or bottom        
                 rectPos = self.getRectPos(my, mh, sy, sh)
@@ -304,7 +307,7 @@ class PegDetector:
                 elif(sideCase):
                 #else:
                     cv2.putText(frame, "modmh: " + str(modmh) + ", modsh: " + str(modsh), (0, 200), cv2.FONT_HERSHEY_SIMPLEX, 2, 255)
-                    if(rectPos == TOP):
+                    if(rectPos == self.TOP):
                         cv2.rectangle(frame,(modsx,modsy),(modsx+modsw,modsy+modsh),(255,0,255),thickness=1)
                         cv2.rectangle(frame,(modmx,modmy),(modmx+modmw,modmy+modmh),(255,0,255),thickness=1)
                         print "top"
@@ -340,11 +343,23 @@ class PegDetector:
                     cv2.line(frame, (mx+mw, my), (sx, sy+sh), (0, 255, 255), thickness=5)"""
 
                 #finds the approximate position of the pin and draws a blue circle in that position
-                self.pinX, self.pinY = pinPosition(mx, my, mx+mw, my+mh, sx, sy, sx+sw, sy+sh)
+                self.pinX, self.pinY = self.pinPosition(mx, my, mx+mw, my+mh, sx, sy, sx+sw, sy+sh)
                 cv2.circle(frame, (self.pinX, self.pinY), 1, (255, 0, 0), thickness=5)
 
                 #diagPinX, diagPinY = crossPinPos(modmx, modmy, modmw, modmh, modsx, modsy, modsw, modsh)
                 #cv2.circle(frame, (diagPinX, diagPinY), 1, (0, 0, 0), thickness=5)
+
+            #one rectangle case, when second rectagle is too small/nonexistent
+            else:
+                #print "one rect case"
+                oneRect = True
+                #if the rectangle is on the right side of the screen
+                if(mx + mw/2.0 > self.SCREEN_WIDTH / 2.0):
+                    self.pinX = mx + 5.125/5*mh
+                else:
+                    self.pinX = mx - 3.125/5*mh
+                #print self.pinX
+
 
         print "Side case:" + str(sideCase)
         
@@ -353,6 +368,8 @@ class PegDetector:
         #depending on whether it is on the side case or not
         if(sideCase):
             distance = self.calcDist((modmh + modsh)/2.0)
+        elif(oneRect):
+            distance = self.calcDist(mh)
         else:
             distance = self.calcDist((mh + sh) / 2.0)
 
@@ -386,7 +403,7 @@ class PegDetector:
         cv2.imshow("Frame", frame)
 
         #adding lag time so we can look at the data more carefully
-        cv2.waitKey(300)
+        cv2.waitKey(3)
 
         #returns the distance and angle we calculated
         return distance, angle
