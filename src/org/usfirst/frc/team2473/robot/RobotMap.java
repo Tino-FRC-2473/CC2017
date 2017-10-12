@@ -8,9 +8,9 @@ package org.usfirst.frc.team2473.robot;
  */
 public class RobotMap {
 	public static final int FRONT_LEFT = 2;
-	public static final int BACK_LEFT = 3;
-	public static final int FRONT_RIGHT = 4;
-	public static final int BACK_RIGHT = 5;
+	public static final int BACK_LEFT = 8;
+	public static final int FRONT_RIGHT = 3;
+	public static final int BACK_RIGHT = 1;
 	
 	public static final String GYRO_YAW = "gyro yaw";
 	public static final String GYRO_RATE = "gyro rate";

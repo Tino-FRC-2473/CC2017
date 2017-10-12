@@ -3,6 +3,7 @@ package org.usfirst.frc.team2473.framework.components;
 import java.util.ArrayList;
 
 import org.usfirst.frc.team2473.framework.trackers.ExternalDevice;
+import org.usfirst.frc.team2473.robot.RobotMap;
 
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
@@ -84,7 +85,11 @@ public class Devices {
 	 * @param id an <code>int</code> value representing the device id of the talon
 	 */
 	public void addTalon(int id) {
-		talons.add(new CANTalon(id));
+		CANTalon talon = new CANTalon(id);
+		if (id == RobotMap.FRONT_LEFT || id == RobotMap.FRONT_RIGHT) {
+			talon.reverseOutput(true);
+		}
+		talons.add(talon);
 	}
 
 	/**

@@ -2,7 +2,9 @@ package org.usfirst.frc.team2473.robot.subsystems;
 
 import org.usfirst.frc.team2473.framework.Database;
 import org.usfirst.frc.team2473.framework.components.Devices;
+import org.usfirst.frc.team2473.robot.Robot;
 import org.usfirst.frc.team2473.robot.RobotMap;
+import org.usfirst.frc.team2473.robot.commands.DriveStraight;
 
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
@@ -13,9 +15,9 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 public class PIDDriveTrain extends PIDSubsystem {
 
 	// KP, KI, and KD values used for PID
-	private static final double KP = 0.035;
-	private static final double KI = 0.0005;
-	private static final double KD = 0.048;
+	private static final double KP = 0.0035;
+	private static final double KI = 0.000035;
+	private static final double KD = 0; //0.001;
 
 	private RobotDrive driver;
 
@@ -36,18 +38,13 @@ public class PIDDriveTrain extends PIDSubsystem {
 		setOutputRange(-1.0, 1.0); // sets the maximum and minimum output values
 		setAbsoluteTolerance(K_TOLERANCE_DEGREES); // sets the absolute error that is tolerable in the PID system
 		getPIDController().setContinuous(true); // sets the PID Controller to think of the gyro input as continuous
-
-		frontLeft = Devices.getInstance().getTalon(RobotMap.FRONT_LEFT);
-		frontRight = Devices.getInstance().getTalon(RobotMap.FRONT_LEFT);
-		backLeft = Devices.getInstance().getTalon(RobotMap.BACK_LEFT);
-		backRight = Devices.getInstance().getTalon(RobotMap.BACK_RIGHT);
 		
 		// Creates a robot driver
-		driver = new RobotDrive(frontLeft, backLeft, frontRight, backRight);
+		driver = new RobotDrive(Devices.getInstance().getTalon(RobotMap.FRONT_LEFT), Devices.getInstance().getTalon(RobotMap.BACK_LEFT), Devices.getInstance().getTalon(RobotMap.FRONT_RIGHT), Devices.getInstance().getTalon(RobotMap.BACK_RIGHT));
 	}
 
 	public void initDefaultCommand() {
-
+		setDefaultCommand(new DriveStraight());
 	}
 
 	/**

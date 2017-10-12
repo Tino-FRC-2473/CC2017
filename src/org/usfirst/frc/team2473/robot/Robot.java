@@ -46,6 +46,7 @@ public class Robot extends IterativeRobot {
 		reader = new DeviceReader();
 		reader.start();
 		robotControlLoop = new Timer();
+		System.out.println("robot init");
 	}
 
 	@Override
@@ -74,20 +75,23 @@ public class Robot extends IterativeRobot {
 		if (command != null) {
 			driveTrain.getGyro().zeroYaw();
 			command.start();
+			System.out.println("command start");
 		}
 		timerRunning = false;
 	}
 
 	@Override
 	public void teleopPeriodic() {
+		System.out.println("Command running");
 		if (!timerRunning) {
+			System.out.println("Running");
 			robotControlLoop.scheduleAtFixedRate(new TimerTask(){ //run the control loop timer if the competition timer is not running
 				@Override
 				public void run() {
 					Scheduler.getInstance().run(); //run the scheduler over the periodic function
 				}
 			}, 0, 20);
-			timerRunning = true; //ultimately set the running timer to true
+			timerRunning = false; //ultimately set the running timer to true
 		}
 		ControlsReader.getInstance().updateAll();	
 	}
