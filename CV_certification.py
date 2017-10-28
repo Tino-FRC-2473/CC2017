@@ -34,7 +34,9 @@ while True:
 
 	#find contours based on mask
 	_, contours,_ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-	img = cv2.drawContours(frame, contours, -1, (0, 255, 0), 2)
+	
+
+
 
 	#Find appropriate cv2 methods to call and code to find circle, and draw it on the frame
 	#You will only need the circle of greatest area and it should atleast be of some size
@@ -47,7 +49,7 @@ while True:
 		
 		center = (int(x), int(y))
 		radius = int(radius)
-		cv2.drawContours(mask, contours[0], -1, (0,255,0), 3)
+		#cv2.drawContours(mask, contours[0], -1, (0,255,0), 3)
 
 		if(radius > max_radius):
 			max_radius = radius
@@ -61,6 +63,8 @@ while True:
 	cv2.imshow("FRAME", frame)
 	cv2.imshow("Mask", mask)
 	
+	img = cv2.drawContours(frame, contours, -1, (0, 255, 0), 2)
+	cv2.imshow("frame+contours", img)
 	#cv2.waitKey(1)
 
 #Closes instances of videocapture object, removes live feed
